@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Tickets & Assign HR</title>
+    
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    
     <style>
         /* General reset */
         * {
@@ -41,6 +45,8 @@
             flex-direction: column;
             align-items: center;
             margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
         }
 
         /* Search Form Styling */
@@ -56,10 +62,9 @@
             font-size: 14px;
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
-            width: 250px;
+            width: 100%;
             background-color: transparent;
             color: #7c598f; /* Light-colored text */
-            margin-right: 20px;
             margin-bottom: 10px;
         }
 
@@ -73,6 +78,8 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             margin-top: 10px;
+            width: 100%;
+            max-width: 250px;
         }
 
         button:hover {
@@ -90,7 +97,7 @@
             position: absolute;
             top: 45px;
             left: 0;
-            width: 250px;
+            width: 100%;
             background-color: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: 8px;
@@ -113,10 +120,9 @@
             font-size: 14px;
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.6);
-            width: 200px;
+            width: 100%;
             background-color: transparent;
             color: #7c598f;
-            margin-right: 20px;
             margin-bottom: 10px;
         }
 
@@ -177,6 +183,7 @@
         @media (max-width: 768px) {
             .form-container {
                 align-items: stretch;
+                padding: 10px;
             }
 
             input[type="text"],
@@ -188,54 +195,90 @@
 
             #ticketTable th,
             #ticketTable td {
-                padding: 10px;
+                padding: 8px;
             }
 
             #ticketTable {
-                font-size: 14px;
+                font-size: 12px;
             }
 
             #ticketTable input[type="text"],
             #ticketTable select {
                 width: 100%;
             }
+
+            /* Adjust the suggestions box on small screens */
+            .suggestions-box {
+                position: relative;
+                width: 100%;
+            }
+        }
+
+          /* Toast Styling */
+          .toastify {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #4b6cb7, #182848); 
+                        color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+            width: auto;
+        }
+
+        .toastify .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 10px;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toastify .close-btn:hover {
+            color: #ff5252;
         }
     </style>
 </head>
 
 <body>
-    <%- include('partials/navbar') %> 
+    <%- include('partials/navbar') %>
 
-   <div style="margin-top: 80px; position: relative; width: 100%; align-items: center;  justify-content: center; display:  flex; flex-direction: column;">
-    <h1>Search Tickets & Assign HR</h1>
+    <div style="margin-top: 80px; position: relative; width: 100%; align-items: center; justify-content: center; display: flex; flex-direction: column;">
+        <h1>Search Tickets & Assign HR</h1>
 
-    <span class="form-container">
-      <span>  <input type="text" id="employeeName" placeholder="Enter employee name" autocomplete="off">
-        <button id="searchBtn">Search Tickets</button> </span>
+        <span class="form-container">
+            <input type="text" id="employeeName" placeholder="Enter employee name" autocomplete="off">
+            <button id="searchBtn">Search Tickets</button>
+            <div id="suggestions" class="suggestions-box"></div>
+        </span>
 
-        <div id="suggestions" class="suggestions-box"></div>
-    </span>
+        <br><br>
 
-    <br><br>
+        <table id="ticketTable">
+            <thead>
+                <tr>
+                    <th>TicketId</th>
+                    <th>Status</th>
+                    <th>Assigned HR</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 
-    <table id="ticketTable">
-        <thead>
-            <tr>
-                <th>TicketId</th>
-                <th>Issue</th>
-                <th>Status</th>
-                <th>Assigned HR</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <%- include('partials/footer') %>
 
-
-   </div>
-   <%- include('partials/footer') %> 
-
+    <!-- Toastify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.js"></script>
 
     <script>
         let hrEmployees = [];
@@ -300,7 +343,7 @@
                 const { tickets } = await response.json();
                 populateTicketTable(tickets);
             } catch (error) {
-                console.error('Error fetching tickets:', error);
+                showToast('Error fetching tickets', 'error');
             }
         });
 
@@ -311,7 +354,6 @@
                 const row = tableBody.insertRow();
                 row.innerHTML = `
                     <td>${ticket.ticketId}</td>
-                    <td>${ticket.issue}</td>
                     <td>${ticket.status}</td>
                     <td>
                         <input type="text" id="assignedHR-${ticket.ticketId}" value="${ticket.assignedToHR ? ticket.assignedToHR.name : 'Not assigned'}" readonly />
@@ -328,11 +370,11 @@
         async function assignHR(ticketId) {
             const hrId = document.getElementById(`assign-hr-${ticketId}`).value;
             if (!hrId) {
-                alert('Please select an HR');
+                showToast('Please select an HR', 'warning');
                 return;
             }
             if (!ticketId) {
-                alert('Ticket ID is missing!');
+                showToast('Ticket ID is missing!', 'error');
                 return;
             }
             const url = `/api/helpdesk/${ticketId}/assign`;
@@ -346,15 +388,37 @@
                     const updatedTicket = await response.json();
                     const assignedHRInput = document.getElementById(`assignedHR-${ticketId}`);
                     assignedHRInput.value = updatedTicket.assignedToHR ? updatedTicket.assignedToHR.name : 'Not assigned';
-                    alert('HR assigned successfully');
+                    showToast('HR assigned successfully', 'success');
                 } else {
-                    alert('Failed to assign HR');
+                    showToast('Failed to assign HR', 'error');
                 }
             } catch (error) {
-                alert('Error assigning HR');
+                showToast('Error assigning HR', 'error');
             }
+        }
+
+        function showToast(message, type) {
+            Toastify({
+                text: message,
+                backgroundColor: type === 'error' ? "red" : type === 'success' ? "green" : "orange",
+                duration: 3000,  // Duration increased for better user experience
+                close: true,
+                gravity: "top", // Position the toast at the top of the screen
+                position: "right", // Align to the right
+                stopOnFocus: true, // Stops the toast if focused on it
+                style: {
+                    borderRadius: "10px", // Rounded corners
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                    padding: "15px", // More padding for better look
+                    boxShadow: "0px 5px 20px rgba(0, 0, 0, 0.3)" // Shadow effect
+                },
+                animation: "fade", // Apply fade animation
+                avatar: type === 'success' ? 'https://img.icons8.com/ios/452/ok.png' : type === 'error' ? 'https://img.icons8.com/ios/452/error.png' : 'https://img.icons8.com/ios/452/info.png'
+            }).showToast();
         }
     </script>
 
 </body>
+
 </html>
