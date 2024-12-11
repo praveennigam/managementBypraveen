@@ -392,8 +392,8 @@ form button[type="button"]:hover {
       <input type="date" id="editProbationPeriodEnd"><br>
 
       <label>Manager Name:</label><br>
-      <input type="text" id="editManagerName"><br>
-
+      <select id="editManagerName"></select><br>
+      
       <button type="button" onclick="saveEmployee()">Save</button>
       <button type="button" onclick="cancelEdit()">Cancel</button>
     </form>
@@ -407,6 +407,47 @@ form button[type="button"]:hover {
     if (!token) {
         window.location.href = '/login'; // Redirect to login if no token exists
     }
+
+
+
+
+
+
+
+
+ // Fetch the list of managers from the API and populate the Manager Name dropdown
+async function fetchManagers() {
+    try {
+        const response = await fetch('/api/helpdesk/manager/employees', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+        const managers = await response.json();
+
+        const managerSelect = document.getElementById('editManagerName');
+        managerSelect.innerHTML = '';  // Clear any existing options
+
+        // Add an option for each manager
+        managers.forEach(manager => {
+            const option = document.createElement('option');
+            option.value = manager._id;  // Use the manager's _id for value
+            option.textContent = manager.name;  // Display the manager's name
+            managerSelect.appendChild(option);
+        });
+
+    } catch (error) {
+        console.error('Error fetching managers:', error);
+        alert('Error fetching managers');
+    }
+}
+
+
+
+   
+
+
 
     // Fetch employees and display them in a table
     async function fetchEmployees() {
@@ -453,8 +494,7 @@ form button[type="button"]:hover {
     }
 
     // Edit employee details
-    // Edit employee details
-async function editEmployee(id) {
+    async function editEmployee(id) {
     try {
         const response = await fetch(`/api/emp/employees/${id}`, {
             method: 'GET',
@@ -498,14 +538,16 @@ async function editEmployee(id) {
         document.getElementById('editWorkLocation').value = employee.workLocation || '';
         document.getElementById('editEmploymentType').value = employee.employmentType || 'full-time';
         document.getElementById('editProbationPeriodEnd').value = employee.probationPeriodEnd ? employee.probationPeriodEnd.split('T')[0] : '';
-        document.getElementById('editManagerName').value = employee.managerName || '';
+
+        // Set the pre-selected manager
+        document.getElementById('editManagerName').value = employee.managerId || '';  // Use managerId from employee
+
     } catch (error) {
         console.error('Error fetching employee details:', error);
         alert('Error fetching employee details');
     }
 }
 
-    // Save edited employee details
   // Save edited employee details
 async function saveEmployee() {
     const id = document.getElementById('editEmpId').value;  // MongoDB _id is used here
@@ -617,8 +659,10 @@ async function saveEmployee() {
         }
     }
 
-    // Fetch employees when the page loads
-    window.onload = fetchEmployees;
+window.onload = async function() {
+    fetchEmployees();  // Fetch employees as usual
+    await fetchManagers();  // Fetch managers and populate the dropdown
+};
 </script>
 
 </body>
