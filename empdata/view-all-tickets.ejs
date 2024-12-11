@@ -5,12 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>All Tickets</title>
-
-  <style>/* Body Style with transparent background */
+  <style>
+    /* Body Style with gradient background */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #000000, #1e3d59); /* Dark gradient background */
-      color: #f5f5f5; /* Light-colored text for contrast */
+      color: #fff; /* White text for contrast */
       padding: 20px;
       display: flex;
       flex-direction: column;
@@ -20,280 +20,225 @@
       overflow-y: auto;
       margin: 0;
     }
-    
-    /* Title Styling */
+  
+    /* Title Styling with gradient text */
     h1 {
-      color: #c5c3c3;  /* Light gray text color */
-      margin-top: 30px;
+      color: transparent;
+      background-image: linear-gradient(45deg, #ff4d4d, #ff9a8b, #4d94ff); /* Colorful gradient */
+      -webkit-background-clip: text;
       font-size: 36px;
       text-align: center;
+      margin-top: 30px;
     }
-    
+  
     /* Styling for the inline filter and search section */
     .search-filter-container {
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      gap: 20px; /* Space between the search and filter fields */
+      gap: 20px;
       margin-bottom: 20px;
       width: 100%;
       max-width: 1000px;
       padding: 6px;
-      background-color: rgba(255, 255, 255, 0.2); /* Transparent background */
+      background-color: rgba(255, 255, 255, 0.2);
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
-    
-    /* Styling for the individual search and filter elements */
-    .search-filter-container > div {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
+  
     label {
       font-weight: bold;
-      color: #f5f5f5; /* Light-colored text for labels */
+      color: #fff;
       font-size: 14px;
     }
-    
-    input[type="text"], select {
+  
+    input[type="text"], select, textarea {
       padding: 10px;
-      font-size: 12px;
+      font-size: 14px;
       border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
+      border: 1px solid transparent;
       width: 200px;
-      background-color: transparent; /* Transparent background */
-      color: #7c598f; /* Light-colored text */
+      background: transparent;
+      color: #fff;
       box-sizing: border-box;
+      transition: background 0.3s ease, border 0.3s ease;
     }
-    
-
-    .statusselect{
+  
+    input[type="text"]:focus, select:focus, textarea:focus {
+      background: linear-gradient(45deg, #d84f7e, #ff9a8b);
+      border: 1px solid #fff;
+    }
+  
+    .statusselect {
       padding: 8px;
       font-size: 12px;
       border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
+      border: 1px solid transparent;
       width: 100px;
-      background-color: transparent; /* Transparent background */
-      color: #211010; /* Light-colored text */
+      background: linear-gradient(135deg, #000000, #1e3d59); /* Dark gradient background */
+      color: #fff;
       box-sizing: border-box;
     }
-
+  
+    /* Buttons with gradient */
     button {
       padding: 8px 12px;
       max-width: 100px;
       margin: 10px;
-      background-color: rgba(255, 255, 255, 0.2); /* Transparent background */
-      color: #f5f5f5; /* Light text color */
+      background: linear-gradient(135deg, #000000, #1e3d59); /* Dark gradient background */
+      color: #fff;
       font-size: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
+      border: 1px solid transparent;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
     }
-    
+  
     button:hover {
-      background-color: rgba(255, 255, 255, 0.3); /* Hover effect */
+      background: linear-gradient(45deg, #d84f7e, #ff9a8b);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     }
-    
+  
     button:disabled {
-      background-color: rgba(255, 255, 255, 0.1); /* Disabled state */
+      background: rgba(255, 255, 255, 0.1);
       cursor: not-allowed;
     }
-    
-    /* Notes section */
+  
+    /* Notes section styled with colorful gradients like WhatsApp chat bubbles */
     .note {
-      background-color: rgba(255, 235, 59, 0.2); /* Transparent yellow */
       padding: 15px;
-      margin: 20px 0;
+      margin: 10px 0;
       border-radius: 8px;
-      font-size: 12px;
-      color: #f5f5f5; /* Light-colored text */
-      border-left: 5px solid #fbc02d; /* Yellow left border */
+      font-size: 14px;
+      color: #fff;
+      position: relative;
+      max-width: 75%;
+      background: linear-gradient(45deg, #ff9a8b, #ff6a00);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+      border-bottom-left-radius: 0;
     }
-    
+  
+    .note::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 15px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-top: 8px solid #ff9a8b;
+    }
+  
     .note.success {
-      background-color: rgba(72, 182, 92, 0.2); /* Transparent green */
-      border-left: 5px solid #28a745; /* Green left border */
+      background: linear-gradient(45deg, #28a745, #4caf50);
     }
-    
+  
     .note.error {
-      background-color: rgba(248, 215, 218, 0.2); /* Transparent red */
-      border-left: 5px solid #dc3545; /* Red left border */
+      background: linear-gradient(45deg, #dc3545, #ff4040);
     }
-    
+  
     .note.warning {
-      background-color: rgba(255, 243, 205, 0.2); /* Transparent warning */
-      border-left: 5px solid #ffc107; /* Yellow left border */
+      background: linear-gradient(135deg, #000000, #1e3d59); /* Dark gradient background */
     }
-    
+  
+    /* Ticket and chat section styles */
     .ticket p {
       margin: 8px 0;
       font-size: 14px;
-      color: #f5f5f5; /* Light text color */
+      color: #fff;
     }
-    
-    /* Buttons inside tickets */
-    .ticket button {
-      padding: 8px 12px;
-      background-color: rgba(255, 165, 0, 0.2); /* Transparent orange */
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 12px;
-      margin-right: 10px;
+  
+    #ticket-list {
+      width: 100%;
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    
-    .ticket button:hover {
-      background-color: rgba(255, 165, 0, 0.3); /* Hover effect */
+  
+    /* Individual Ticket Styling */
+    .ticket {
+      background: transparent;
+      margin: 15px 0;
+      padding: 20px;
+      border-radius: 8px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
-    
-    /* Ticket Details Styling */
+  
     .ticket-details {
       margin-top: 20px;
-      background-color: rgba(249, 249, 249, 0.2); /* Transparent background for details */
+      background: linear-gradient(135deg, #000000, #1e3d59); /* Dark gradient background */
       padding: 15px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       display: none;
     }
-    
+  
     .ticket-details input,
+    .ticket-details select,
     .ticket-details textarea {
       width: 100%;
       padding: 10px;
       font-size: 14px;
       border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
-      background-color: rgba(255, 255, 255, 0.3); /* Transparent background */
-      color: #f5f5f5; /* Light-colored text */
+      border: 1px solid transparent;
+      background: linear-gradient(135deg, #000000, #1e3d59); /* Dark gradient background */
+      color: #fff;
     }
-
-    .ticket-details select{
+  
+    /* Expanded width for .d2 when editing */
+    .d2.expanded {
       width: 100%;
-      padding: 10px;
-      font-size: 14px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
-      background-color: rgba(255, 255, 255, 0.3); /* Transparent background */
-      color: #625b5b; /* Light-colored text */
+      flex-direction: row;
     }
-
-    
-    .ticket-details textarea {
-      width: 97%;
-      padding: 10px;
-      font-size: 14px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
-      background-color: rgba(255, 255, 255, 0.3); /* Transparent background */
-      color: #f5f5f5; /* Light-colored text */
+  
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .search-filter-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+  
+      .ticket {
+        flex-direction: column;
+      }
+  
+      .ticket-details textarea {
+        width: 100%;
+      }
     }
-   
+  
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 28px;
+      }
+  
+      .ticket {
+        padding: 15px;
+      }
+  
+      .ticket button {
+        font-size: 12px;
+        padding: 6px 10px;
+      }
+  
       textarea {
-      height: 100px;
-      width: 80%;
-      padding: 10px;
-      font-size: 14px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
-      background-color: rgba(255, 255, 255, 0.3); /* Transparent background */
-      color: #f5f5f5; /* Light-colored text */
+        width: 90%;
+      }
     }
-    
-    /* Ticket List Styling */
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    
-    li {
-      padding: 8px;
-      margin-bottom: 8px;
-      background-color: rgba(241, 241, 241, 0.3); /* Transparent note background */
-      border-radius: 4px;
-      color: #f5f5f5; /* Light-colored text */
-    }
-    /* Container for Ticket List */
-#ticket-list {
-  width: 70%;
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Individual Ticket Styling */
-.ticket {
-  background-color: rgba(255, 255, 255, 0.2);
-  margin: 15px 0;
-  padding: 20px;
-  border-radius: 8px;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-/* d1 and d2 are the two sections of the ticket */
-.d1 {
-  width: 40%;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.d2 {
-  width: 50%;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  transition: width 0.3s ease; /* Smooth transition for width */
-}
-
-/* Styling for the Edit button */
-
-/* Initially hide ticket details */
-.ticket-details {
-  display: none;
-  width: 100%;
-  padding: 15px;
-  margin-top: 10px;
-  background-color: rgba(249, 249, 249, 0.2);
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-/* Styling for input fields inside ticket details */
-.ticket-details input,
-.ticket-details select{
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  background-color: rgba(255, 255, 255, 0.3);
-  color: #544b4b;
-}
-
-/* Expanded width for .d2 when editing */
-.d2.expanded {
-  width: 100%;
-  flex-direction: row;
-}
-
-/* Expand ticket details when toggled */
-.ticket-details.show {
-  display: block;
-}
-
-    </style>
+  </style>
+  
+  
   <script src="/socket.io/socket.io.js"></script>
   </head>
 
 <body>
   <%- include('partials/navbar') %> 
-  <div style="margin-top: 80px; position: relative; width: 100%; padding-bottom:20px ; align-items: center;  justify-content: center; display:  flex; flex-direction: column;">
+  <div style="margin-top: 80px; position: relative; width: 98%; padding-bottom:20px ; align-items: center;  justify-content: center; display:  flex; flex-direction: column;">
 
   <h1>All Tickets</h1>
 
