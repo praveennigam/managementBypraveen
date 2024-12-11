@@ -8,27 +8,21 @@
   <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
  <style>
     /* General Styles */
-    body {
-            background: linear-gradient(135deg, #000000, #1e3d59); /* Dark gradient background */
-            color: #f5f5f5; /* Light-colored text for contrast */
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            min-height: 100vh;
-            margin: 0;
-        }
-
-/* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #000000, #1e3d59); /* Dark gradient background */
+    color: #f5f5f5; /* Light-colored text for contrast */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    width: 100vw;
     margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    font-family: Arial, sans-serif;
 }
 
+/* Heading Styles */
 h2 {
     text-align: center;
     margin-top: 20px;
@@ -37,11 +31,11 @@ h2 {
 
 /* Table Styles */
 #employeesTable {
-    width: 80%;
+    width: 100%;
     margin: 20px auto;
     border-collapse: collapse;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    background-color: white;
+    background-color: transparent;
 }
 
 #employeesTable th, #employeesTable td {
@@ -56,18 +50,42 @@ h2 {
 }
 
 #employeesTable tr:hover {
-    background-color: #f1f1f1;
+    background: linear-gradient(45deg, #2575fc, #296638); }
+
+
+
+
+    #employeesTable button {
+    padding: 6px 12px;
+    background-color: transparent; /* Transparent background */
+    color: transparent; /* Make text transparent */
+    border: 2px solid #6a11cb; /* Border with matching purple color */
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    margin: 5px;
+    background-image: linear-gradient(45deg, #6a11cb, #2575fc); 
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    transition: all 0.3s ease; 
 }
+
+#employeesTable button:hover {
+    border-color: #2575fc; 
+    color: #2575fc; 
+}
+
 
 /* Form Styles */
 #editEmployeeForm {
-    width: 80%;
+    width: 100%;
     max-width: 600px;
     margin: 20px auto;
     background-color: transparent;
     padding: 20px;
     color: #3498db;
     border-radius: 5px;
+    display: none;
 }
 
 #editEmployeeForm h3 {
@@ -144,12 +162,26 @@ form button[type="button"]:hover {
 }
 
 /* Mobile Responsive */
+/* Mobile Responsive */
 @media screen and (max-width: 768px) {
+    /* Table Styles */
     #employeesTable {
         width: 95%;
         margin: 10px auto;
     }
 
+    #employeesTable th, #employeesTable td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    /* Hide Email column in mobile view */
+    #employeesTable th:nth-child(3),
+    #employeesTable td:nth-child(3) {
+        display: none;
+    }
+
+    /* Form Styles */
     #editEmployeeForm {
         width: 95%;
         margin: 20px 10px;
@@ -167,14 +199,11 @@ form button[type="button"]:hover {
 
     form button {
         width: 100%;
-    }
-
-    /* Responsive Table */
-    #employeesTable th, #employeesTable td {
-        padding: 8px;
         font-size: 14px;
+        padding: 12px 18px;
     }
 
+    /* Table Adjustments */
     #employeesTable td {
         text-align: center;
     }
@@ -182,18 +211,43 @@ form button[type="button"]:hover {
     #employeesTable th {
         font-size: 16px;
     }
+}
 
-    /* Adjust button size for mobile */
+
+@media screen and (max-width: 1024px) {
+    /* Table Styles */
+    #employeesTable {
+        width: 100%;
+    }
+
+    /* Form Styles */
+    .form-pair {
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    .form-group {
+        width: 48%;
+    }
+
     form button {
-        font-size: 14px;
+        width: 100%;
+        font-size: 15px;
         padding: 12px 18px;
     }
 }
 
-/* Tablet and Large Mobile Devices */
-@media screen and (max-width: 1024px) {
+/* Desktop Styles */
+@media screen and (min-width: 1025px) {
+    /* Table Styles */
     #employeesTable {
-        width: 90%;
+        width: 80%;
+        margin: 20px auto;
+    }
+
+    /* Form Styles */
+    #editEmployeeForm {
+        width: 60%;
     }
 
     .form-pair {
@@ -204,7 +258,14 @@ form button[type="button"]:hover {
     .form-group {
         width: 48%;
     }
+
+    form button {
+        font-size: 16px;
+        padding: 12px 20px;
+    }
 }
+
+
 </style>
 </head>
 
