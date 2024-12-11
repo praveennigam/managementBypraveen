@@ -335,7 +335,7 @@
                 alert('Ticket ID is missing!');
                 return;
             }
-            const url = `http://localhost:5000/api/helpdesk/${ticketId}/assign`;
+            const url = `/api/helpdesk/${ticketId}/assign`;
             try {
                 const response = await fetch(url, {
                     method: 'PUT',

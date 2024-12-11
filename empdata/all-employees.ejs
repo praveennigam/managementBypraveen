@@ -350,7 +350,7 @@ form button[type="button"]:hover {
     // Fetch employees and display them in a table
     async function fetchEmployees() {
         try {
-            const response = await fetch('http://localhost:5000/api/emp/employees', {
+            const response = await fetch('/api/emp/employees', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -394,7 +394,7 @@ form button[type="button"]:hover {
     // Edit employee details
     async function editEmployee(id) {
         try {
-            const response = await fetch(`http://localhost:5000/api/emp/employees/${id}`, {
+            const response = await fetch(`/api/emp/employees/${id}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -499,7 +499,7 @@ form button[type="button"]:hover {
         };
 
         try {
-            const response = await fetch(`http://localhost:5000/api/emp/employees/${id}`, {  // Use MongoDB _id here
+            const response = await fetch(`/api/emp/employees/${id}`, {  // Use MongoDB _id here
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -533,7 +533,7 @@ form button[type="button"]:hover {
     async function deleteEmployee(id) {
         if (confirm('Are you sure you want to delete this employee?')) {
             try {
-                const response = await fetch(`http://localhost:5000/api/emp/employees/${id}`, {
+                const response = await fetch(`/api/emp/employees/${id}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${token}`,

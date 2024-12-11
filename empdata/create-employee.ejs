@@ -293,7 +293,7 @@ form button[type="submit"]:hover {
       }
 
       try {
-        const response = await fetch('http://localhost:5000/api/emp/employees', {
+        const response = await fetch('/api/emp/employees', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
