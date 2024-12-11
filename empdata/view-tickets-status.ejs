@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View My Tickets</title>
+  <style>
+    /* General body styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e3d59, #004f6d);
+      color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+
+    /* Page title styles */
+    .page-title {
+      color: #f5f5f5;
+      font-size: 36px;
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    /* Tickets list container */
+    .tickets-list {
+      width: 100%;
+      max-width: 900px;
+      margin-top: 20px;
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1fr;
+      padding: 10px;
+    }
+
+    /* Ticket box styles */
+    .ticket {
+      background: linear-gradient(135deg, #000000, #1e3d59); /* Dark gradient background */
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ticket:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Ticket ID */
+    .ticket-id {
+      font-size: 20px;
+      color: #fbc02d;
+      margin-bottom: 10px;
+    }
+
+    /* Ticket information styles */
+    .ticket-status,
+    .ticket-priority,
+    .assigned-hr {
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #f5f5f5;
+    }
+
+    /* Styling for the notes section */
+    .note-item {
+      background: #1e3d59;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      color: #f5f5f5;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .note-content,
+    .note-posted-by,
+    .note-created-at {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .no-tickets,
+    .no-notes {
+      font-style: italic;
+      text-align: center;
+      color: #f5f5f5;
+    }
+
+    /* Responsive design for tablet and mobile screens */
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 28px;
+      }
+
+      .ticket {
+        padding: 15px;
+      }
+
+      .ticket-id {
+        font-size: 18px;
+      }
+
+      .ticket-status,
+      .ticket-priority,
+      .assigned-hr {
+        font-size: 14px;
+      }
+
+      .tickets-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-title {
+        font-size: 22px;
+      }
+
+      .ticket {
+        padding: 10px;
+      }
+
+      .ticket-id {
+        font-size: 16px;
+      }
+
+      .ticket-status,
+      .ticket-priority,
+      .assigned-hr {
+        font-size: 12px;
+      }
+
+      .note-item {
+        font-size: 12px;
+        padding: 8px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <%- include('partials/navbar') %> 
+  <div style="margin-top: 40px; position: relative; width: 100%; align-items: center;  justify-content: center; display:  flex; flex-direction: column;">
+
+  <h1 class="page-title">Your Tickets</h1>
+  <div id="tickets-list" class="tickets-list"></div>
+  </div>
+  <script>
+    // Function to display the list of tickets
+    function displayTickets(tickets) {
+      const ticketsList = document.getElementById('tickets-list');
+
+      if (tickets.length === 0) {
+        ticketsList.innerHTML = '<p class="no-tickets">No tickets found.</p>';
+        return;
+      }
+
+      tickets.forEach(ticket => {
+        const ticketElement = document.createElement('div');
+        ticketElement.classList.add('ticket');
+
+        ticketElement.innerHTML = `
+          <h3 class="ticket-id">Ticket ID: ${ticket.ticketId}</h3>
+          <p><span class="ticket-status">Status:</span> ${ticket.status}</p>
+          <p><span class="ticket-priority">Priority:</span> ${ticket.priority}</p>
+          <p><span class="assigned-hr">Assigned HR:</span> ${ticket.assignedToHR ? ticket.assignedToHR.name : 'Not Assigned'}</p>
+        `;
+
+        ticketsList.appendChild(ticketElement);
+
+        setTimeout(() => {
+          fetchTicketNotes(ticket.ticketId, ticketElement);
+        }, 1000);
+      });
+    }
+
+    // Function to fetch ticket notes
+    function fetchTicketNotes(ticketId, ticketElement) {
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        return;
+      }
+
+      fetch(`/api/helpdesk/${ticketId}/notes`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch notes');
+        }
+        return response.json();
+      })
+      .then(notes => {
+        if (notes.length > 0) {
+          const notesList = document.createElement('ul');
+          notes.forEach(note => {
+            const noteItem = document.createElement('li');
+            noteItem.classList.add('note-item');
+            noteItem.innerHTML = `
+              <strong class="note-content">Note:</strong> ${note.note}<br>
+              <strong class="note-posted-by">Posted By:</strong> ${note.createdByName}<br>
+              <strong class="note-created-at">Created At:</strong> ${new Date(note.createdAt).toLocaleString()}
+            `;
+            notesList.appendChild(noteItem);
+          });
+          ticketElement.appendChild(notesList);
+        } else {
+          ticketElement.innerHTML += '<p class="no-notes">No notes available for this ticket.</p>';
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
+
+    // Function to fetch the tickets for the logged-in user
+    function fetchTickets() {
+      const userId = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
+
+      if (!userId || !token) {
+        alert('You are not logged in!');
+        return;
+      }
+
+      const employeeId = userId;
+
+      fetch(`/api/helpdesk/tickets/employee/${employeeId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch tickets');
+        }
+        return response.json();
+      })
+      .then(data => {
+        displayTickets(data);
+      })
+      .catch(error => {
+        console.error('Error fetching tickets:', error);
+      });
+    }
+
+    window.onload = () => {
+      fetchTickets();
+    }
+  </script>
+    <%- include('partials/footer') %> 
+
+</body>
+
+</html>

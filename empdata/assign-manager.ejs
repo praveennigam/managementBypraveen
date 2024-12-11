@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assign Manager</title>
+</head>
+
+<body>
+  <h1>Assign Manager to Employee</h1>
+  <form id="assign-manager-form">
+    <label for="manager-id">Manager ID:</label><br>
+    <input type="text" id="manager-id" name="manager-id"><br><br>
+    <button type="submit">Assign Manager</button>
+  </form>
+
+  <button onclick="window.history.back()">Back</button>
+
+  <script>
+    const employeeId = window.location.pathname.split('/').pop();
+
+    document.getElementById('assign-manager-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const formData = new FormData(this);
+
+      fetch(`/api/emp/employees/${employeeId}/assign-manager`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          managerId: formData.get('manager-id')
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert('Manager assigned successfully');
+          window.location.href = '/dashboard';
+        })
+        .catch(error => {
+          console.error('Error assigning manager:', error);
+        });
+    });
+  </script>
+</body>
+
+</html>

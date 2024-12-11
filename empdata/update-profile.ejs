@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Profile</title>
+</head>
+
+<body>
+  <h1>Update Profile</h1>
+  <form id="update-profile-form">
+    <!-- Form fields populated with user's current information -->
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" value="<%= user.name %>" required><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" value="<%= user.email %>" required><br><br>
+
+    <label for="role">Role:</label><br>
+    <input type="text" id="role" name="role" value="<%= user.role %>" required><br><br>
+
+    <label for="department">Department:</label><br>
+    <input type="text" id="department" name="department" value="<%= user.department %>"><br><br>
+
+    <label for="contact">Contact Number:</label><br>
+    <input type="text" id="contact" name="contact" value="<%= user.contactNumber %>"><br><br>
+
+    <label for="gender">Gender:</label><br>
+    <select id="gender" name="gender">
+      <option value="male" <%=user.gender==='male' ? 'selected' : '' %>>Male</option>
+      <option value="female" <%=user.gender==='female' ? 'selected' : '' %>>Female</option>
+      <option value="other" <%=user.gender==='other' ? 'selected' : '' %>>Other</option>
+    </select><br><br>
+
+    <label for="dob">Date of Birth:</label><br>
+    <input type="date" id="dob" name="dob" value="<%= user.dateOfBirth %>"><br><br>
+
+    <label for="salary">Salary:</label><br>
+    <input type="number" id="salary" name="salary" value="<%= user.salary %>"><br><br>
+    <label for="education">Education:</label><br>
+    <input type="text" id="education" name="education" value="<%= user.education %>"><br><br>
+
+    <label for="workExperience">Work Experience:</label><br>
+    <input type="text" id="workExperience" name="workExperience" value="<%= user.workExperience %>"><br><br>
+
+    <label for="skills">Skills:</label><br>
+    <input type="text" id="skills" name="skills" value="<%= user.skills.join(', ') %>"><br><br>
+
+    <label for="certifications">Certifications:</label><br>
+    <input type="text" id="certifications" name="certifications" value="<%= user.certifications.join(', ') %>"><br><br>
+
+    <label for="performanceRating">Performance Rating:</label><br>
+    <input type="text" id="performanceRating" name="performanceRating" value="<%= user.performanceRating %>"><br><br>
+
+    <label for="workLocation">Work Location:</label><br>
+    <input type="text" id="workLocation" name="workLocation" value="<%= user.workLocation %>"><br><br>
+
+    <label for="employmentType">Employment Type:</label><br>
+    <input type="text" id="employmentType" name="employmentType" value="<%= user.employmentType %>"><br><br>
+
+    <label for="managerName">Manager Name:</label><br>
+    <input type="text" id="managerName" name="managerName" value="<%= user.managerName %>"><br><br>
+
+    <label for="emergencyContact">Emergency Contact:</label><br>
+    <input type="text" id="emergencyContact" name="emergencyContact"
+      value="<%= user.emergencyContact ? user.emergencyContact.name : '' %>"><br><br>
+
+    <label for="hireDate">Hire Date:</label><br>
+    <input type="date" id="hireDate" name="hireDate" value="<%= user.hireDate %>"><br><br>
+
+    <label for="employmentStatus">Employment Status:</label><br>
+    <input type="text" id="employmentStatus" name="employmentStatus" value="<%= user.employmentStatus %>"><br><br>
+
+    <label for="approvalStatus">Approval Status:</label><br>
+    <input type="text" id="approvalStatus" name="approvalStatus" value="<%= user.approvalStatus %>"><br><br>
+
+    <label for="lastPromotionDate">Last Promotion Date:</label><br>
+    <input type="date" id="lastPromotionDate" name="lastPromotionDate"
+      value="<%= user.lastPromotionDate ? user.lastPromotionDate : '' %>"><br><br>
+
+    <label for="probationPeriodEnd">Probation Period End:</label><br>
+    <input type="date" id="probationPeriodEnd" name="probationPeriodEnd"
+      value="<%= user.probationPeriodEnd ? user.probationPeriodEnd : '' %>"><br><br>
+
+    <label for="isMarried">Is Married:</label><br>
+    <select id="isMarried" name="isMarried">
+      <option value="true" <%=user.isMarried ? 'selected' : '' %>>Yes</option>
+      <option value="false" <%=!user.isMarried ? 'selected' : '' %>>No</option>
+    </select><br><br>
+
+    <label for="isActive">Is Active:</label><br>
+    <select id="isActive" name="isActive">
+      <option value="true" <%=user.isActive ? 'selected' : '' %>>Yes</option>
+      <option value="false" <%=!user.isActive ? 'selected' : '' %>>No</option>
+    </select><br><br>
+
+    <button type="submit">Update Profile</button>
+  </form>
+
+  <script>
+    // Get the userId and token from localStorage or URL (ensure it's available for submission)
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');  // Assuming token is available in localStorage
+
+    const form = document.getElementById('update-profile-form');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+
+      // Prepare updated profile data to be sent in the request body
+      const updatedData = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        role: formData.get('role'),
+        department: formData.get('department'),
+        contactNumber: formData.get('contact'),
+        gender: formData.get('gender'),
+        dateOfBirth: formData.get('dob'),
+        salary: formData.get('salary'),
+        education: formData.get('education'),
+        workExperience: formData.get('workExperience'),
+        skills: formData.get('skills').split(',').map(skill => skill.trim()),
+        certifications: formData.get('certifications').split(',').map(cert => cert.trim()),
+        performanceRating: formData.get('performanceRating'),
+        workLocation: formData.get('workLocation'),
+        employmentType: formData.get('employmentType'),
+        managerName: formData.get('managerName'),
+        emergencyContact: formData.get('emergencyContact'),
+        hireDate: formData.get('hireDate'),
+        employmentStatus: formData.get('employmentStatus'),
+        approvalStatus: formData.get('approvalStatus'),
+        lastPromotionDate: formData.get('lastPromotionDate'),
+        probationPeriodEnd: formData.get('probationPeriodEnd'),
+        isMarried: formData.get('isMarried') === 'true',
+        isActive: formData.get('isActive') === 'true',
+      };
+
+      // Send the PUT request to update the profile on the server
+      fetch(`/api/emp/employees/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Profile updated successfully!');
+            window.location.href = '/my-profile'; // Redirect to the profile page
+          } else {
+            alert('Error updating profile!');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('There was an error updating your profile.');
+        });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Employee</title>
+</head>
+
+<body>
+  <h1>Update Employee</h1>
+  <form id="update-form">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name"><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br><br>
+
+    <label for="role">Role:</label><br>
+    <input type="text" id="role" name="role"><br><br>
+
+    <label for="department">Department:</label><br>
+    <input type="text" id="department" name="department"><br><br>
+
+    <label for="contact">Contact:</label><br>
+    <input type="text" id="contact" name="contact"><br><br>
+
+    <label for="address">Address:</label><br>
+    <input type="text" id="address" name="address"><br><br>
+
+    <label for="gender">Gender:</label><br>
+    <input type="text" id="gender" name="gender"><br><br>
+
+    <label for="dob">Date of Birth:</label><br>
+    <input type="date" id="dob" name="dob"><br><br>
+
+    <label for="salary">Salary:</label><br>
+    <input type="number" id="salary" name="salary"><br><br>
+
+    <button type="submit">Update</button>
+  </form>
+
+  <button onclick="window.history.back()">Back</button>
+
+  <script>
+    const employeeId = window.location.pathname.split('/').pop();
+
+    fetch(`/api/emp/employees/${employeeId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data._id) {
+          document.getElementById('name').value = data.name;
+          document.getElementById('email').value = data.email;
+          document.getElementById('role').value = data.role;
+          document.getElementById('department').value = data.department;
+          document.getElementById('contact').value = data.contactNumber;
+          document.getElementById('address').value = data.address;
+          document.getElementById('gender').value = data.gender;
+          document.getElementById('dob').value = data.dateOfBirth;
+          document.getElementById('salary').value = data.salary;
+        }
+      });
+
+    document.getElementById('update-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const formData = new FormData(this);
+
+      fetch(`/api/emp/employees/${employeeId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert('Employee updated successfully');
+          window.location.href = '/dashboard';
+        })
+        .catch(error => {
+          console.error('Error updating employee:', error);
+        });
+    });
+  </script>
+</body>
+
+</html>

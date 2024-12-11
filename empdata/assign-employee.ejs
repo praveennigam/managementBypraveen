@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Tickets & Assign HR</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Body Styling */
+        body {
+            background: linear-gradient(135deg, #000000, #1e3d59); /* Dark gradient background */
+            color: #f5f5f5; /* Light-colored text for contrast */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Title Styling */
+        h1 {
+            color: #c5c3c3; /* Light gray text color */
+            font-size: 36px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        /* Form Container */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        /* Search Form Styling */
+        label {
+            font-weight: bold;
+            color: #f5f5f5;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
+            width: 250px;
+            background-color: transparent;
+            color: #7c598f; /* Light-colored text */
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #f5f5f5;
+            font-size: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        button:disabled {
+            background-color: rgba(255, 255, 255, 0.1);
+            cursor: not-allowed;
+        }
+
+        /* Suggestions Box Styling */
+        .suggestions-box {
+            display: none;
+            position: absolute;
+            top: 45px;
+            left: 0;
+            width: 250px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .suggestions-box div {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .suggestions-box div:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* HR Dropdown Styling */
+        select {
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            width: 200px;
+            background-color: transparent;
+            color: #7c598f;
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Tickets Table Styling */
+        #ticketTable {
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 30px;
+            border-collapse: collapse;
+        }
+
+        #ticketTable th,
+        #ticketTable td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #ticketTable th {
+            background-color: #333;
+            color: #f5f5f5;
+        }
+
+        #ticketTable td {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #f5f5f5;
+        }
+
+        #ticketTable input[type="text"] {
+            background-color: transparent;
+            color: #f5f5f5;
+            border: none;
+            width: 100%;
+        }
+
+        #ticketTable select {
+            background-color: transparent;
+            color: #f5f5f5;
+            border: none;
+            width: 100%;
+        }
+
+        /* Actions Column Styling */
+        #ticketTable button {
+            padding: 8px 16px;
+            background-color: rgba(255, 165, 0, 0.2);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #f5f5f5;
+        }
+
+        #ticketTable button:hover {
+            background-color: rgba(255, 165, 0, 0.3);
+        }
+
+        /* Responsive Design for small screens */
+        @media (max-width: 768px) {
+            .form-container {
+                align-items: stretch;
+            }
+
+            input[type="text"],
+            select,
+            button {
+                width: 100%;
+                margin-right: 0;
+            }
+
+            #ticketTable th,
+            #ticketTable td {
+                padding: 10px;
+            }
+
+            #ticketTable {
+                font-size: 14px;
+            }
+
+            #ticketTable input[type="text"],
+            #ticketTable select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('partials/navbar') %> 
+
+   <div style="margin-top: 80px; position: relative; width: 100%; align-items: center;  justify-content: center; display:  flex; flex-direction: column;">
+    <h1>Search Tickets & Assign HR</h1>
+
+    <span class="form-container">
+      <span>  <input type="text" id="employeeName" placeholder="Enter employee name" autocomplete="off">
+        <button id="searchBtn">Search Tickets</button> </span>
+
+        <div id="suggestions" class="suggestions-box"></div>
+    </span>
+
+    <br><br>
+
+    <table id="ticketTable">
+        <thead>
+            <tr>
+                <th>TicketId</th>
+                <th>Issue</th>
+                <th>Status</th>
+                <th>Assigned HR</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+
+   </div>
+   <%- include('partials/footer') %> 
+
+
+    <script>
+        let hrEmployees = [];
+        let employeeSuggestions = [];
+
+        async function loadHREmployees() {
+            try {
+                const response = await fetch('/api/helpdesk/hr/employees');
+                if (!response.ok) throw new Error('Failed to load HR employees');
+                hrEmployees = await response.json();
+            } catch (error) {
+                console.error('Error loading HR employees:', error);
+            }
+        }
+
+        window.onload = loadHREmployees;
+
+        document.getElementById('employeeName').addEventListener('input', async (event) => {
+            const query = event.target.value.trim().toLowerCase();
+            if (!query) {
+                document.getElementById('suggestions').style.display = 'none';
+                return;
+            }
+            try {
+                const response = await fetch(`/api/helpdesk/employees/suggest/${query}`);
+                if (!response.ok) throw new Error('Failed to fetch suggestions');
+                const suggestions = await response.json();
+                employeeSuggestions = suggestions;
+                displaySuggestions(suggestions);
+            } catch (error) {
+                console.error('Error fetching employee suggestions:', error);
+            }
+        });
+
+        function displaySuggestions(suggestions) {
+            const suggestionsBox = document.getElementById('suggestions');
+            suggestionsBox.innerHTML = '';
+            if (suggestions.length > 0) {
+                suggestionsBox.style.display = 'block';
+                suggestions.forEach(suggestion => {
+                    const div = document.createElement('div');
+                    div.textContent = suggestion.name;
+                    div.onclick = () => selectEmployee(suggestion.name);
+                    suggestionsBox.appendChild(div);
+                });
+            } else {
+                suggestionsBox.style.display = 'none';
+            }
+        }
+
+        function selectEmployee(employeeName) {
+            document.getElementById('employeeName').value = employeeName;
+            document.getElementById('suggestions').style.display = 'none';
+        }
+
+        document.getElementById('searchBtn').addEventListener('click', async () => {
+            const employeeName = document.getElementById('employeeName').value;
+            const url = `/api/helpdesk/tickets/${employeeName}`;
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Failed to fetch tickets');
+                const { tickets } = await response.json();
+                populateTicketTable(tickets);
+            } catch (error) {
+                console.error('Error fetching tickets:', error);
+            }
+        });
+
+        function populateTicketTable(tickets) {
+            const tableBody = document.getElementById('ticketTable').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = '';  // Clear existing rows
+            tickets.forEach(ticket => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${ticket.ticketId}</td>
+                    <td>${ticket.issue}</td>
+                    <td>${ticket.status}</td>
+                    <td>
+                        <input type="text" id="assignedHR-${ticket.ticketId}" value="${ticket.assignedToHR ? ticket.assignedToHR.name : 'Not assigned'}" readonly />
+                        <select id="assign-hr-${ticket.ticketId}">
+                            <option value="">Assign HR</option>
+                            ${hrEmployees.map(hr => `<option value="${hr._id}">${hr.name}</option>`).join('')}
+                        </select>
+                    </td>
+                    <td><button onclick="assignHR('${ticket.ticketId}')">Assign HR</button></td>
+                `;
+            });
+        }
+
+        async function assignHR(ticketId) {
+            const hrId = document.getElementById(`assign-hr-${ticketId}`).value;
+            if (!hrId) {
+                alert('Please select an HR');
+                return;
+            }
+            if (!ticketId) {
+                alert('Ticket ID is missing!');
+                return;
+            }
+            const url = `http://localhost:5000/api/helpdesk/${ticketId}/assign`;
+            try {
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: hrId }),
+                });
+                if (response.ok) {
+                    const updatedTicket = await response.json();
+                    const assignedHRInput = document.getElementById(`assignedHR-${ticketId}`);
+                    assignedHRInput.value = updatedTicket.assignedToHR ? updatedTicket.assignedToHR.name : 'Not assigned';
+                    alert('HR assigned successfully');
+                } else {
+                    alert('Failed to assign HR');
+                }
+            } catch (error) {
+                alert('Error assigning HR');
+            }
+        }
+    </script>
+
+</body>
+</html>

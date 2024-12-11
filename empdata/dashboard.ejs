@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+ <style>/* Body Style with a Dark Gradient */
+/* Body Style with Gradient Background */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #000000, #1e3d59); /* Dark gradient background */
+      color: #f5f5f5; /* Light-colored text for contrast */
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 1000px;
+      overflow-y: auto;
+      margin: 0;
+    }
+
+
+/* Welcome Section */
+h2 {
+  font-size: 2.5em;
+  color: #ffffff;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.greeting {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.greeting p {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #fff;
+}
+
+.greeting span {
+  color: #4CAF50;
+  font-size: 1.5em;
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+/* Gradient Buttons */
+.button-container button {
+  background: linear-gradient(45deg,  #1e3d59, #2196F3); /* Gradient background for buttons */
+  color: white;
+  font-size: 1.2em;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Light shadow for depth */
+}
+
+.button-container button:hover {
+  background: linear-gradient(45deg, #45a049,  #1e3d59); /* Slightly darker gradient on hover */
+}
+
+.button-container button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+
+/* Media Query for Mobile Optimization */
+@media (max-width: 768px) {
+  .button-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .greeting {
+    padding: 20px;
+  }
+
+  .button-container button {
+    font-size: 1.1em;
+    width: 100%;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <%- include('partials/navbar') %> 
+
+  <div style="margin-top: 120px; position: relative;" >
+    <div class="container">
+      <h2>Welcome to Your Dashboard</h2>
+  
+      <!-- Greeting section -->
+      <div id="greeting" class="greeting">
+        <p>Hello, <span id="user-name">User</span>!</p>
+        <p>We're glad to have you here. What would you like to do today?</p>
+      </div>
+  
+      <!-- Button container for navigation -->
+      <div class="button-container">
+        <button id="create-employee-btn" onclick="window.location.href='/create-employee'">Create Employee</button>
+        <button id="all-employees-btn" onclick="window.location.href='/all-employees'">All Employees</button>
+        <button id="my-profile-btn" onclick="window.location.href='/my-profile'">My Profile</button>
+        <button id="helpdesk-btn" onclick="window.location.href='/helpdesk'">HelpDesk</button>
+        <button id="login-btn" onclick="window.location.href='/login'">Login</button>
+        <button id="signup-btn" onclick="window.location.href='/signup'">Sign Up</button>
+        <button id="logout-btn" onclick="logout()">Log Out</button>
+      </div>
+    </div>
+  
+  </div>
+  <%- include('partials/footer') %>
+
+  <script>
+    // Fetch and display user data (like name)
+    function fetchUserData() {
+      const userName = localStorage.getItem('userName') || 'User'; // Default to 'User' if not found
+      document.getElementById('user-name').textContent = userName; // Display user's name
+    }
+
+    // Check login status and adjust UI based on user role
+    function checkLoginStatus() {
+    const token = localStorage.getItem('token');
+      const role = localStorage.getItem('role'); 
+
+      fetchUserData();
+
+      if (token) {
+        document.getElementById('login-btn').style.display = 'none';
+        document.getElementById('signup-btn').style.display = 'none';
+        document.getElementById('logout-btn').style.display = 'inline-block';
+        document.getElementById('my-profile-btn').style.display = 'inline-block';
+        document.getElementById('helpdesk-btn').style.display = 'inline-block';
+
+        // Conditionally show buttons based on user role
+        if (role === 'admin' || role === 'hr') {
+          document.getElementById('create-employee-btn').style.display = 'inline-block';
+          document.getElementById('all-employees-btn').style.display = 'inline-block';
+        } else if (role === 'employee' || role === 'manager') {
+          document.getElementById('create-employee-btn').style.display = 'none';
+          document.getElementById('all-employees-btn').style.display = 'none';
+        }
+      } else {
+        // If not logged in, show login and signup buttons
+        document.getElementById('login-btn').style.display = 'inline-block';
+        document.getElementById('signup-btn').style.display = 'inline-block';
+        document.getElementById('logout-btn').style.display = 'none';
+        document.getElementById('create-employee-btn').style.display = 'none';
+        document.getElementById('all-employees-btn').style.display = 'none';
+        document.getElementById('my-profile-btn').style.display = 'none';
+        document.getElementById('helpdesk-btn').style.display = 'none';
+      }
+    }
+
+    // Logout function
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('role');  // Clear the role from localStorage as well
+      localStorage.removeItem('userName');  // Clear the userName as well
+      checkLoginStatus();
+      window.location.href = '/login';
+    }
+
+    // On window load, check login status
+    window.onload = function() {
+      checkLoginStatus();
+    };
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+</head>
+
+<body>
+  <h2 style="text-align: center; margin-top: 50px; padding-top: 50px;">Welcome to the Dashboard</h2>
+
+  <div class="button-container">
+    <button id="create-employee-btn" onclick="window.location.href='/create-employee'" style="display:none;">Create Employee</button>
+    <button id="all-employees-btn" onclick="window.location.href='/all-employees'" style="display:none;">All Employees</button>
+    <button id="my-profile-btn" onclick="window.location.href='/my-profile'" style="display:none;">My Profile</button>
+    <button id="login-btn" onclick="window.location.href='/login'" style="display:none;">Login</button>
+    <button id="signup-btn" onclick="window.location.href='/signup'" style="display:none;">Sign Up</button>
+    <button id="logout-btn" onclick="logout()" style="display:none;">Log Out</button>
+  </div>
+
+  <script>
+    function checkLoginStatus() {
+      const token = localStorage.getItem('token');
+      const role = localStorage.getItem('role');  // Retrieve role from localStorage
+      if (token) {
+        document.getElementById('login-btn').style.display = 'none';
+        document.getElementById('signup-btn').style.display = 'none';
+        document.getElementById('logout-btn').style.display = 'inline-block';
+        document.getElementById('create-employee-btn').style.display = 'inline-block';
+        document.getElementById('all-employees-btn').style.display = 'inline-block';
+        document.getElementById('my-profile-btn').style.display = 'inline-block';
+
+        // Conditionally show the "Create Employee" or other admin-specific buttons
+        if (role === 'admin' || role === 'hr') {
+          document.getElementById('create-employee-btn').style.display = 'inline-block';
+          document.getElementById('all-employees-btn').style.display = 'inline-block';
+        }
+      } else {
+        document.getElementById('login-btn').style.display = 'inline-block';
+        document.getElementById('signup-btn').style.display = 'inline-block';
+        document.getElementById('logout-btn').style.display = 'none';
+        document.getElementById('create-employee-btn').style.display = 'none';
+        document.getElementById('all-employees-btn').style.display = 'none';
+        document.getElementById('my-profile-btn').style.display = 'none';
+      }
+    }
+
+    window.onload = function() {
+      checkLoginStatus();
+    };
+
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('role');  // Clear the role from localStorage as well
+      checkLoginStatus();
+      window.location.href = '/login';
+    }
+  </script>
+</body>
+
+</html> -->

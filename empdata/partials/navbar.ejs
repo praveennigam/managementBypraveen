@@ -1,0 +1,215 @@
+<!-- navbar.ejs -->
+<nav class="navbar">
+  <div class="navbar-container">
+    <!-- Brand Logo -->
+    <a href="/" class="navbar-brand">Thewebseller EMS</a>
+
+    <!-- Navbar Links -->
+    <div class="navbar-links" id="navbarLinks">
+      <a href="/" class="navbar-link">Home</a>
+      <a href="/employees" class="navbar-link">Employees</a>
+      <a href="/about" class="navbar-link">About</a>
+      <a href="/contact" class="navbar-link">Contact</a>
+      <a href="/logout" class="navbar-link">Logout</a>
+    </div>
+
+    <!-- Toggle Button for small/medium screens (Hamburger menu) -->
+    <div class="navbar-toggle" id="navbarToggle">
+      <span class="navbar-toggle-icon"></span>
+      <span class="navbar-toggle-icon"></span>
+      <span class="navbar-toggle-icon"></span>
+    </div>
+
+    <!-- Close Button (X) for small screens -->
+    <div class="navbar-close" id="navbarClose">&times;</div>
+  </div>
+</nav>
+
+<script>
+  // Toggle menu visibility (Hamburger to Close)
+  const toggleButton = document.getElementById('navbarToggle');
+  const navbarLinks = document.getElementById('navbarLinks');
+  const closeButton = document.getElementById('navbarClose');
+
+  toggleButton.addEventListener('click', () => {
+    navbarLinks.classList.toggle('active');
+    closeButton.style.display = navbarLinks.classList.contains('active') ? 'block' : 'none';
+    toggleButton.style.display = navbarLinks.classList.contains('active') ? 'none' : 'flex';
+  });
+
+  // Close the menu when clicking the close (X) button
+  closeButton.addEventListener('click', () => {
+    navbarLinks.classList.remove('active');
+    closeButton.style.display = 'none';
+    toggleButton.style.display = 'flex';
+  });
+</script>
+
+<style>
+  /* General Navbar Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+.navbar {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(135deg, #1e3d59, #3498db);
+  color: #fff;
+  z-index: 1000;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.3s ease-in-out;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #fff;
+  letter-spacing: 1px;
+  transition: color 0.3s ease-in-out;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 30px;
+}
+
+.navbar-link {
+  color: #f0f0f0;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out, transform 0.3s ease;
+}
+
+.navbar-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.navbar-toggle-icon {
+  width: 30px;
+  height: 3px;
+  background-color: #fff;
+  border-radius: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-close {
+  display: none;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Mobile Styles (max-width: 768px) */
+@media (max-width: 768px) {
+  .navbar-links {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    background: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    transform: translateX(-100%); /* Initially hidden */
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .navbar-links.active {
+    transform: translateX(0); /* Slide in when active */
+  }
+
+  .navbar-toggle {
+    display: flex; /* Show hamburger icon */
+  }
+
+  .navbar-close {
+    display: block; /* Show close button when active */
+  }
+
+  .navbar-toggle-icon:nth-child(1) {
+    transform: rotate(0);
+  }
+
+  .navbar-toggle-icon:nth-child(2) {
+    opacity: 1;
+  }
+
+  .navbar-toggle-icon:nth-child(3) {
+    transform: rotate(0);
+  }
+
+  .navbar-links.active + .navbar-toggle .navbar-toggle-icon:nth-child(1) {
+    transform: rotate(45deg);
+    position: relative;
+    top: 8px;
+  }
+
+  .navbar-links.active + .navbar-toggle .navbar-toggle-icon:nth-child(2) {
+    opacity: 0;
+  }
+
+  .navbar-links.active + .navbar-toggle .navbar-toggle-icon:nth-child(3) {
+    transform: rotate(-45deg);
+    position: relative;
+    top: -8px;
+  }
+}
+
+/* Medium devices (768px to 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .navbar-links {
+    display: flex;
+    gap: 15px;
+  }
+
+  .navbar-toggle {
+    display: flex;
+  }
+
+  .navbar-close {
+    display: none; /* Hide close button on medium screens */
+  }
+}
+
+/* Desktop Styles (min-width: 1025px) */
+@media (min-width: 1025px) {
+  .navbar-links {
+    display: flex;
+    gap: 30px;
+  }
+
+  .navbar-toggle {
+    display: none;
+  }
+
+  .navbar-close {
+    display: none;
+  }
+}
+
+</style>

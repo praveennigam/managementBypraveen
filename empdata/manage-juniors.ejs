@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Juniors</title>
+</head>
+
+<body>
+  <h1>Manage Juniors</h1>
+
+  <div id="junior-list">
+    <h2>List of Employees Managed by You</h2>
+    <ul id="junior-list-items"></ul>
+  </div>
+
+  <button onclick="window.history.back()">Back</button>
+
+  <script>
+    const managerId = localStorage.getItem('userId');  // Assuming manager's user ID is stored in localStorage
+
+    fetch(`/api/emp/employees/manager/${managerId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const juniorList = document.getElementById('junior-list-items');
+        data.forEach(employee => {
+          const listItem = document.createElement('li');
+          listItem.innerHTML = `
+          ${employee.name} - ${employee.role}
+          <button onclick="window.location.href='/update-employee/${employee._id}'">Update</button>
+          <button onclick="deleteEmployee('${employee._id}')">Delete</button>
+        `;
+          juniorList.appendChild(listItem);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching juniors:', error);
+      });
+
+    function deleteEmployee(employeeId) {
+      fetch(`/api/emp/employees/${employeeId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert('Junior employee deleted successfully');
+          window.location.reload();
+        })
+        .catch(error => {
+          console.error('Error deleting junior employee:', error);
+        });
+    }
+  </script>
+</body>
+
+</html>

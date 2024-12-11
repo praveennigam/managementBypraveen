@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Tickets</title>
+
+  <style>/* Body Style with transparent background */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #000000, #1e3d59); /* Dark gradient background */
+      color: #f5f5f5; /* Light-colored text for contrast */
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      overflow-y: auto;
+      margin: 0;
+    }
+    
+    /* Title Styling */
+    h1 {
+      color: #c5c3c3;  /* Light gray text color */
+      margin-top: 30px;
+      font-size: 36px;
+      text-align: center;
+    }
+    
+    /* Styling for the inline filter and search section */
+    .search-filter-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 20px; /* Space between the search and filter fields */
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 1000px;
+      padding: 6px;
+      background-color: rgba(255, 255, 255, 0.2); /* Transparent background */
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    }
+    
+    /* Styling for the individual search and filter elements */
+    .search-filter-container > div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    label {
+      font-weight: bold;
+      color: #f5f5f5; /* Light-colored text for labels */
+      font-size: 14px;
+    }
+    
+    input[type="text"], select {
+      padding: 10px;
+      font-size: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
+      width: 200px;
+      background-color: transparent; /* Transparent background */
+      color: #7c598f; /* Light-colored text */
+      box-sizing: border-box;
+    }
+    
+
+    .statusselect{
+      padding: 8px;
+      font-size: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
+      width: 100px;
+      background-color: transparent; /* Transparent background */
+      color: #211010; /* Light-colored text */
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 8px 12px;
+      max-width: 100px;
+      margin: 10px;
+      background-color: rgba(255, 255, 255, 0.2); /* Transparent background */
+      color: #f5f5f5; /* Light text color */
+      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+      background-color: rgba(255, 255, 255, 0.3); /* Hover effect */
+    }
+    
+    button:disabled {
+      background-color: rgba(255, 255, 255, 0.1); /* Disabled state */
+      cursor: not-allowed;
+    }
+    
+    /* Notes section */
+    .note {
+      background-color: rgba(255, 235, 59, 0.2); /* Transparent yellow */
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #f5f5f5; /* Light-colored text */
+      border-left: 5px solid #fbc02d; /* Yellow left border */
+    }
+    
+    .note.success {
+      background-color: rgba(72, 182, 92, 0.2); /* Transparent green */
+      border-left: 5px solid #28a745; /* Green left border */
+    }
+    
+    .note.error {
+      background-color: rgba(248, 215, 218, 0.2); /* Transparent red */
+      border-left: 5px solid #dc3545; /* Red left border */
+    }
+    
+    .note.warning {
+      background-color: rgba(255, 243, 205, 0.2); /* Transparent warning */
+      border-left: 5px solid #ffc107; /* Yellow left border */
+    }
+    
+    .ticket p {
+      margin: 8px 0;
+      font-size: 14px;
+      color: #f5f5f5; /* Light text color */
+    }
+    
+    /* Buttons inside tickets */
+    .ticket button {
+      padding: 8px 12px;
+      background-color: rgba(255, 165, 0, 0.2); /* Transparent orange */
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-right: 10px;
+    }
+    
+    .ticket button:hover {
+      background-color: rgba(255, 165, 0, 0.3); /* Hover effect */
+    }
+    
+    /* Ticket Details Styling */
+    .ticket-details {
+      margin-top: 20px;
+      background-color: rgba(249, 249, 249, 0.2); /* Transparent background for details */
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      display: none;
+    }
+    
+    .ticket-details input,
+    .ticket-details textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
+      background-color: rgba(255, 255, 255, 0.3); /* Transparent background */
+      color: #f5f5f5; /* Light-colored text */
+    }
+
+    .ticket-details select{
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
+      background-color: rgba(255, 255, 255, 0.3); /* Transparent background */
+      color: #625b5b; /* Light-colored text */
+    }
+
+    
+    .ticket-details textarea {
+      width: 97%;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
+      background-color: rgba(255, 255, 255, 0.3); /* Transparent background */
+      color: #f5f5f5; /* Light-colored text */
+    }
+   
+      textarea {
+      height: 100px;
+      width: 80%;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.6); /* Light border */
+      background-color: rgba(255, 255, 255, 0.3); /* Transparent background */
+      color: #f5f5f5; /* Light-colored text */
+    }
+    
+    /* Ticket List Styling */
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    li {
+      padding: 8px;
+      margin-bottom: 8px;
+      background-color: rgba(241, 241, 241, 0.3); /* Transparent note background */
+      border-radius: 4px;
+      color: #f5f5f5; /* Light-colored text */
+    }
+    /* Container for Ticket List */
+#ticket-list {
+  width: 70%;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Individual Ticket Styling */
+.ticket {
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 15px 0;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* d1 and d2 are the two sections of the ticket */
+.d1 {
+  width: 40%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.d2 {
+  width: 50%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: width 0.3s ease; /* Smooth transition for width */
+}
+
+/* Styling for the Edit button */
+
+/* Initially hide ticket details */
+.ticket-details {
+  display: none;
+  width: 100%;
+  padding: 15px;
+  margin-top: 10px;
+  background-color: rgba(249, 249, 249, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for input fields inside ticket details */
+.ticket-details input,
+.ticket-details select{
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #544b4b;
+}
+
+/* Expanded width for .d2 when editing */
+.d2.expanded {
+  width: 100%;
+  flex-direction: row;
+}
+
+/* Expand ticket details when toggled */
+.ticket-details.show {
+  display: block;
+}
+
+    </style>
+  <script src="/socket.io/socket.io.js"></script>
+  </head>
+
+<body>
+  <%- include('partials/navbar') %> 
+  <div style="margin-top: 80px; position: relative; width: 100%; align-items: center;  justify-content: center; display:  flex; flex-direction: column;">
+
+  <h1>All Tickets</h1>
+
+  <!-- Search by Employee Name -->
+   
+  <div>
+    <label for="search-name">Search by Employee Name:</label>
+    <input type="text" id="search-name" placeholder="Enter name to search" oninput="filterTicketsByName()">
+  </div>
+
+  <!-- Filter by HR Assigned -->
+  <div>
+    <label for="filter-hr">Filter by HR Assigned:</label>
+    <select id="filter-hr">
+      <option value="">All</option>
+      <!-- HR names will be populated here -->
+    </select>
+    <button onclick="applyHRFilter()">Apply Filter</button>
+  </div>
+
+  <!-- Container for ticket list -->
+  <div id="ticket-list"></div>
+</div>
+
+<%- include('partials/footer') %> 
+
+
+<script>
+    // Initialize Socket.IO connection
+    const socket = io();
+
+    // Store HR data for filtering
+    let hrEmployees = [];
+
+    // Function to check if the current user is an admin
+    function isAdmin() {
+      const role = localStorage.getItem('role');
+      return role === 'admin';  // Check if the role in localStorage is 'admin'
+    }
+
+    // Function to filter tickets by employee name
+    function filterTicketsByName() {
+      const searchValue = document.getElementById('search-name').value.toLowerCase();
+      const tickets = document.querySelectorAll('.ticket');
+      tickets.forEach(ticket => {
+        const employeeName = ticket.querySelector('.employee-name').textContent.toLowerCase();
+        ticket.style.display = employeeName.includes(searchValue) ? '' : 'none';
+      });
+    }
+
+    // Function to filter tickets by HR assigned
+    function applyHRFilter() {
+      const selectedHR = document.getElementById('filter-hr').value;
+      const tickets = document.querySelectorAll('.ticket');
+      tickets.forEach(ticket => {
+        const assignedHR = ticket.querySelector('.assigned-hr').dataset.hrId;
+        if (selectedHR) {
+          ticket.style.display = assignedHR === selectedHR ? '' : 'none';
+        } else {
+          ticket.style.display = ''; 
+        }
+      });
+    }
+
+    // Fetch and render all tickets
+    async function loadAllTickets() {
+  try {
+    const response = await fetch('/api/helpdesk');
+    if (!response.ok) {
+      console.error('Failed to load tickets:', response.statusText);
+      throw new Error('Failed to load tickets');
+    }
+
+    const tickets = await response.json();
+    const ticketList = document.getElementById('ticket-list');
+
+    ticketList.innerHTML = tickets.map(ticket => {
+      // Separate out description and issue if necessary
+      let issueDescription = ticket.description || '';
+      let issue = ticket.issue || 'No issue provided';
+
+      // Example of how to handle a description that might contain both the issue and description
+      let description = '';
+      if (issueDescription) {
+        // If the description contains "Issue Type: <type>", split and extract it
+        const parts = issueDescription.split('Description:');
+        if (parts.length > 1) {
+          description = parts[1].trim();
+        } else {
+          description = issueDescription; // If no "Description:", display as is
+        }
+      }
+
+      return `
+        <div class="ticket">
+          <div class= "d1">
+            
+          <p><strong>Ticket ID:</strong> ${ticket.ticketId}</p>
+          
+          <!-- Display description separately -->
+          <p><strong>Description:</strong> ${description || 'No description provided'}</p>
+          
+          <!-- Display issue -->
+          <p><strong>Issue:</strong> ${issue}</p>
+
+          <p><strong>Employee Name:</strong> <span class="employee-name">${ticket.employeeId ? ticket.employeeId.name : 'N/A'}</span></p>
+          <p><strong>Assigned HR:</strong> 
+            <span class="assigned-hr" data-hr-id="${ticket.assignedToHR ? ticket.assignedToHR._id : ''}">
+              ${ticket.assignedToHR ? ticket.assignedToHR.name : 'Not assigned'}
+            </span>
+          </p>
+          <p><strong>Status:</strong> 
+            <select class="statusselect" id="status-${ticket.ticketId}" ${isAdmin() ? '' : 'disabled'}>
+              <option value="open" ${ticket.status === 'open' ? 'selected' : ''}>Open</option>
+              <option value="in-progress" ${ticket.status === 'in-progress' ? 'selected' : ''}>In Progress</option>
+              <option value="closed" ${ticket.status === 'closed' ? 'selected' : ''}>Closed</option>
+            </select>
+          </p>
+            <span>  
+                          <button onclick="saveStatus('${ticket.ticketId}')">Save Status</button>
+
+                <button onclick="toggleTicketDetails('${ticket.ticketId}')">Edit</button>
+          <button onclick="deleteTicket('${ticket.ticketId}')">Delete</button>
+         </span>
+
+          </div>
+          <div class="d2">
+          <div id="ticket-details-${ticket.ticketId}" class="ticket-details" style="display: none; background:transparent;">
+            <p><strong>Issue:</strong> 
+              <input type="text" id="issue-${ticket.ticketId}" value="${ticket.issue}" ${isAdmin() ? '' : 'disabled'} />
+            </p>
+            <p><strong>Priority:</strong>
+              <input type="text" id="priority-${ticket.ticketId}" value="${ticket.priority}" ${isAdmin() ? '' : 'disabled'} />
+            </p>
+            <p><strong>Assigned HR:</strong> 
+              <input type="text" id="assignedHR-${ticket.ticketId}" value="${ticket.assignedToHR ? ticket.assignedToHR.name : 'Not assigned'}" disabled />
+            </p>
+
+            <div>
+              <label for="assign-hr-${ticket.ticketId}">Assign HR:</label>
+              <select id="assign-hr-${ticket.ticketId}" ${isAdmin() ? '' : 'disabled'}>
+                <option value="">Select HR</option>
+              </select>
+              <button onclick="assignHR('${ticket.ticketId}')">Assign HR</button>
+            </div>
+
+            
+              <strong>Notes:</strong>
+              <ul id="notes-list-${ticket.ticketId}">
+                ${ticket.notes.map(note => `
+                  <li>
+                    ${note.note}  <!-- Display the content of the note -->
+                    <i>(${new Date(note.createdAt).toLocaleString()})</i><br>  <!-- Format and display the timestamp -->
+                    <strong>Posted by:</strong> ${note.createdByName}  <!-- Display the name of the employee who posted the note -->
+                  </li>
+                `).join('')}
+              </ul>
+
+              <textarea class="rrre"  id="new-note-${ticket.ticketId}" ${isAdmin() ? '' : 'disabled'}></textarea>
+              <button onclick="addNote('${ticket.ticketId}')">Add Note</button>
+            </div>
+          </div>
+        </div>  
+        </div>
+      `;
+    }).join('');
+
+    await loadHREmployees();
+  } catch (error) {
+    console.error('Error loading tickets:', error);
+    document.getElementById('ticket-list').innerHTML = '<p>Error loading tickets. Please try again later.</p>';
+  }
+}
+
+    // Fetch HR employees to populate the dropdown
+    async function loadHREmployees() {
+      try {
+        const response = await fetch('/api/helpdesk/hr/employees');
+        if (!response.ok) {
+          console.error('Failed to fetch HR employees:', response.statusText);
+          throw new Error('Failed to load HR employees');
+        }
+
+        hrEmployees = await response.json();
+        const hrSelect = document.getElementById('filter-hr');
+        hrSelect.innerHTML = '<option value="">ALL</option>';
+
+        hrEmployees.forEach(hr => {
+          const option = document.createElement('option');
+          option.value = hr._id;
+          option.textContent = hr.name;
+          hrSelect.appendChild(option);
+        });
+
+        document.querySelectorAll('.ticket-details').forEach(details => {
+          const select = details.querySelector('select[id^="assign-hr-"]');
+          if (select) {
+            hrEmployees.forEach(hr => {
+              const option = document.createElement('option');
+              option.value = hr._id;
+              option.textContent = hr.name;
+              select.appendChild(option);
+            });
+          }
+        });
+      } catch (error) {
+        console.error('Error loading HR employees:', error);
+      }
+    }
+
+    // Toggle visibility and editable state of ticket details
+    function toggleTicketDetails(ticketId) {
+      const details = document.getElementById(`ticket-details-${ticketId}`);
+      const statusSelect = document.getElementById(`status-${ticketId}`);
+      const issueInput = document.getElementById(`issue-${ticketId}`);
+      const priorityInput = document.getElementById(`priority-${ticketId}`);
+      const assignedHRInput = document.getElementById(`assignedHR-${ticketId}`);
+      const assignHRSelect = document.getElementById(`assign-hr-${ticketId}`);
+      
+      const isEditing = details.style.display === 'block';
+      details.style.display = isEditing ? 'none' : 'block';
+
+      issueInput.disabled = isEditing;
+      priorityInput.disabled = isEditing;
+      assignedHRInput.disabled = isEditing;
+      assignHRSelect.disabled = isEditing;
+      statusSelect.disabled = isEditing;
+    }
+
+    // Assign HR to the ticket
+    async function assignHR(ticketId) {
+      const hrId = document.getElementById(`assign-hr-${ticketId}`).value;
+      if (!hrId) return alert('Please select an HR');
+
+      try {
+        const response = await fetch(`/api/helpdesk/${ticketId}/assign`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: hrId })
+        });
+
+        if (response.ok) {
+          const updatedTicket = await response.json();
+          alert('HR assigned successfully');
+          const assignedHRInput = document.getElementById(`assignedHR-${ticketId}`);
+          assignedHRInput.value = updatedTicket.assignedToHR ? updatedTicket.assignedToHR.name : 'Not assigned';
+
+          socket.emit('ticketUpdate', { ticketId, assignedToHR: hrId });
+        } else {
+          alert('Failed to assign HR');
+        }
+      } catch (error) {
+        console.error('Error assigning HR:', error);
+        alert('Error assigning HR');
+      }
+    }
+
+    // Save updated status
+    async function saveStatus(ticketId) {
+      const newStatus = document.getElementById(`status-${ticketId}`).value;
+
+      try {
+        const response = await fetch(`/api/helpdesk/${ticketId}/status`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus })
+        });
+
+        if (response.ok) {
+          alert('Status updated successfully');
+          socket.emit('ticketUpdate', { ticketId, status: newStatus });
+        } else {
+          alert('Failed to update status');
+        }
+      } catch (error) {
+        console.error('Error updating status:', error);
+        alert('Error updating status');
+      }
+    }
+
+    // Add note to the ticket
+    async function addNote(ticketId) {
+      const noteText = document.getElementById(`new-note-${ticketId}`).value;
+      if (!noteText) return alert('Please enter a note');
+
+      const userId = localStorage.getItem('userId');
+      if (!userId) return alert('User not logged in');
+
+      try {
+        const response = await fetch(`/api/helpdesk/${ticketId}/note`, { 
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ note: noteText, userId: userId })
+        });
+
+        if (response.ok) {
+          alert('Note added successfully');
+          loadAllTickets(); // Reload tickets to show updated note
+        } else {
+          alert('Failed to add note');
+        }
+      } catch (error) {
+        console.error('Error adding note:', error);
+        alert('Error adding note');
+      }
+    }
+
+    // Delete ticket
+    async function deleteTicket(ticketId) {
+      if (!confirm("Are you sure you want to delete this ticket?")) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/helpdesk/${ticketId}`, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (response.ok) {
+          alert('Ticket deleted successfully');
+          loadAllTickets(); // Reload the ticket list to reflect the deletion
+        } else {
+          alert('Failed to delete ticket');
+        }
+      } catch (error) {
+        console.error('Error deleting ticket:', error);
+        alert('Error deleting ticket');
+      }
+    }
+
+    // Initialize page by loading all tickets
+    window.onload = loadAllTickets;
+  </script>
+</body>
+
+</html>

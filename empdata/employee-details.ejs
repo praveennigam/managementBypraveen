@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Details</title>
+</head>
+
+<body>
+  <h1>Employee Details</h1>
+  <div id="employee-details">
+    <p><strong>Name:</strong> <span id="name"></span></p>
+    <p><strong>Email:</strong> <span id="email"></span></p>
+    <p><strong>Role:</strong> <span id="role"></span></p>
+    <p><strong>Department:</strong> <span id="department"></span></p>
+    <p><strong>Contact:</strong> <span id="contact"></span></p>
+    <p><strong>Address:</strong> <span id="address"></span></p>
+    <p><strong>Gender:</strong> <span id="gender"></span></p>
+    <p><strong>Date of Birth:</strong> <span id="dob"></span></p>
+    <p><strong>Salary:</strong> <span id="salary"></span></p>
+    <button onclick="window.history.back()">Back</button>
+  </div>
+
+  <script>
+    const employeeId = window.location.pathname.split('/').pop();
+
+    fetch(`/api/emp/employees/${employeeId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data._id) {
+          document.getElementById('name').innerText = data.name;
+          document.getElementById('email').innerText = data.email;
+          document.getElementById('role').innerText = data.role;
+          document.getElementById('department').innerText = data.department;
+          document.getElementById('contact').innerText = data.contactNumber;
+          document.getElementById('address').innerText = data.address;
+          document.getElementById('gender').innerText = data.gender;
+          document.getElementById('dob').innerText = data.dateOfBirth;
+          document.getElementById('salary').innerText = data.salary;
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching employee details:', error);
+      });
+  </script>
+</body>
+
+</html>

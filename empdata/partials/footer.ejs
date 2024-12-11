@@ -1,0 +1,50 @@
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <p>© 2024 Thewebseller. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+
+  /* Content section (optional) */
+  .content {
+    flex-grow: 1; /* Ensures content takes up remaining space */
+    padding: 20px;
+  }
+
+  /* Footer Styles */
+  .footer {
+    position: fixed;
+    bottom: 0;
+    background: linear-gradient(135deg, #000000, #1e3d59); /* Dark gradient background */
+
+    left: 0;
+    width: 100%;
+    background-color: inherit; /* Inherit background color from parent (body or container) */
+    color: inherit; /* Inherit text color */
+    padding: 12px 0;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .footer-container p {
+    margin: 0;
+  }
+
+  /* Make footer responsive */
+  @media (max-width: 768px) {
+    .footer {
+      font-size: 12px; /* Adjust font size on smaller screens */
+      padding: 10px 0; /* Adjust padding for smaller screens */
+    }
+  }
+
+  /* For very small screens like mobile */
+  @media (max-width: 480px) {
+    .footer {
+      font-size: 12px; /* Slightly smaller font on extra small screens */
+      padding: 8px 0; /* Even smaller padding on extra small screens */
+    }
+  }
+</style>

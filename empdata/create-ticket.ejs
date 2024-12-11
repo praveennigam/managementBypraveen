@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create New Ticket</title>
+  <style>
+    /* General body styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e3d59, #004f6d);
+      color: #f5f5f5;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+   
+    }
+
+    /* Header style */
+    h1 {
+      color: #f5f5f5;
+      margin-top: 30px;
+      font-size: 36px;
+      text-align: center;
+    }
+
+    /* Introductory text style */
+    .intro-text {
+      color: #f5f5f5;
+      font-size: 18px;
+      text-align: center;
+      margin-bottom: 20px;
+      max-width: 600px;
+      line-height: 1.5;
+    }
+
+    /* Form container style */
+    #create-ticket-form {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 800px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      backdrop-filter: blur(8px);
+      margin: 0 auto;
+    }
+
+    /* Label styles */
+    label {
+      color: #f5f5f5;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    /* Input and select box styles */
+    select,
+    textarea,
+    button {
+      padding: 10px 16px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      background-color: transparent;
+      color: #f5f5f5;
+      width: 100%;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    /* Select specific styles */
+    select {
+      background-color: transparent;
+      color: #5c4e4e;
+    }
+
+    /* Textarea specific style */
+    textarea {
+      height: 100px;
+      resize: vertical;
+    }
+
+    /* Focus state styles */
+    select:focus,
+    textarea:focus,
+    button:focus {
+      border-color: #fbc02d;
+      outline: none;
+    }
+
+    /* Button style */
+    button {
+      background-color: #00796b;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background-color: #004d40;
+    }
+
+    /* Responsive design for tablet and mobile screens */
+    @media (max-width: 768px) {
+      .intro-text {
+        font-size: 16px;
+        margin-bottom: 15px;
+      }
+
+      #create-ticket-form {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      select, textarea, button {
+        font-size: 16px;
+        padding: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 24px;
+      }
+
+      .intro-text {
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      #create-ticket-form {
+        padding: 15px;
+        width: 100%;
+      }
+
+      button {
+        font-size: 14px;
+      }
+
+      select, textarea {
+        font-size: 14px;
+      }
+    }
+
+    /* Large screens and wider devices */
+    @media (min-width: 1024px) {
+      h1 {
+        font-size: 42px;
+      }
+
+      .intro-text {
+        font-size: 20px;
+      }
+
+      #create-ticket-form {
+        padding: 40px;
+      }
+
+      select, textarea, button {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <%- include('partials/navbar') %> 
+
+  <div style="margin-top: 60px; position: relative;">
+    <h1 style="margin-left: 13%;">Create a New Ticket</h1>
+
+    <!-- Introductory Text explaining the page -->
+    <div class="intro-text">
+      <p style="margin-left: 10%;">If you're facing any issues, whether it's related to payroll, software, hardware, network, or any other matter, you can create a support ticket here. Our team will review your issue and get back to you as soon as possible.</p>
+    </div>
+
+    <!-- Form for Creating a Ticket -->
+    <form id="create-ticket-form">
+      <label for="issue">Issue Type:</label>
+      <select id="issue" name="issue" required>
+        <option value="payroll">Payroll</option>
+        <option value="software">Software Issue</option>
+        <option value="hardware">Hardware Issue</option>
+        <option value="network">Network Issue</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" placeholder="Please describe the issue you're facing..." required></textarea>
+
+      <label for="priority">Priority:</label>
+      <select id="priority" name="priority" required>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+
+      <button type="submit">Create Ticket</button>
+    </form>
+  </div>
+  <%- include('partials/footer') %> 
+
+  <script>
+    document.getElementById('create-ticket-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const issue = document.getElementById('issue').value;
+      const description = document.getElementById('description').value;
+      const priority = document.getElementById('priority').value;
+      const employeeId = localStorage.getItem('userId'); 
+
+      // Add the issue type to the description for context
+      const issueText = `Issue Type: ${issue}\n\nDescription: ${description}`;
+
+      const response = await fetch('/api/helpdesk/myticket', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          employeeId,
+          issue,
+          description: issueText,  // Send the issue type with the description
+          priority
+        })
+      });
+
+      const newTicket = await response.json();
+      alert('Ticket Created: ' + newTicket.ticketId);
+      window.location.href = '/helpdesk';
+    });
+  </script>
+</body>
+
+</html>

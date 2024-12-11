@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Signup</title>
+<style>
+  body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1e3d59, #004f6d);
+  color: #f5f5f5;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+h2 {
+  color: #c5c3c3;
+  margin-top: 30px;
+  font-size: 36px;
+  text-align: center;
+}
+
+#signupForm {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 700px; /* Decrease the max-width to make the form more compact */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  backdrop-filter: blur(8px);
+  margin: 0 auto;
+}
+
+#signupForm input,
+#signupForm button,
+#signupForm select {
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background-color: transparent;
+  color: #f5f5f5;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+/* Focus state for inputs */
+#signupForm input[type="text"]:focus,
+#signupForm input[type="email"]:focus,
+#signupForm input[type="password"]:focus,
+#signupForm select:focus {
+  border-color: #fbc02d;
+  outline: none;
+}
+
+/* Colorful placeholder text */
+#signupForm input::placeholder,
+#signupForm select::placeholder {
+  background: linear-gradient(to left, #ff416c, #ff4b2b); /* Gradient placeholder */
+  -webkit-background-clip: text;
+  color: transparent;
+  opacity: 1;
+  transition: color 0.3s ease;
+}
+
+/* Change placeholder color on focus */
+#signupForm input:focus::placeholder,
+#signupForm select:focus::placeholder {
+  color: #fbc02d; /* Yellow placeholder text when focused */
+}
+
+button {
+  background-color: #00796b;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+button:hover {
+  background-color: #004d40;
+}
+
+.inline {
+  grid-column: span 2;
+}
+
+.inline-half {
+  grid-column: span 1;
+}
+
+#login-link {
+  color: #fbc02d;
+  text-decoration: none;
+  font-size: 14px;
+  margin-top: 20px;
+  display: block;
+  text-align: center;
+}
+
+#login-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  #signupForm {
+    grid-template-columns: 1fr; /* Change grid layout to a single column for smaller screens */
+    padding: 20px; /* Add some padding */
+    width: 90%; /* Allow the form to take up most of the screen width */
+    max-width: 600px; /* Adjust max width for smaller screens */
+  }
+
+  #signupForm input,
+  #signupForm select,
+  button {
+    font-size: 16px; /* Adjust input font size on small screens */
+    padding: 12px; /* Increase padding for better touch targets */
+  }
+
+  h2 {
+    font-size: 28px; /* Adjust heading font size for small screens */
+  }
+}
+
+@media (max-width: 480px) {
+  #signupForm {
+    width: 100%; /* Make form take up the full width on the smallest screens */
+    max-width: 100%;
+  }
+
+  #signupForm input,
+  #signupForm select,
+  button {
+    font-size: 14px; /* Adjust font size for very small screens */
+    padding: 12px; /* Larger padding for touch screens */
+  }
+}
+
+</style>
+</head>
+
+<body>
+  <div style="margin-top: 80px; position: relative; width: 100%; align-items: center;  justify-content: center; display:  flex; flex-direction: column;">
+
+  <h2>Signup</h2>
+  <form id="signupForm">
+    <!-- Basic user information -->
+    <input type="text" id="name" placeholder="Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+
+    <!-- Role selection -->
+    <select id="role" required>
+      <option value="employee">Employee</option>
+      <option value="hr">HR</option>
+      <option value="manager">Manager</option>
+      <option value="admin">Admin</option>
+    </select>
+
+    <!-- Location and Address -->
+    <input type="text" id="workLocation" placeholder="Work Location" required>
+    <input type="text" id="address" placeholder="Address" required>
+
+    <!-- Emergency Contact -->
+    <input type="text" id="emergencyContactName" placeholder="Emergency Contact Name" required>
+    <input type="text" id="emergencyContactPhone" placeholder="Emergency Contact Phone" required>
+
+    <!-- Date of Birth -->
+    <input type="date" id="dateOfBirth" placeholder="Date of Birth" required>
+
+    <!-- Submit Button -->
+    <button type="submit" style="background: linear-gradient(135deg, #1e3d59, #004f6d);">Signup</button>
+  </form>
+
+  <a href="/login" id="login-link">Already have an account? Login</a>
+
+  </div>
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+        role: document.getElementById('role').value,
+        workLocation: document.getElementById('workLocation').value,
+        address: document.getElementById('address').value,
+        emergencyContact: {
+          name: document.getElementById('emergencyContactName').value,
+          phone: document.getElementById('emergencyContactPhone').value,
+        },
+        dateOfBirth: document.getElementById('dateOfBirth').value,
+      };
+
+      try {
+        const response = await fetch('http://localhost:5000/api/emp/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.status === 201) {
+          localStorage.setItem('token', result.token);
+          localStorage.setItem('userId', result.userId);
+          localStorage.setItem('role', result.employee.role);
+          localStorage.setItem('userName', result.employee.name);
+
+          alert('Signup successful! Redirecting to dashboard...');
+          setTimeout(() => {
+            window.location.href = '/dashboard';
+          }, 2000);
+        } else {
+          alert(result.message || 'Something went wrong during signup.');
+        }
+      } catch (error) {
+        alert('Error during signup: ' + error.message);
+      }
+    });
+  </script>
+    <%- include('partials/navbar') %> 
+
+</body>
+
+</html>
