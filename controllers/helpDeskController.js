@@ -293,6 +293,21 @@ exports.getTicketsByStatus = async (req, res) => {
 };
 
 
+
+//manager ka name 
+exports.getAllManagerEmployees = async (req, res) => {
+  try {
+    // Fetch all employees with the role 'manager'
+    const managerEmployees = await Employee.find({ role: 'manager' });  
+    res.status(200).json(managerEmployees);
+  } catch (error) {
+    console.error('Error fetching manager employees:', error); 
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+
 // for get hr name 
 exports.getAllHREmployees = async (req, res) => {
   try {

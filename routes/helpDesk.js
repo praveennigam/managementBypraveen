@@ -5,8 +5,16 @@ const helpDeskController = require('../controllers/helpDeskController');
 // Create a new help desk ticket
 router.post('/myticket', helpDeskController.createTicket);
 
-//get hr name 
+
+
+
+
+//get hr & manager name 
 router.get('/hr/employees', helpDeskController.getAllHREmployees);
+router.get('/manager/employees', helpDeskController.getAllManagerEmployees);
+
+
+
 
 // Get all help desk tickets
 router.get('/', helpDeskController.getAllTickets);
