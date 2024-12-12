@@ -158,31 +158,35 @@
   <script>
     // Function to display the list of tickets
     function displayTickets(tickets) {
-      const ticketsList = document.getElementById('tickets-list');
+  const ticketsList = document.getElementById('tickets-list');
 
-      if (tickets.length === 0) {
-        ticketsList.innerHTML = '<p class="no-tickets">No tickets found.</p>';
-        return;
-      }
+  if (tickets.length === 0) {
+    ticketsList.innerHTML = '<p class="no-tickets">No tickets found.</p>';
+    return;
+  }
 
-      tickets.forEach(ticket => {
-        const ticketElement = document.createElement('div');
-        ticketElement.classList.add('ticket');
+  // Sort tickets by the creation date (latest ticket first)
+  tickets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-        ticketElement.innerHTML = `
-          <h3 class="ticket-id">Ticket ID: ${ticket.ticketId}</h3>
-          <p><span class="ticket-status">Status:</span> ${ticket.status}</p>
-          <p><span class="ticket-priority">Priority:</span> ${ticket.priority}</p>
-          <p><span class="assigned-hr">Assigned HR:</span> ${ticket.assignedToHR ? ticket.assignedToHR.name : 'Not Assigned'}</p>
-        `;
+  tickets.forEach(ticket => {
+    const ticketElement = document.createElement('div');
+    ticketElement.classList.add('ticket');
 
-        ticketsList.appendChild(ticketElement);
+    ticketElement.innerHTML = `
+      <h3 class="ticket-id">Ticket ID: ${ticket.ticketId}</h3>
+      <p><span class="ticket-status">Status:</span> ${ticket.status}</p>
+      <p><span class="ticket-priority">Priority:</span> ${ticket.priority}</p>
+      <p><span class="assigned-hr">Assigned HR:</span> ${ticket.assignedToHR ? ticket.assignedToHR.name : 'Not Assigned'}</p>
+    `;
 
-        setTimeout(() => {
-          fetchTicketNotes(ticket.ticketId, ticketElement);
-        }, 1000);
-      });
-    }
+    ticketsList.appendChild(ticketElement);
+
+    setTimeout(() => {
+      fetchTicketNotes(ticket.ticketId, ticketElement);
+    }, 1000);
+  });
+}
+
 
     // Function to fetch ticket notes
     function fetchTicketNotes(ticketId, ticketElement) {
@@ -211,9 +215,9 @@
             const noteItem = document.createElement('li');
             noteItem.classList.add('note-item');
             noteItem.innerHTML = `
-              <strong class="note-content">Note:</strong> ${note.note}<br>
-              <strong class="note-posted-by">Posted By:</strong> ${note.createdByName}<br>
-              <strong class="note-created-at">Created At:</strong> ${new Date(note.createdAt).toLocaleString()}
+              <strong class="note-content">Note: <span style="color:green;">${note.note} </span></strong> 
+              <strong class="note-posted-by">Posted By: <span style="color:tomato;">${note.createdByName}</span> </strong> 
+              <strong class="note-created-at" style="color:grey;">Created At: <span style="color:grey;"> ${new Date(note.createdAt).toLocaleString()} </span> </strong> 
             `;
             notesList.appendChild(noteItem);
           });
