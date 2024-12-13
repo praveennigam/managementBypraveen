@@ -68,20 +68,16 @@ const generateOfferLetter = async (offerDetails, filePath) => {
   pdfDocument.moveDown();
 
   // Introduction
-  pdfDocument.fontSize(12).text(`We are pleased to offer you the position of  ${offerDetails.department} at TheWebSeller Pvt. Ltd.`);
+  pdfDocument.fontSize(12).text(`We are pleased to offer you the position of  ${offerDetails.role} at TheWebSeller Pvt. Ltd.`);
   pdfDocument.moveDown();
 
   // Employee Details
-  pdfDocument.text(`Position: ${offerDetails.role}`);
-  pdfDocument.text(`Salary: ${offerDetails.salary ? `${offerDetails.salary.toLocaleString()} LPA` : 'N/A'}`);
-  pdfDocument.text(`Date of Joining: ${offerDetails.dateOfJoining ? new Date(offerDetails.dateOfJoining).toLocaleDateString() : 'N/A'}`);
-  pdfDocument.text(`Location: ${offerDetails.workLocation || 'N/A'}`);
-  pdfDocument.text(`Probation Period: ${offerDetails.probationPeriodEnd ? new Date(offerDetails.probationPeriodEnd).toLocaleDateString() : 'N/A'}`);
+  pdfDocument.text(`Date of Joining: ${offerDetails.dateOfJoining ? new Date(offerDetails.dateOfJoining).toLocaleDateString() : new Date().toLocaleDateString()}`);
+  pdfDocument.text(`Location: ${offerDetails.workLocation || 'Indore'}`);
   pdfDocument.moveDown();
 
   // Contact and Emergency Information
   pdfDocument.text(`Contact: ${offerDetails.contactNumber || 'N/A'}`);
-  pdfDocument.text(`Emergency Contact: ${offerDetails.emergencyContact ? `${offerDetails.emergencyContact.name} - ${offerDetails.emergencyContact.phone}` : 'N/A'}`);
   pdfDocument.moveDown();
 
   // Closing Remarks

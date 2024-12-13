@@ -167,7 +167,7 @@ button:hover {
     <input type="password" id="password" placeholder="Password" required>
 
     <!-- Role selection -->
-    <select id="role" required>
+    <select id="role" required  style="color:#004d40;">
       <option value="employee">Employee</option>
       <option value="hr">HR</option>
       <option value="manager">Manager</option>
@@ -178,9 +178,6 @@ button:hover {
     <input type="text" id="workLocation" placeholder="Work Location" required>
     <input type="text" id="address" placeholder="Address" required>
 
-    <!-- Emergency Contact -->
-    <input type="text" id="emergencyContactName" placeholder="Emergency Contact Name" required>
-    <input type="text" id="emergencyContactPhone" placeholder="Emergency Contact Phone" required>
 
     <!-- Date of Birth -->
     <input type="date" id="dateOfBirth" placeholder="Date of Birth" required>
@@ -203,10 +200,7 @@ button:hover {
         role: document.getElementById('role').value,
         workLocation: document.getElementById('workLocation').value,
         address: document.getElementById('address').value,
-        emergencyContact: {
-          name: document.getElementById('emergencyContactName').value,
-          phone: document.getElementById('emergencyContactPhone').value,
-        },
+        
         dateOfBirth: document.getElementById('dateOfBirth').value,
       };
 

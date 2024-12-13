@@ -193,7 +193,7 @@
       document.getElementById('view-my-tickets-btn').style.display = 'block';
 
       // Role-based logic to show/hide other buttons
-      if (userRole === 'admin') {
+      if (userRole === 'admin' || userRole === 'hr') {
         document.getElementById('view-all-tickets-btn').style.display = 'block';
         document.getElementById('create-ticket-btn').style.display = 'block';
         document.getElementById('assign-employee-btn').style.display = 'block';
