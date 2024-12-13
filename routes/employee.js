@@ -11,7 +11,7 @@ router.post('/employees', authMiddleware, roleMiddleware(['admin', 'hr']), uploa
 router.get('/employees', authMiddleware, roleMiddleware(['admin', 'manager', 'hr']), employeeController.getAllEmployees);
 
 router.get('/employees/:id', authMiddleware, roleMiddleware(['admin', 'manager', 'hr', 'employee']), employeeController.getEmployeeById);
-router.put('/employees/:id', authMiddleware, roleMiddleware(['admin', 'manager', 'hr', 'employee']), upload.single('image'), employeeController.updateEmployee);
+router.put('/employees/:id', authMiddleware, roleMiddleware(['admin', 'manager', 'hr', 'employee']), employeeController.updateEmployee);
 
 router.delete('/employees/:id', authMiddleware, roleMiddleware(['admin', 'hr']), employeeController.deleteEmployee);
 

@@ -45,6 +45,7 @@ app.get('/dashboard', (req, res) => {
 app.get('/create-employee', (req, res) => {
   res.render('create-employee');
 });
+
 app.get('/all-employees', (req, res) => {
   res.render('all-employees');
 });

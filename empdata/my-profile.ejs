@@ -32,286 +32,220 @@ body {
 
 /* Title Styling with Gradient Text */
 h1 {
-    font-size: 2.8rem;
-    background: linear-gradient(135deg, #3916aa,    #434fd7); /* Gradient Text */
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    margin-bottom: 30px;
-    font-weight: 600;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+  text-align: center;
+  margin-top: 20px;
+  color: #fff;
+  font-size: 2.5rem;
+  animation: fadeIn 1.5s ease-in-out;
 }
 
-/* Flex container for buttons */
-div.buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
-/* Button Styles */
+/* Button styles */
 button {
-    padding: 12px 25px;
-    font-size: 1.1rem;
-    background: linear-gradient(135deg, #166240, #1a4de4); /* Soft light gradient background */
-   margin: 5px;
-    border: none;
-    border-radius: 8px;
-    color: #fff;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+  background: linear-gradient(45deg, #0066cc, #333333);
+  color: white;
+  font-size: 16px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  margin: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 button:hover {
-    background-color: rgba(0, 86, 179, 0.7);
-    transform: scale(1.05);
-    box-shadow: 0 8px 15px rgba(0, 86, 179, 0.4);
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #004d99, #222222);
 }
 
-button:active {
-    background-color: rgba(0, 86, 179, 1);
+button:focus {
+  outline: none;
 }
 
-/* Profile Details Section */
+/* Profile details */
 #profile-details {
-    background: rgba(255, 255, 255, 0.1); /* Light transparent background */
-    padding: 30px;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 900px;
-    margin-top: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  background-color: transparent;
+  padding: 30px;
+  border-radius: 10px;
+  margin-top: 20px;
+  width: 90%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 40px;
+
+  animation: fadeIn 2s ease-out;
 }
 
-/* Profile Field Styling */
 .profile-field {
-    font-size: 1.1rem;
-    color: #f5f5f5;
-    margin: 8px 0;
+  font-weight: bold;
+  background: linear-gradient(45deg, #3c96f0, #ee3548);
+  -webkit-background-clip: text; /* Ensures the background gradient is applied to the text */
+  color: transparent; /* Makes the text color transparent so the gradient can show through */
+  display: inline-block;
+  margin-top: 5px;
+  transition: all 0.3s ease;
+}
+
+.profile-field:hover {
+  transform: scale(1.02);
 }
 
 strong {
-    color: #007bff;
-    font-weight: 600;
-    margin-right: 10px;
+  color: transparent;
+  background: linear-gradient(45deg, #d4ff14, #8fffdc); /* Light blue to light pink gradient */
+  -webkit-background-clip: text; /* Applies the gradient only to the text */
+  background-clip: text;
+  margin-right: 10px;
+  font-weight: bold; /* Keeps the text bold */
+  transition: all 0.3s ease;
 }
 
-/* Flex Layout for Profile Fields */
-.profile-info {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
 
-.profile-info p {
-    flex-basis: 48%; /* Makes each <p> take up nearly half the width */
-    font-size: 1rem;
-    margin-bottom: 10px;
-}
-
-.profile-info .full-width {
-    flex-basis: 100%;
-}
-
-.profile-info input,
-.profile-info select {
-    font-size: 1rem;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    background-color: rgba(51, 51, 51, 0.7); /* Transparent dark background */
-    color: #fff;
-    width: 100%; /* Makes inputs fill available space */
-    margin-top: 10px;
-}
-
-.profile-info select {
-    padding-right: 30px; /* Adds space for dropdown arrow */
-}
-
-/* Edit Input Fields (Hidden by default) */
-.edit-input {
-    display: none;
-    margin-left: 10px;
-    padding: 8px;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: rgba(51, 51, 51, 0.7);
-    color: #fff;
-    width: 100%;
-}
-
-.edit-input.show {
-    display: inline-block;
-}
-
-/* Profile Image Styling */
 #profile-image {
-    border-radius: 5px;
-    width: 80px;
-    margin: 10px;
-    height: 80px;
-    object-fit: cover;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    margin-bottom: 20px;
+  border-radius: 5px;
+  margin-top: 10px;
 }
 
-#profile-image:hover {
-    transform: scale(1.2);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+/* Education table */
+#education-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-/* Image Upload Input */
-#image-edit {
-    display: none;
+#education-table th,
+#education-table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #444;
 }
 
-/* Modal Style for Image Preview */
-#image-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
+#education-table th {
+  background: linear-gradient(45deg, #004d99, #0066cc);
+  color: white;
+}
+
+#education-table tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#education-table tr:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  #profile-details {
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    align-items: center;
-    justify-content: center;
+    padding: 20px;
+  }
+
+  button {
+    padding: 10px 18px;
+    font-size: 14px;
+  }
+
+  #education-table {
+    font-size: 14px;
+  }
+
+  #education-table th,
+  #education-table td {
+    padding: 8px;
+  }
 }
 
-#image-modal img {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 10px;
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-/* Custom Scrollbar */
-body::-webkit-scrollbar {
-    width: 8px;
+/* Hover effect for profile field values */
+.profile-field:hover {
+  color: #f7d700;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
 }
-
-body::-webkit-scrollbar-thumb {
-    background-color: #007bff;
-    border-radius: 5px;
-}
-
-body::-webkit-scrollbar-thumb:hover {
-    background-color: #0056b3;
-}
-
-/* Responsive Design for Smaller Screens */
-@media (max-width: 768px) {
-    h1 {
-        font-size: 2.2rem;
-    }
-
-    .profile-info p {
-        flex-basis: 100%;
-    }
-
-    .buttons {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .profile-info input {
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 1.8rem;
-    }
-
-    #profile-details {
-        padding: 20px;
-    }
-
-    button {
-        padding: 10px 20px;
-        font-size: 1rem;
-    }
-
-    .profile-info p {
-        font-size: 0.9rem;
-    }
-
-    .profile-info input {
-        padding: 6px;
-        font-size: 0.9rem;
-    }
-}
-
-
         /* Title Styling */
       
     </style>
 </head>
-<body>
-
-
+<body> 
   <%- include('partials/navbar') %> 
-  <div style="margin-top: 60px; position: relative; width: 100%; align-items: center;  justify-content: center; display:  flex; flex-direction: column;">
+  <div style="margin-top: 60px; position: relative; width: 100%; align-items: center; justify-content: center; display: flex; flex-direction: column;">
+    <h1>My Profile</h1>
 
+    <div>
+      <button id="edit-btn" onclick="toggleEditMode()">Edit Profile</button>
+      <button id="print-btn" onclick="printProfile()">Print Profile</button> <!-- Print Button -->
+    </div>
 
-  <h1>My Profile</h1>
+    <div id="profile-details">
+      <!-- Profile Fields -->
 
-  <div>
-    <button id="edit-btn" onclick="toggleEditMode()">Edit Profile</button>
-    <button id="save-btn" onclick="saveProfile()" style="display:none;">Save Changes</button>
-    <button id="print-btn" onclick="printProfile()">Print Profile</button> <!-- Print Button -->
-  </div>
-
-  <div id="profile-details">
-    <!-- Profile Fields -->
-
-    <p><strong></strong>
-      <span id="image" class="profile-field">
+      <!-- Profile Image -->
+      <p><strong></strong> <span id="image" class="profile-field">
         <img id="profile-image" src="" alt="Profile Image" width="100" height="100" style="display:none;">
-      </span>
-      <input type="file" id="image-edit" class="edit-input profile-field" style="display:none;" onchange="uploadImage()">
-    </p>
-    
-    <p><strong>Employee ID:</strong> <span id="empId" class="profile-field"></span></p>
-    <p><strong>Name:</strong> <span id="name" class="profile-field"></span><input type="text" id="name-edit" class="edit-input profile-field" style="display:none;"></p>
+      </span></p>
 
-    <p><strong>Email:</strong> <span id="email" class="profile-field"></span><input type="email" id="email-edit" class="edit-input profile-field" style="display:none;"></p>
-    <p><strong>Role:</strong> <span id="role" class="profile-field"></span><input type="text" id="role-edit" class="edit-input profile-field" style="display:none;"></p>
-    <p><strong>Department:</strong> <span id="department" class="profile-field"></span><input type="text" id="department-edit" class="edit-input profile-field" style="display:none;"></p>
-    <p><strong>Contact:</strong> <span id="contact" class="profile-field"></span><input type="text" id="contact-edit" class="edit-input profile-field" style="display:none;"></p>
-    <p><strong>Gender:</strong> <span id="gender" class="profile-field"></span><input type="text" id="gender-edit" class="edit-input profile-field" style="display:none;"></p>
-    <p><strong>Date of Birth:</strong> <span id="dob" class="profile-field"></span><input type="date" id="dob-edit" class="edit-input profile-field" style="display:none;"></p>
-    <p><strong>Salary:</strong> <span id="salary" class="profile-field"></span><input type="number" id="salary-edit" class="edit-input profile-field" style="display:none;"></p>
-    <p><strong>Education:</strong> <span id="education" class="profile-field"></span><input type="text" id="education-edit" class="edit-input profile-field" style="display:none;"></p>
-    <p><strong>Work Experience:</strong> <span id="workExperience" class="profile-field"></span><input type="text" id="workExperience-edit" class="edit-input profile-field" style="display:none;"></p>
-    <p><strong>Skills:</strong> <span id="skills" class="profile-field"></span><input type="text" id="skills-edit" class="edit-input profile-field" style="display:none;"></p>
-    <p><strong>Certifications:</strong> <span id="certifications" class="profile-field"></span><input type="text" id="certifications-edit" class="edit-input profile-field" style="display:none;"></p>
-    <p><strong>Manager Name:</strong> <span id="managerName" class="profile-field"></span><input type="text" id="managerName-edit" class="edit-input profile-field" readonly style="display:none;"></p>
+      <p><strong>Employee ID:</strong> <span id="empId" class="profile-field"></span></p>
+      <p><strong>Name:</strong> <span id="name" class="profile-field"></span></p>
+      <p><strong>Email:</strong> <span id="email" class="profile-field"></span></p>
+      <p><strong>Role:</strong> <span id="role" class="profile-field"></span></p>
+      <p><strong>Department:</strong> <span id="department" class="profile-field"></span></p>
+      <p><strong>Contact:</strong> <span id="contact" class="profile-field"></span></p>
+      <p><strong>Gender:</strong> <span id="gender" class="profile-field"></span></p>
+      <p><strong>Date of Birth:</strong> <span id="dob" class="profile-field"></span></p>
+      <p><strong>Salary:</strong> <span id="salary" class="profile-field"></span></p>
 
-    <p><strong>Performance Rating:</strong> <span id="performanceRating" class="profile-field"></span><input type="number" id="performanceRating-edit" class="edit-input profile-field" readonly style="display:none;"></p>
-    <p><strong>Employment Type:</strong> <span id="employmentType" class="profile-field"></span><input type="text" id="employmentType-edit" class="edit-input profile-field" readonly style="display:none;"></p>
-    <p><strong>Hire Date:</strong> <span id="hireDate" class="profile-field"></span><input type="date" id="hireDate-edit" class="edit-input profile-field" readonly style="display:none;"></p>
-    <p><strong>Employment Status:</strong> <span id="employmentStatus" class="profile-field"></span><input type="text" id="employmentStatus-edit" class="edit-input profile-field" readonly style="display:none;"></p>
-    <p><strong>Last Promotion Date:</strong> <span id="lastPromotionDate" class="profile-field"></span><input type="date" id="lastPromotionDate-edit" class="edit-input profile-field" readonly style="display:none;"></p>
+ 
+      <p><strong>Work Experience:</strong> <span id="workExperience" class="profile-field"></span></p>
+      <p><strong>Skills:</strong> <span id="skills" class="profile-field"></span></p>
+      <p><strong>Certifications:</strong> <span id="certifications" class="profile-field"></span></p>
+      <p><strong>Manager Name:</strong> <span id="managerName" class="profile-field"></span></p>
+      <p><strong>Performance Rating:</strong> <span id="performanceRating" class="profile-field"></span></p>
+      <p><strong>Employment Type:</strong> <span id="employmentType" class="profile-field"></span></p>
+      <p><strong>Hire Date:</strong> <span id="hireDate" class="profile-field"></span></p>
+      <p><strong>Employment Status:</strong> <span id="employmentStatus" class="profile-field"></span></p>
+      <p><strong>Last Promotion Date:</strong> <span id="lastPromotionDate" class="profile-field"></span></p>
 
-    <p><strong>Is Married:</strong> <span id="isMarried" class="profile-field"></span><input type="checkbox" id="isMarried-edit" class="edit-input profile-field" style="display:none;"></p>
-    <p><strong>Is Active:</strong> <span id="isActive" class="profile-field"></span><input type="checkbox" id="isActive-edit" class="edit-input profile-field" style="display:none;"></p>
+      <p><strong>Is Married:</strong> <span id="isMarried" class="profile-field"></span></p>
+      <p><strong>Is Active:</strong> <span id="isActive" class="profile-field"></span></p>
 
-    <!-- Address Field -->
-    <p><strong>Address:</strong> <span id="address" class="profile-field"></span><input type="text" id="address-edit" class="edit-input profile-field" style="display:none;"></p>
-  </div>
+      <!-- Address Field -->
+      <p><strong>Address:</strong> <span id="address" class="profile-field"></span></p>
+        
+
+
+      <p><strong>Education:</strong></p>
+      <table id="education-table">
+        <thead>
+          <tr>
+            <th>School Name</th>
+            <th>Passing Year</th>
+            <th>Degree</th>
+            <th>Marks</th>
+          </tr>
+        </thead>
+        <tbody id="education-body"></tbody>
+      </table>
+ 
+    </div>
 
   <%- include('partials/footer') %> 
-  
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -347,67 +281,50 @@ body::-webkit-scrollbar-thumb:hover {
     });
 
     function toggleEditMode() {
-      const elementsToToggle = document.querySelectorAll('.edit-input');
-      const displayFields = document.querySelectorAll('#profile-details span');
-      elementsToToggle.forEach(inputField => {
-        inputField.style.display = inputField.style.display === 'none' ? 'inline-block' : 'none';
-      });
-      displayFields.forEach(span => {
-        span.style.display = span.style.display === 'none' ? 'inline' : 'none';
-      });
-
-      document.getElementById('edit-btn').style.display = document.getElementById('edit-btn').style.display === 'none' ? 'inline-block' : 'none';
-      document.getElementById('save-btn').style.display = document.getElementById('save-btn').style.display === 'none' ? 'inline-block' : 'none';
+      // Transition to the update profile page
+      window.location.href = '/update-profile';
     }
 
-    function saveProfile() {
-      const userId = localStorage.getItem('userId');
-      const token = localStorage.getItem('token');
-      const updatedData = {
-        name: document.getElementById('name-edit').value,
-        email: document.getElementById('email-edit').value,
-        role: document.getElementById('role-edit').value,
-        department: document.getElementById('department-edit').value,
-        contactNumber: document.getElementById('contact-edit').value,
-        gender: document.getElementById('gender-edit').value,
-        dateOfBirth: document.getElementById('dob-edit').value,
-        salary: document.getElementById('salary-edit').value,
-        education: document.getElementById('education-edit').value,
-        workExperience: document.getElementById('workExperience-edit').value,
-        skills: document.getElementById('skills-edit').value.split(',').map(skill => skill.trim()),
-        certifications: document.getElementById('certifications-edit').value.split(',').map(cert => cert.trim()),
-        isMarried: document.getElementById('isMarried-edit').checked,
-        isActive: document.getElementById('isActive-edit').checked,
-        address: document.getElementById('address-edit').value, // Address field
-      };
+    function populateProfile(data) {
+      document.getElementById('empId').innerText = data.empId;
+      document.getElementById('name').innerText = data.name;
+      document.getElementById('email').innerText = data.email;
+      document.getElementById('role').innerText = data.role;
+      document.getElementById('department').innerText = data.department;
+      document.getElementById('contact').innerText = data.contactNumber;
+      document.getElementById('gender').innerText = data.gender;
+      document.getElementById('dob').innerText = new Date(data.dateOfBirth).toLocaleDateString();
+      document.getElementById('salary').innerText = data.salary;
+      document.getElementById('workExperience').innerText = data.workExperience;
+      document.getElementById('skills').innerText = data.skills.join(', ');
+      document.getElementById('certifications').innerText = data.certifications.join(', ');
+      document.getElementById('managerName').innerText = data.managerName;
 
-      const imageInput = document.getElementById('image-edit');
-      if (imageInput.files.length > 0) {
-        updatedData.image = imageInput.files[0];
-      }
+      document.getElementById('performanceRating').innerText = data.performanceRating;
+      document.getElementById('employmentType').innerText = data.employmentType;
+      document.getElementById('hireDate').innerText = new Date(data.hireDate).toLocaleDateString();
+      document.getElementById('employmentStatus').innerText = data.employmentStatus;
+      document.getElementById('lastPromotionDate').innerText = new Date(data.lastPromotionDate).toLocaleDateString();
 
-      fetch(`/api/emp/employees/${userId}`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedData)
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data && data._id) {
-            alert('Profile updated successfully.');
-            populateProfile(data);
-            toggleEditMode();
-          } else {
-            alert('Failed to update profile.');
-          }
-        })
-        .catch(error => {
-          console.error('Error saving profile:', error);
-          alert('Error updating profile.');
-        });
+      document.getElementById('isMarried').innerText = data.isMarried ? 'Yes' : 'No';
+      document.getElementById('isActive').innerText = data.isActive ? 'Yes' : 'No';
+
+      // Populating Education Table
+      const educationTableBody = document.getElementById('education-body');
+      educationTableBody.innerHTML = '';
+      data.education.forEach(ed => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${ed.schoolName}</td>
+          <td>${ed.passingYear}</td>
+          <td>${ed.degreeName}</td>
+          <td>${ed.marks}</td>
+        `;
+        educationTableBody.appendChild(row);
+      });
+
+      // Set Address Field
+      document.getElementById('address').innerText = data.address;
     }
 
     function fetchImage(userId) {
@@ -424,7 +341,7 @@ body::-webkit-scrollbar-thumb:hover {
             const imageUrl = `/${data.image}`;
             const imgElement = document.getElementById('profile-image');
             imgElement.src = imageUrl;
-            imgElement.style.display = 'inline';
+            imgElement.style.display = 'inline'; // Display the image when it's fetched
           } else {
             console.log('No image found');
           }
@@ -435,96 +352,13 @@ body::-webkit-scrollbar-thumb:hover {
         });
     }
 
-    function uploadImage() {
-      const userId = localStorage.getItem('userId');
-      const token = localStorage.getItem('token');
-      const imageInput = document.getElementById('image-edit');
-      const formData = new FormData();
-      if (imageInput.files.length > 0) {
-        formData.append('image', imageInput.files[0]);
-      } else {
-        alert('Please select an image to upload.');
-        return;
-      }
-
-      fetch(`/api/emp/update-image/${userId}`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-        body: formData
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data && data.image) {
-            alert('Image updated successfully.');
-            fetchImage(userId);
-          }
-        })
-        .catch(error => {
-          console.error('Error uploading image:', error);
-        });
-    }
-
-    function populateProfile(data) {
-      document.getElementById('empId').innerText = data.empId;
-      document.getElementById('name').innerText = data.name;
-      document.getElementById('email').innerText = data.email;
-      document.getElementById('role').innerText = data.role;
-      document.getElementById('department').innerText = data.department;
-      document.getElementById('contact').innerText = data.contactNumber;
-      document.getElementById('gender').innerText = data.gender;
-      document.getElementById('dob').innerText = new Date(data.dateOfBirth).toLocaleDateString();
-      document.getElementById('salary').innerText = data.salary;
-      document.getElementById('education').innerText = data.education;
-      document.getElementById('workExperience').innerText = data.workExperience;
-      document.getElementById('skills').innerText = data.skills.join(', ');
-      document.getElementById('certifications').innerText = data.certifications.join(', ');
-      document.getElementById('managerName').innerText = data.managerName;
-
-      document.getElementById('performanceRating').innerText = data.performanceRating;
-      document.getElementById('employmentType').innerText = data.employmentType;
-      document.getElementById('hireDate').innerText = new Date(data.hireDate).toLocaleDateString();
-      document.getElementById('employmentStatus').innerText = data.employmentStatus;
-      document.getElementById('lastPromotionDate').innerText = new Date(data.lastPromotionDate).toLocaleDateString();
-
-      document.getElementById('isMarried').checked = data.isMarried;
-      document.getElementById('isActive').checked = data.isActive;
-
-      // Populating the address field
-      document.getElementById('address').innerText = data.address;
-
-      // Setting edit field values
-      document.getElementById('name-edit').value = data.name;
-      document.getElementById('email-edit').value = data.email;
-      document.getElementById('role-edit').value = data.role;
-      document.getElementById('department-edit').value = data.department;
-      document.getElementById('contact-edit').value = data.contactNumber;
-      document.getElementById('gender-edit').value = data.gender;
-      document.getElementById('dob-edit').value = data.dateOfBirth ? new Date(data.dateOfBirth).toISOString().split('T')[0] : '';
-      document.getElementById('salary-edit').value = data.salary;
-      document.getElementById('education-edit').value = data.education;
-      document.getElementById('workExperience-edit').value = data.workExperience;
-      document.getElementById('skills-edit').value = data.skills.join(', ');
-      document.getElementById('certifications-edit').value = data.certifications.join(', ');
-      document.getElementById('managerName-edit').value = data.managerName;
-
-      // Setting values for isMarried, isActive
-      document.getElementById('isMarried-edit').checked = data.isMarried;
-      document.getElementById('isActive-edit').checked = data.isActive;
-
-      // Set address edit value
-      document.getElementById('address-edit').value = data.address;
-
-      document.getElementById('image-edit').value = '';
-    }
-
     // Function to trigger print
     function printProfile() {
       window.print();
     }
   </script>
 </body>
+
 
 </html>
 

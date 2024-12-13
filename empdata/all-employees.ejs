@@ -270,393 +270,404 @@ form button[type="button"]:hover {
 </head>
 
 <body>
-    <div style="margin-top: 80px; position: relative; width: 100%; align-items: center;  justify-content: center; display:  flex; flex-direction: column;">
-        
-        <%- include('partials/navbar') %> 
-
-  <h2>All Employees</h2>
-  <table id="employeesTable">
-    <thead>
-      <tr>
-        <th>Emp ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th >Role</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <!-- Editable Form for Employee -->
-  <div id="editEmployeeForm" style="display: none;">
-    <h3>Edit Employee</h3>
-    <form id="employeeEditForm">
-     
-        <label>Emp ID:</label><br>
-      <input type="text" id="editEmpId" disabled style="background-color: #343333; color: #ddd;"><br>
-
-      <label>Name:</label><br>
-      <input type="text" id="editName"><br>
-
-      <label>Email:</label><br>
-      <input type="email" id="editEmail"><br>
-
-      <label>Role:</label><br>
-      <select id="editRole">
-        <option value="admin">Admin</option>
-        <option value="manager">Manager</option>
-        <option value="hr">HR</option>
-        <option value="employee">Employee</option>
-      </select><br>
-
-       
-      <label>Department:</label><br>
-      <select type="text" id="editDepartment">
-        <option value="QA">QA</option>
-        <option value="SR Developer">SR Developer</option>
-        <option value="JR  Developer">JR  Developer</option>
-        <option value="intern">Intern</option>
-        <option value="Project Manager">Project Manager</option>
-        <option value="Jr Project Manager"> Jr Project Manager</option>
-        <option value="Qa Manager">Qa Manager</option>
-        <option value="DEVops Er">DEVops Er</option>
-        <option value="TESTER">TESTER</option>
-      </select><br>
-
-
-
-
-
-
-      <label>Contact Number:</label><br>
-      <input type="text" id="editContactNumber"><br>
-
-      <label>Address:</label><br>
-      <input type="text" id="editAddress"><br>
-
-      <label>Gender:</label><br>
-      <select id="editGender">
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-        <option value="other">Other</option>
-      </select><br>
-
-      <label>Date of Birth:</label><br>
-      <input type="date" id="editDateOfBirth"><br>
-
-      <label>Emergency Contact Name:</label><br>
-      <input type="text" id="editEmergencyContactName"><br>
-
-      <label>Emergency Contact Phone:</label><br>
-      <input type="text" id="editEmergencyContactPhone"><br>
-
-      <label>Employment Status:</label><br>
-      <select id="editEmploymentStatus">
-        <option value="active">Active</option>
-        <option value="on-leave">On Leave</option>
-        <option value="terminated">Terminated</option>
-        <option value="resigned">Resigned</option>
-      </select><br>
-
-      <label>Approval Status:</label><br>
-      <select id="editApprovalStatus">
-        <option value="pending">Pending</option>
-        <option value="approved">Approved</option>
-        <option value="rejected">Rejected</option>
-      </select><br>
-
-      <label>Hire Date:</label><br>
-      <input type="date" id="editHireDate"><br>
-
-      <label>Performance Rating:</label><br>
-      <input type="number" id="editPerformanceRating" min="1" max="5"><br>
-
-      <label>Salary:</label><br>
-      <input type="number" id="editSalary"><br>
-
-      <label>Is Married:</label><br>
-      <input type="checkbox" id="editIsMarried"><br>
-
-      <label>Education:</label><br>
-      <input type="text" id="editEducation"><br>
-
-      <label>Work Experience:</label><br>
-      <input type="text" id="editWorkExperience"><br>
-
-      <label>Skills (comma-separated):</label><br>
-      <input type="text" id="editSkills"><br>
-
-      <label>Certifications (comma-separated):</label><br>
-      <input type="text" id="editCertifications"><br>
-
-      <label>Last Promotion Date:</label><br>
-      <input type="date" id="editLastPromotionDate"><br>
-
-      <label>Work Location:</label><br>
-      <input type="text" id="editWorkLocation"><br>
-
-      <label>Employment Type:</label><br>
-      <select id="editEmploymentType">
-        <option value="full-time">Full-time</option>
-        <option value="part-time">Part-time</option>
-        <option value="contract">Contract</option>
-        <option value="intern">Intern</option>
-      </select><br>
-
-      <label>Probation Period End:</label><br>
-      <input type="date" id="editProbationPeriodEnd"><br>
-
-      <label>Manager Name:</label><br>
-      <select id="editManagerName"></select><br>
-      
-      <button type="button" onclick="saveEmployee()">Save</button>
-      <button type="button" onclick="cancelEdit()">Cancel</button>
-    </form>
-  </div>
-
+    <div style="margin-top: 80px; position: relative; width: 100%; align-items: center; justify-content: center; display: flex; flex-direction: column;">
+      <%- include('partials/navbar') %>
+  
+      <h2>All Employees</h2>
+      <table id="employeesTable">
+        <thead>
+          <tr>
+            <th>Emp ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+  
+      <!-- Editable Form for Employee -->
+      <div id="editEmployeeForm" style="display: none;">
+        <h3>Edit Employee</h3>
+        <form id="employeeEditForm">
+  
+          <label>Emp ID:</label><br>
+          <input type="text" id="editEmpId" disabled style="background-color: #343333; color: #ddd;"><br>
+  
+          <label>Name:</label><br>
+          <input type="text" id="editName"><br>
+  
+          <label>Email:</label><br>
+          <input type="email" id="editEmail"><br>
+  
+          <label>Role:</label><br>
+          <select id="editRole">
+            <option value="admin">Admin</option>
+            <option value="manager">Manager</option>
+            <option value="hr">HR</option>
+            <option value="employee">Employee</option>
+          </select><br>
+  
+          <label>Department:</label><br>
+          <select type="text" id="editDepartment">
+            <option value="QA">QA</option>
+            <option value="SR Developer">SR Developer</option>
+            <option value="JR  Developer">JR Developer</option>
+            <option value="intern">Intern</option>
+            <option value="Project Manager">Project Manager</option>
+            <option value="Jr Project Manager">Jr Project Manager</option>
+            <option value="Qa Manager">Qa Manager</option>
+            <option value="DEVops Er">DEVops Er</option>
+            <option value="TESTER">TESTER</option>
+          </select><br>
+  
+          <label>Contact Number:</label><br>
+          <input type="text" id="editContactNumber"><br>
+  
+          <label>Address:</label><br>
+          <input type="text" id="editAddress"><br>
+  
+          <label>Gender:</label><br>
+          <select id="editGender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select><br>
+  
+          <label>Date of Birth:</label><br>
+          <input type="date" id="editDateOfBirth"><br>
+  
+          <label>Emergency Contact Name:</label><br>
+          <input type="text" id="editEmergencyContactName"><br>
+  
+          <label>Emergency Contact Phone:</label><br>
+          <input type="text" id="editEmergencyContactPhone"><br>
+  
+          <label>Employment Status:</label><br>
+          <select id="editEmploymentStatus">
+            <option value="active">Active</option>
+            <option value="on-leave">On Leave</option>
+            <option value="terminated">Terminated</option>
+            <option value="resigned">Resigned</option>
+          </select><br>
+  
+          <label>Approval Status:</label><br>
+          <select id="editApprovalStatus">
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+          </select><br>
+  
+          <label>Hire Date:</label><br>
+          <input type="date" id="editHireDate"><br>
+  
+          <label>Performance Rating:</label><br>
+          <input type="number" id="editPerformanceRating" min="1" max="5"><br>
+  
+          <label>Salary:</label><br>
+          <input type="number" id="editSalary"><br>
+  
+          <label>Is Married:</label><br>
+          <input type="checkbox" id="editIsMarried"><br>
+  
+          <!-- Editable Education Section -->
+          <div id="educationSection">
+            <div class="editEducation">
+              <input type="text" class="schoolName" placeholder="School Name">
+              <input type="number" class="passingYear" placeholder="Passing Year">
+              <input type="text" class="degreeName" placeholder="Degree Name">
+              <input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)">
+            </div>
+          </div>
+          <button type="button" id="addEducationBtn">Add Education</button><br>
+  
+          <label>Work Experience:</label><br>
+          <input type="text" id="editWorkExperience"><br>
+  
+          <label>Skills (comma-separated):</label><br>
+          <input type="text" id="editSkills"><br>
+  
+          <label>Certifications (comma-separated):</label><br>
+          <input type="text" id="editCertifications"><br>
+  
+          <label>Last Promotion Date:</label><br>
+          <input type="date" id="editLastPromotionDate"><br>
+  
+          <label>Work Location:</label><br>
+          <input type="text" id="editWorkLocation"><br>
+  
+          <label>Employment Type:</label><br>
+          <select id="editEmploymentType">
+            <option value="full-time">Full-time</option>
+            <option value="part-time">Part-time</option>
+            <option value="contract">Contract</option>
+            <option value="intern">Intern</option>
+          </select><br>
+  
+          <label>Probation Period End:</label><br>
+          <input type="date" id="editProbationPeriodEnd"><br>
+  
+          <label>Manager Name:</label><br>
+          <select id="editManagerName"></select><br>
+  
+          <button type="button" onclick="saveEmployee()">Save</button>
+          <button type="button" onclick="cancelEdit()">Cancel</button>
+        </form>
+      </div>
+  
     </div>
-    <%- include('partials/footer') %> 
+    <%- include('partials/footer') %>
+  
+    <script>
+      const token = localStorage.getItem('token');
+      if (!token) {
+          window.location.href = '/login'; // Redirect to login if no token exists
+      }
+  
+      // Fetch the list of managers from the API and populate the Manager Name dropdown
+      async function fetchManagers() {
+          try {
+              const response = await fetch('/api/helpdesk/manager/employees', {
+                  method: 'GET',
+                  headers: {
+                      'Authorization': `Bearer ${token}`,
+                  },
+              });
+              const managers = await response.json();
+  
+              const managerSelect = document.getElementById('editManagerName');
+              managerSelect.innerHTML = '';  // Clear any existing options
+  
+              // Add an option for each manager
+              managers.forEach(manager => {
+                  const option = document.createElement('option');
+                  option.value = manager._id;  // Use the manager's _id for value
+                  option.textContent = manager.name;  // Display the manager's name
+                  managerSelect.appendChild(option);
+              });
+  
+          } catch (error) {
+              console.error('Error fetching managers:', error);
+              alert('Error fetching managers');
+          }
+      }
+  
+      // Add an education entry dynamically
+      document.getElementById('addEducationBtn').addEventListener('click', function () {
+          const educationSection = document.getElementById('educationSection');
+          const newEducation = document.createElement('div');
+          newEducation.classList.add('editEducation');
+          newEducation.innerHTML = `
+              <input type="text" class="schoolName" placeholder="School Name">
+              <input type="number" class="passingYear" placeholder="Passing Year">
+              <input type="text" class="degreeName" placeholder="Degree Name">
+              <input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)">
+          `;
+          educationSection.appendChild(newEducation);
+      });
+  
+      // Fetch employees and display them in a table
+      async function fetchEmployees() {
+          try {
+              const response = await fetch('/api/emp/employees', {
+                  method: 'GET',
+                  headers: {
+                      'Authorization': `Bearer ${token}`,
+                  },
+              });
+              const employees = await response.json();
+              const tableBody = document.querySelector('#employeesTable tbody');
+              tableBody.innerHTML = ''; // Clear the table body before adding new data
+  
+              // Sort employees by hireDate in descending order (latest first)
+              employees.sort((a, b) => new Date(b.hireDate) - new Date(a.hireDate));
+  
+              // Get the current user's role
+              const userRole = localStorage.getItem('role');
+              console.log("User Role: ", userRole);
+  
+              employees.forEach(employee => {
+                  const row = document.createElement('tr');
+                  let editDeleteButtons = '';
+  
+                  // Show "Edit" and "Delete" buttons for HR or Admin
+                  if (userRole === 'admin' || userRole === 'hr') {
+                      editDeleteButtons = `
+                          <button onclick="editEmployee('${employee._id}')">Edit</button>
+                          <button onclick="deleteEmployee('${employee._id}')">Delete</button>
+                      `;
+                  }
+  
+                  row.innerHTML = `
+                      <td>${employee.empId}</td> <!-- Use MongoDB _id here -->
+                      <td>${employee.name}</td>
+                      <td>${employee.email}</td>
+                      <td style="color: ${employee.role === 'admin' ? 'green' : 
+                                       employee.role === 'hr' ? 'orange' : 
+                                       employee.role === 'manager' ? 'blue' : 
+                                       'red'};">
+                          ${employee.role.toUpperCase()}
+                      </td>
+                      <td>${editDeleteButtons}</td>
+                  `;
+                  tableBody.appendChild(row);
+              });
+          } catch (error) {
+              console.error('Error fetching employees:', error);
+              alert('Error fetching employees');
+          }
+      }
+  
+      // Edit employee details
+      async function editEmployee(id) {
+          try {
+              const response = await fetch(`/api/emp/employees/${id}`, {
+                  method: 'GET',
+                  headers: {
+                      'Authorization': `Bearer ${token}`,
+                  },
+              });
+  
+              if (!response.ok) {
+                  alert('Error fetching employee details');
+                  return;
+              }
+  
+              const employee = await response.json();
+  
+              // Pre-fill the form with employee data
+              document.getElementById('editEmployeeForm').style.display = 'block';
+              document.getElementById('editEmpId').value = employee.empId;  // Display empId
+              document.getElementById('editEmpId').value = employee._id;  // Use _id for PUT method
+              document.getElementById('editName').value = employee.name;
+              document.getElementById('editEmail').value = employee.email;
+              document.getElementById('editRole').value = employee.role;
+              document.getElementById('editDepartment').value = employee.department || '';
+              document.getElementById('editContactNumber').value = employee.contactNumber || '';
+              document.getElementById('editAddress').value = employee.address || '';
+              document.getElementById('editGender').value = employee.gender || 'male';
+              document.getElementById('editDateOfBirth').value = employee.dateOfBirth ? employee.dateOfBirth.split('T')[0] : '';
+              document.getElementById('editEmergencyContactName').value = employee.emergencyContact?.name || '';
+              document.getElementById('editEmergencyContactPhone').value = employee.emergencyContact?.phone || '';
+              document.getElementById('editEmploymentStatus').value = employee.employmentStatus || 'active';
+              document.getElementById('editApprovalStatus').value = employee.approvalStatus || 'approved';
+              document.getElementById('editHireDate').value = employee.hireDate ? employee.hireDate.split('T')[0] : '';
+              document.getElementById('editPerformanceRating').value = employee.performanceRating || '';
+              document.getElementById('editSalary').value = employee.salary || '';
+              document.getElementById('editIsMarried').checked = employee.isMarried || false;
+              document.getElementById('editWorkExperience').value = employee.workExperience || '';
+              document.getElementById('editSkills').value = employee.skills?.join(', ') || '';
+              document.getElementById('editCertifications').value = employee.certifications?.join(', ') || '';
+              document.getElementById('editLastPromotionDate').value = employee.lastPromotionDate ? employee.lastPromotionDate.split('T')[0] : '';
+              document.getElementById('editWorkLocation').value = employee.workLocation || '';
+              document.getElementById('editEmploymentType').value = employee.employmentType || 'full-time';
+              document.getElementById('editProbationPeriodEnd').value = employee.probationPeriodEnd ? employee.probationPeriodEnd.split('T')[0] : '';
+  
+              // Set the pre-selected manager
+              document.getElementById('editManagerName').value = employee.managerId || '';  // Use managerId from employee
+  
+          } catch (error) {
+              console.error('Error fetching employee details:', error);
+              alert('Error fetching employee details');
+          }
+      }
+  
+      // Save edited employee details
+      async function saveEmployee() {
+          const id = document.getElementById('editEmpId').value;  // MongoDB _id is used here
+          const name = document.getElementById('editName').value;
+          const email = document.getElementById('editEmail').value;
+          const role = document.getElementById('editRole').value;
+          const department = document.getElementById('editDepartment').value;
+          const contactNumber = document.getElementById('editContactNumber').value;
+          const address = document.getElementById('editAddress').value;
+          const gender = document.getElementById('editGender').value;
+          const dateOfBirth = document.getElementById('editDateOfBirth').value;
+          const emergencyContactName = document.getElementById('editEmergencyContactName').value;
+          const emergencyContactPhone = document.getElementById('editEmergencyContactPhone').value;
+          const employmentStatus = document.getElementById('editEmploymentStatus').value;
+          const approvalStatus = document.getElementById('editApprovalStatus').value;
+          const hireDate = document.getElementById('editHireDate').value;
+        const performanceRating = document.getElementById('editPerformanceRating').value;
+        const salary = document.getElementById('editSalary').value;
+        const isMarried = document.getElementById('editIsMarried').checked;
+        const workExperience = document.getElementById('editWorkExperience').value;
+        const skills = document.getElementById('editSkills').value.split(',').map(skill => skill.trim());
+        const certifications = document.getElementById('editCertifications').value.split(',').map(cert => cert.trim());
+        const lastPromotionDate = document.getElementById('editLastPromotionDate').value;
+        const workLocation = document.getElementById('editWorkLocation').value;
+        const employmentType = document.getElementById('editEmploymentType').value;
+        const probationPeriodEnd = document.getElementById('editProbationPeriodEnd').value;
+        const managerId = document.getElementById('editManagerName').value;
 
-  <script>
-    const token = localStorage.getItem('token');
-    if (!token) {
-        window.location.href = '/login'; // Redirect to login if no token exists
-    }
+        // Gather Education data
+        const educationData = [];
+        const educationElements = document.querySelectorAll('.editEducation');
+        educationElements.forEach(education => {
+            const schoolName = education.querySelector('.schoolName').value;
+            const passingYear = education.querySelector('.passingYear').value;
+            const degreeName = education.querySelector('.degreeName').value;
+            const marks = education.querySelector('.marks').value;
 
-
-
-
-
-
-
-
- // Fetch the list of managers from the API and populate the Manager Name dropdown
-async function fetchManagers() {
-    try {
-        const response = await fetch('/api/helpdesk/manager/employees', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
-        });
-        const managers = await response.json();
-
-        const managerSelect = document.getElementById('editManagerName');
-        managerSelect.innerHTML = '';  // Clear any existing options
-
-        // Add an option for each manager
-        managers.forEach(manager => {
-            const option = document.createElement('option');
-            option.value = manager._id;  // Use the manager's _id for value
-            option.textContent = manager.name;  // Display the manager's name
-            managerSelect.appendChild(option);
-        });
-
-    } catch (error) {
-        console.error('Error fetching managers:', error);
-        alert('Error fetching managers');
-    }
-}
-
-
-
-   
-
-
-
-    // Fetch employees and display them in a table
-    async function fetchEmployees() {
-    try {
-        const response = await fetch('/api/emp/employees', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
-        });
-        const employees = await response.json();
-        const tableBody = document.querySelector('#employeesTable tbody');
-        tableBody.innerHTML = ''; // Clear the table body before adding new data
-
-        // Sort employees by hireDate in descending order (latest first)
-        employees.sort((a, b) => new Date(b.hireDate) - new Date(a.hireDate));
-
-        // Get the current user's role
-        const userRole = localStorage.getItem('role');
-        console.log("User Role: ", userRole);
-
-        employees.forEach(employee => {
-            const row = document.createElement('tr');
-            let editDeleteButtons = '';
-
-            // Show "Edit" and "Delete" buttons for HR or Admin
-            if (userRole === 'admin' || userRole === 'hr') {
-                editDeleteButtons = `
-                    <button onclick="editEmployee('${employee._id}')">Edit</button>
-                    <button onclick="deleteEmployee('${employee._id}')">Delete</button>
-                `;
+            if (schoolName && passingYear && degreeName && marks) {
+                educationData.push({ schoolName, passingYear, degreeName, marks });
             }
-
-            row.innerHTML = `
-                <td>${employee.empId}</td> <!-- Use MongoDB _id here -->
-                <td>${employee.name}</td>
-                <td>${employee.email}</td>
-                <td style="color: ${employee.role === 'admin' ? 'green' : 
-                                 employee.role === 'hr' ? 'orange' : 
-                                 employee.role === 'manager' ? 'blue' : 
-                                 'red'};">
-                    ${employee.role.toUpperCase()}
-                </td>
-                <td>${editDeleteButtons}</td>
-            `;
-            tableBody.appendChild(row);
-        });
-    } catch (error) {
-        console.error('Error fetching employees:', error);
-        alert('Error fetching employees');
-    }
-}
-
-    // Edit employee details
-    async function editEmployee(id) {
-    try {
-        const response = await fetch(`/api/emp/employees/${id}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
         });
 
-        if (!response.ok) {
-            alert('Error fetching employee details');
-            return;
+        const employeeData = {
+            name,
+            email,
+            role,
+            department,
+            contactNumber,
+            address,
+            gender,
+            dateOfBirth,
+            emergencyContact: { name: emergencyContactName, phone: emergencyContactPhone },
+            employmentStatus,
+            approvalStatus,
+            hireDate,
+            performanceRating,
+            salary,
+            isMarried,
+            workExperience,
+            skills,
+            certifications,
+            lastPromotionDate,
+            workLocation,
+            employmentType,
+            probationPeriodEnd,
+            managerId,
+            education: educationData
+        };
+
+        try {
+            const response = await fetch(`/api/emp/employees/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify(employeeData),
+            });
+
+            if (response.ok) {
+                alert('Employee updated successfully!');
+                document.getElementById('editEmployeeForm').style.display = 'none';
+                fetchEmployees(); // Refresh employee list
+            } else {
+                alert('Failed to update employee');
+            }
+        } catch (error) {
+            console.error('Error updating employee:', error);
+            alert('Error updating employee');
         }
-
-        const employee = await response.json();
-
-        // Pre-fill the form with employee data
-        document.getElementById('editEmployeeForm').style.display = 'block';
-        document.getElementById('editEmpId').value = employee.empId;  // Display empId
-        document.getElementById('editEmpId').value = employee._id;  // Use _id for PUT method
-        document.getElementById('editName').value = employee.name;
-        document.getElementById('editEmail').value = employee.email;
-        document.getElementById('editRole').value = employee.role;
-        document.getElementById('editDepartment').value = employee.department || '';
-        document.getElementById('editContactNumber').value = employee.contactNumber || '';
-        document.getElementById('editAddress').value = employee.address || '';
-        document.getElementById('editGender').value = employee.gender || 'male';
-        document.getElementById('editDateOfBirth').value = employee.dateOfBirth ? employee.dateOfBirth.split('T')[0] : '';
-        document.getElementById('editEmergencyContactName').value = employee.emergencyContact?.name || '';
-        document.getElementById('editEmergencyContactPhone').value = employee.emergencyContact?.phone || '';
-        document.getElementById('editEmploymentStatus').value = employee.employmentStatus || 'active';
-        document.getElementById('editApprovalStatus').value = employee.approvalStatus || 'approved';
-        document.getElementById('editHireDate').value = employee.hireDate ? employee.hireDate.split('T')[0] : '';
-        document.getElementById('editPerformanceRating').value = employee.performanceRating || '';
-        document.getElementById('editSalary').value = employee.salary || '';
-        document.getElementById('editIsMarried').checked = employee.isMarried || false;
-        document.getElementById('editEducation').value = employee.education || '';
-        document.getElementById('editWorkExperience').value = employee.workExperience || '';
-        document.getElementById('editSkills').value = employee.skills?.join(', ') || '';
-        document.getElementById('editCertifications').value = employee.certifications?.join(', ') || '';
-        document.getElementById('editLastPromotionDate').value = employee.lastPromotionDate ? employee.lastPromotionDate.split('T')[0] : '';
-        document.getElementById('editWorkLocation').value = employee.workLocation || '';
-        document.getElementById('editEmploymentType').value = employee.employmentType || 'full-time';
-        document.getElementById('editProbationPeriodEnd').value = employee.probationPeriodEnd ? employee.probationPeriodEnd.split('T')[0] : '';
-
-        // Set the pre-selected manager
-        document.getElementById('editManagerName').value = employee.managerId || '';  // Use managerId from employee
-
-    } catch (error) {
-        console.error('Error fetching employee details:', error);
-        alert('Error fetching employee details');
     }
-}
 
-  // Save edited employee details
-async function saveEmployee() {
-    const id = document.getElementById('editEmpId').value;  // MongoDB _id is used here
-    const name = document.getElementById('editName').value;
-    const email = document.getElementById('editEmail').value;
-    const role = document.getElementById('editRole').value;
-    const department = document.getElementById('editDepartment').value;
-    const contactNumber = document.getElementById('editContactNumber').value;
-    const address = document.getElementById('editAddress').value;
-    const gender = document.getElementById('editGender').value;
-    const dateOfBirth = document.getElementById('editDateOfBirth').value;
-    const emergencyContactName = document.getElementById('editEmergencyContactName').value;
-    const emergencyContactPhone = document.getElementById('editEmergencyContactPhone').value;
-    const employmentStatus = document.getElementById('editEmploymentStatus').value;
-    const approvalStatus = document.getElementById('editApprovalStatus').value;
-    const hireDate = document.getElementById('editHireDate').value;
-    const performanceRating = document.getElementById('editPerformanceRating').value;
-    const salary = document.getElementById('editSalary').value;
-    const isMarried = document.getElementById('editIsMarried').checked;
-    const education = document.getElementById('editEducation').value;
-    const workExperience = document.getElementById('editWorkExperience').value;
-    const skills = document.getElementById('editSkills').value.split(',').map(skill => skill.trim());
-    const certifications = document.getElementById('editCertifications').value.split(',').map(cert => cert.trim());
-    const lastPromotionDate = document.getElementById('editLastPromotionDate').value;
-    const workLocation = document.getElementById('editWorkLocation').value;
-    const employmentType = document.getElementById('editEmploymentType').value;
-    const probationPeriodEnd = document.getElementById('editProbationPeriodEnd').value;
-    const managerName = document.getElementById('editManagerName').value;
-
-    const updatedEmployee = {
-        name,
-        email,
-        role,
-        department,
-        contactNumber,
-        address,
-        gender,
-        dateOfBirth,
-        emergencyContact: { name: emergencyContactName, phone: emergencyContactPhone },
-        employmentStatus,
-        approvalStatus,
-        hireDate,
-        performanceRating,
-        salary,
-        isMarried,
-        education,
-        workExperience,
-        skills,
-        certifications,
-        lastPromotionDate,
-        workLocation,
-        employmentType,
-        probationPeriodEnd,
-        managerName
-    };
-
-    try {
-        const response = await fetch(`/api/emp/employees/${id}`, {  // Use MongoDB _id here
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify(updatedEmployee),
-        });
-
-        if (response.ok) {
-            alert('Employee updated successfully');
-            fetchEmployees(); // Re-fetch the employees list after saving
-            cancelEdit(); // Hide the form and show employee list again
-        } else {
-            const errorData = await response.json();
-            console.error('Error updating employee:', errorData);
-            alert('Error updating employee: ' + (errorData.message || 'Unknown error'));
-        }
-    } catch (error) {
-        console.error('Error during save operation:', error);
-        alert('Error updating employee: ' + error.message);
-    }
-}
-
-    // Cancel editing and close the form
+    // Cancel the edit process
     function cancelEdit() {
         document.getElementById('editEmployeeForm').style.display = 'none';
-        document.getElementById('employeesTable').style.display = 'block'; // Show employee list again
     }
 
     // Delete an employee
@@ -671,10 +682,10 @@ async function saveEmployee() {
                 });
 
                 if (response.ok) {
-                    alert('Employee deleted successfully');
-                    fetchEmployees(); // Re-fetch the employees list after deletion
+                    alert('Employee deleted successfully!');
+                    fetchEmployees(); // Refresh employee list
                 } else {
-                    alert('Error deleting employee');
+                    alert('Failed to delete employee');
                 }
             } catch (error) {
                 console.error('Error deleting employee:', error);
@@ -683,12 +694,10 @@ async function saveEmployee() {
         }
     }
 
-window.onload = async function() {
-    fetchEmployees();  // Fetch employees as usual
-    await fetchManagers();  // Fetch managers and populate the dropdown
-};
-</script>
-
+    // Initial fetch
+    fetchEmployees();
+    fetchManagers(); // Fetch managers for the select dropdown
+  </script>
 </body>
 
 </html>

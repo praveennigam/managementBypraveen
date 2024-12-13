@@ -186,84 +186,134 @@ form button[type="submit"]:hover {
 
     </style>
 </head>
-
 <body>
-  <%- include('partials/navbar') %> 
+  <%- include('partials/navbar') %>
 
-  <div style="margin-top: 60px; position: relative; width: 100%; align-items: center;  justify-content: center; display:  flex; flex-direction: column;">
-  <h2>Create Employee</h2>
-  <form id="createEmployeeForm">
-    <!-- Personal Information -->
-    <input type="text" id="firstName" placeholder="First Name" required>
-    <input type="text" id="lastName" placeholder="Last Name" required>
-    <input type="email" id="email" placeholder="Email" required>
-    <input type="password" id="password" placeholder="Password" required>
-    <input type="date" id="dob" placeholder="Date of Birth" required>
-    <select id="gender" required>
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-      <option value="other">Other</option>
-    </select>
+  <div style="margin-top: 60px; position: relative; width: 100%; align-items: center; justify-content: center; display: flex; flex-direction: column;">
+    <h2>Create Employee</h2>
+    <form id="createEmployeeForm">
+      <!-- Personal Information -->
+      <input type="text" id="firstName" placeholder="First Name" required>
+      <input type="text" id="lastName" placeholder="Last Name" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
 
-    <!-- Employment Details -->
-    <select id="role" required>
-      <option value="employee">Employee</option>
-      <option value="hr">HR</option>
-      <option value="manager">Manager</option>
-      <option value="admin">Admin</option>
-    </select>
-    <input type="date" id="hireDate" placeholder="Hire Date" required>
-    
-    
-    <select type="text" id="department">
-      <option value="QA">QA</option>
-      <option value="SR Developer">SR Developer</option>
-      <option value="JR  Developer">JR  Developer</option>
-      <option value="Intern">Intern</option>
-      <option value="Project Manager">Project Manager</option>
-      <option value="Jr Project Manager"> Jr Project Manager</option>
-      <option value="Qa Manager">Qa Manager</option>
-      <option value="DEVops Er">DEVops Er</option>
-      <option value="TESTER">TESTER</option>
-    </select><br>
+      <span style="display: flex; position: relative; width: 100%; flex-direction: row;">
+        <label for="dob" style="position: relative; display: flex; flex-direction: row; float: left; width: 30%; padding-left: 18px; padding-top: 4%; justify-content: center; align-items: center;">DOB: </label>
+        <input type="date" id="dob" style="position: relative; width: 70%;" placeholder="Date of Birth" required>
+      </span>
 
+      <select id="gender" required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
 
+      <!-- Employment Details -->
+      <select id="role" required>
+        <option value="employee">Employee</option>
+        <option value="hr">HR</option>
+        <option value="manager">Manager</option>
+        <option value="admin">Admin</option>
+      </select>
 
+      <input type="date" id="hireDate" placeholder="Hire Date">
 
+      <select type="text" id="department">
+        <option value="QA">QA</option>
+        <option value="SR Developer">SR Developer</option>
+        <option value="JR Developer">JR Developer</option>
+        <option value="Intern">Intern</option>
+        <option value="Project Manager">Project Manager</option>
+        <option value="Jr Project Manager">Jr Project Manager</option>
+        <option value="Qa Manager">Qa Manager</option>
+        <option value="DEVops Er">DEVops Er</option>
+        <option value="TESTER">TESTER</option>
+      </select><br>
 
-    <input type="text" id="salary" placeholder="Salary" required >
-    <select id="status" required>
-      <option value="active">Active</option>
-      <option value="inactive">Inactive</option>
-    </select>
-    <input type="text" id="managerId" placeholder="Manager ID (if applicable)">
-    <select id="employmentType" required>
-      <option value="full-time">Full-time</option>
-      <option value="part-time">Part-time</option>
-      <option value="contract">Contract</option>
-    </select>
+      <input type="text" id="salary" placeholder="Salary">
+      
+      <select id="isActive">
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+        <option value="waiting">On Waiting</option>
+        <option value="processing">Processing</option>
+      </select>
 
-    <!-- Contact Information -->
-    <input type="tel" id="phone" placeholder="Phone Number" required>
-    <input type="text" id="address" placeholder="Address" required>
-    <input type="text" id="city" placeholder="City" required>
-    <input type="text" id="state" placeholder="State" required>
-    <input type="text" id="zipCode" placeholder="Zip Code" required>
-    <input type="text" id="country" placeholder="Country" required>
+      <!-- Manager ID dropdown populated from API -->
+      <select id="managerId"></select>
 
-    <!-- Emergency Contact -->
-    <input type="text" id="emergencyContactName" placeholder="Emergency Contact Name" required>
-    <input type="tel" id="emergencyContactPhone" placeholder="Emergency Contact Phone" required>
+      <select id="employmentType">
+        <option value="full-time">Full-time</option>
+        <option value="part-time">Part-time</option>
+        <option value="contract">Contract</option>
+      </select>
 
-    <!-- Optional Profile Picture -->
-    <input type="file" id="profilePicture" accept="image/*">
+      <!-- Contact Information -->
+      <input type="tel" id="phone" placeholder="Phone Number">
+      <input type="text" id="address" placeholder="Address">
+      <input type="text" id="city" placeholder="City">
+      <input type="text" id="state" placeholder="State">
+      <input type="text" id="zipCode" placeholder="Zip Code">
+      <input type="text" id="country" placeholder="Country">
 
-    <button type="submit">Create</button>
-  </form>
- </div>
- <%- include('partials/footer') %> 
+      <!-- Emergency Contact -->
+      <input type="text" id="emergencyContactName" placeholder="Emergency Contact Name">
+      <input type="tel" id="emergencyContactPhone" placeholder="Emergency Contact Phone">
+
+      <!-- Education Section with Add Button -->
+      <div id="educationSection">
+        <!-- Initial education entry -->
+        <div class="educationEntry">
+          <input type="text" class="schoolName" placeholder="School Name">
+          <input type="number" class="passingYear" placeholder="Passing Year">
+          <input type="text" class="degreeName" placeholder="Degree Name">
+          <input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)">
+        </div>
+      </div>
+      <button type="button" id="addEducationBtn">Add Education</button>
+
+      <!-- Skills Section with Add Button -->
+      <div id="skillsSection">
+        <input type="text" class="skillsInput" placeholder="Enter Skill">
+      </div>
+      <button type="button" id="addSkillBtn">Add Skill</button>
+
+      <button type="submit">Create</button>
+
+      <!-- Close Button -->
+      <button type="button" id="closeBtn">Close</button>
+    </form>
+  </div>
+
+  <%- include('partials/footer') %>
 
   <script>
+    // Function to fetch and populate manager options
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('/api/helpdesk/allemp/employees');
+        const employees = await response.json();
+
+        const managerSelect = document.getElementById('managerId');
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'Select a Manager';
+        managerSelect.appendChild(defaultOption);
+
+        employees.forEach(employee => {
+          const option = document.createElement('option');
+          option.value = employee._id;
+          option.textContent = employee.name;
+          managerSelect.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Error fetching employees:', error);
+        alert('Failed to load employee list.');
+      }
+    });
+
+    // Form submission handler
     document.getElementById('createEmployeeForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -274,48 +324,49 @@ form button[type="submit"]:hover {
         return;
       }
 
-      const data = new FormData();
-      // Personal Information
-      data.append('firstName', document.getElementById('firstName').value);
-      data.append('lastName', document.getElementById('lastName').value);
-      data.append('email', document.getElementById('email').value);
-      data.append('password', document.getElementById('password').value);
-      data.append('dob', document.getElementById('dob').value);
-      data.append('gender', document.getElementById('gender').value);
+      // Collect form data into an object and replace missing fields with "N/A"
+      const educationEntries = Array.from(document.querySelectorAll('.educationEntry')).map(entry => ({
+        schoolName: entry.querySelector('.schoolName').value || 'N/A',
+        passingYear: entry.querySelector('.passingYear').value || 'N/A',
+        degreeName: entry.querySelector('.degreeName').value || 'N/A',
+        marks: entry.querySelector('.marks').value || 'N/A',
+      }));
 
-      // Employment Details
-      data.append('role', document.getElementById('role').value);
-      data.append('hireDate', document.getElementById('hireDate').value);
-      data.append('department', document.getElementById('department').value);
-      data.append('salary', document.getElementById('salary').value);
-      data.append('status', document.getElementById('status').value);
-      data.append('managerId', document.getElementById('managerId').value);
-      data.append('employmentType', document.getElementById('employmentType').value);
+      const skills = Array.from(document.querySelectorAll('.skillsInput')).map(input => input.value).join(', ') || 'N/A';
 
-      // Contact Information
-      data.append('phone', document.getElementById('phone').value);
-      data.append('address', document.getElementById('address').value);
-      data.append('city', document.getElementById('city').value);
-      data.append('state', document.getElementById('state').value);
-      data.append('zipCode', document.getElementById('zipCode').value);
-      data.append('country', document.getElementById('country').value);
-
-      // Emergency Contact
-      data.append('emergencyContactName', document.getElementById('emergencyContactName').value);
-      data.append('emergencyContactPhone', document.getElementById('emergencyContactPhone').value);
-
-      // Append the profile picture if selected
-      if (document.getElementById('profilePicture').files[0]) {
-        data.append('profilePicture', document.getElementById('profilePicture').files[0]);
-      }
+      const data = {
+        name: `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`,
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+        dob: document.getElementById('dob').value,
+        gender: document.getElementById('gender').value,
+        role: document.getElementById('role').value,
+        hireDate: document.getElementById('hireDate').value || 'N/A',
+        department: document.getElementById('department').value || 'N/A',
+        salary: document.getElementById('salary').value || 'N/A',
+        isActive: document.getElementById('isActive').value || 'N/A',
+        managerId: document.getElementById('managerId').value || 'N/A',
+        employmentType: document.getElementById('employmentType').value || 'N/A',
+        phone: document.getElementById('phone').value || 'N/A',
+        address: document.getElementById('address').value || 'N/A',
+        city: document.getElementById('city').value || 'N/A',
+        state: document.getElementById('state').value || 'N/A',
+        zipCode: document.getElementById('zipCode').value || 'N/A',
+        country: document.getElementById('country').value || 'N/A',
+        emergencyContactName: document.getElementById('emergencyContactName').value || 'N/A',
+        emergencyContactPhone: document.getElementById('emergencyContactPhone').value || 'N/A',
+        education: educationEntries,
+        skills: skills,
+      };
 
       try {
-        const response = await fetch('/api/emp/employees', {
+        const response = await fetch('/api/emp/signup', {
           method: 'POST',
           headers: {
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
           },
-          body: data,
+          body: JSON.stringify(data),
         });
 
         const result = await response.json();
@@ -327,6 +378,36 @@ form button[type="submit"]:hover {
       } catch (error) {
         alert('Error creating employee');
       }
+    });
+
+    // Add Education Input
+    document.getElementById('addEducationBtn').addEventListener('click', () => {
+      const educationSection = document.getElementById('educationSection');
+      const newEntry = document.createElement('div');
+      newEntry.classList.add('educationEntry');
+      
+      newEntry.innerHTML = `
+        <input type="text" class="schoolName" placeholder="School Name">
+        <input type="number" class="passingYear" placeholder="Passing Year">
+        <input type="text" class="degreeName" placeholder="Degree Name">
+        <input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)">
+      `;
+      educationSection.appendChild(newEntry);
+    });
+
+    // Add Skill Input
+    document.getElementById('addSkillBtn').addEventListener('click', () => {
+      const skillsSection = document.getElementById('skillsSection');
+      const newInput = document.createElement('input');
+      newInput.type = 'text';
+      newInput.classList.add('skillsInput');
+      newInput.placeholder = 'Enter Skill';
+      skillsSection.appendChild(newInput);
+    });
+
+    // Close button functionality
+    document.getElementById('closeBtn').addEventListener('click', () => {
+      window.location.href = '/';  // Redirect to the employees page
     });
   </script>
 </body>

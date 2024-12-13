@@ -307,6 +307,22 @@ exports.getAllManagerEmployees = async (req, res) => {
 };
 
 
+//all type employee
+exports.getAllEmpEmployees = async (req, res) => {
+  try {
+    // Fetch all employees with roles 'manager', 'admin', 'employee', and 'hr'
+    const employees = await Employee.find({
+      role: { $in: ['manager', 'admin', 'employee', 'hr'] }
+    }).select('name role');  // Select only name and role fields
+
+    res.status(200).json(employees);
+  } catch (error) {
+    console.error('Error fetching employees:', error); 
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 
 // for get hr name 
 exports.getAllHREmployees = async (req, res) => {

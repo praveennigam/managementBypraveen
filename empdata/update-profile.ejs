@@ -4,164 +4,640 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Update Profile</title>
+  <title>Edit Profile</title>
+
+ <style>/* General body styles */
+ body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e3d59, #004f6d);
+      color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+
+    /* Title of the page */
+    h1 {
+      font-size: 36px;
+      color: #f5f5f5;
+      margin-bottom: 20px;
+      text-align: center;
+      width: 100%;
+    }
+
+    /* Form container styles */
+    form {
+      width: 100%;
+      max-width: 800px;
+      background: transparent;
+      padding: 20px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      box-sizing: border-box;
+      margin-bottom: 40px;
+    }
+
+    /* Inline label and input grouping */
+    .input-group {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .input-group label {
+      width: 100%;
+    }
+
+    .input-group input {
+      width: 100%;
+    }
+
+    /* Input fields and select elements */
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+      padding: 12px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #003b54;
+      width: 100%;
+
+      color: #f5f5f5;
+      font-size: 16px;
+      margin-bottom: 15px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    /* Profile Image Section */
+    #profile-image {
+      border-radius: 50%;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    /* Textarea Styling */
+    textarea {
+      padding: 12px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #003b54;
+      color: #f5f5f5;
+      font-size: 16px;
+      resize: vertical;
+      width: 100%;
+    }
+
+    /* Education Table Styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table th,
+    table td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    table th {
+      background-color: #004f6d;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    table td {
+      background-color: #003b54;
+      color: #f5f5f5;
+      font-size: 14px;
+    }
+
+    /* Table input fields */
+    table td input[type="text"],
+    table td input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #003b54;
+      color: #f5f5f5;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    table button[type="button"] {
+      background-color: #d32f2f;
+      color: #fff;
+      padding: 8px;
+      border-radius: 5px;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+    }
+
+    table button[type="button"]:hover {
+      background-color: #c2185b;
+    }
+
+    /* Button Styling */
+    button[type="submit"] {
+      background-color: #00796b;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      align-self: center;
+      width: 50%;
+      margin-top: 20px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #004d40;
+      transform: scale(1.05);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      form {
+        width: 90%;
+        padding: 15px;
+      }
+
+      .input-group {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .input-group label {
+        width: 100%;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="number"],
+      input[type="date"],
+      select,
+      textarea {
+        font-size: 14px;
+      }
+
+      button[type="submit"] {
+        width: 100%;
+        padding: 12px;
+      }
+
+      table th,
+      table td {
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      table td input[type="text"],
+      table td input[type="number"] {
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      table button[type="button"] {
+        font-size: 12px;
+        padding: 8px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      form {
+        width: 95%;
+        padding: 10px;
+      }
+
+      button[type="submit"] {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      table th,
+      table td {
+        font-size: 10px;
+        padding: 6px;
+      }
+
+      table td input[type="text"],
+      table td input[type="number"] {
+        font-size: 10px;
+        padding: 6px;
+      }
+
+      table button[type="button"] {
+        font-size: 10px;
+        padding: 6px;
+      }
+    }
+ </style>
 </head>
 
 <body>
-  <h1>Update Profile</h1>
-  <form id="update-profile-form">
-    <!-- Form fields populated with user's current information -->
-    <label for="name">Name:</label><br>
-    <input type="text" id="name" name="name" value="<%= user.name %>" required><br><br>
+  <%- include('partials/navbar') %>
 
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" value="<%= user.email %>" required><br><br>
+  <div style="margin-top: 60px; position: relative; width: 99vw; align-items: center; justify-content: center; display: flex; flex-direction: column; margin-bottom: 20px;">
+    <h1>Edit Profile</h1>
 
-    <label for="role">Role:</label><br>
-    <input type="text" id="role" name="role" value="<%= user.role %>" required><br><br>
+    <!-- Form to Update Profile -->
+    <form id="update-profile-form" style="width: 80%; width: 100vw;">
 
-    <label for="department">Department:</label><br>
-    <input type="text" id="department" name="department" value="<%= user.department %>"><br><br>
+      <!-- Profile Image Section -->
+      <p>
+        <span id="image" class="profile-field" style="display: flex; align-items: center; justify-content: center;">
+          <img id="profile-image" src="" alt="Profile Image" width="100" height="100" style="display:inline;" onclick="openImageModal()">
+        </span>
+        <input type="file" id="image-edit" accept="image/*" onchange="updateProfileImage(event)" 
+        style="display: flex; align-items: center; justify-content: center; background-color: #003b54; color: #f5f5f5; padding: 8px 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; position: relative; width: 99%;">
+            </p>
 
-    <label for="contact">Contact Number:</label><br>
-    <input type="text" id="contact" name="contact" value="<%= user.contactNumber %>"><br><br>
+      <!-- Editable Fields -->
+      <div>
+        <label for="empId">Employee ID:</label>
+        <input type="text" id="empId" name="empId" readonly>
+      </div>
 
-    <label for="gender">Gender:</label><br>
-    <select id="gender" name="gender">
-      <option value="male" <%=user.gender==='male' ? 'selected' : '' %>>Male</option>
-      <option value="female" <%=user.gender==='female' ? 'selected' : '' %>>Female</option>
-      <option value="other" <%=user.gender==='other' ? 'selected' : '' %>>Other</option>
-    </select><br><br>
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+      </div>
 
-    <label for="dob">Date of Birth:</label><br>
-    <input type="date" id="dob" name="dob" value="<%= user.dateOfBirth %>"><br><br>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+      </div>
 
-    <label for="salary">Salary:</label><br>
-    <input type="number" id="salary" name="salary" value="<%= user.salary %>"><br><br>
-    <label for="education">Education:</label><br>
-    <input type="text" id="education" name="education" value="<%= user.education %>"><br><br>
+      <div>
+        <label for="role">Role:</label>
+        <input type="text" id="role" name="role">
+      </div>
 
-    <label for="workExperience">Work Experience:</label><br>
-    <input type="text" id="workExperience" name="workExperience" value="<%= user.workExperience %>"><br><br>
+      <div>
+        <label for="department">Department:</label>
+        <input type="text" id="department" name="department" readonly>
 
-    <label for="skills">Skills:</label><br>
-    <input type="text" id="skills" name="skills" value="<%= user.skills.join(', ') %>"><br><br>
 
-    <label for="certifications">Certifications:</label><br>
-    <input type="text" id="certifications" name="certifications" value="<%= user.certifications.join(', ') %>"><br><br>
 
-    <label for="performanceRating">Performance Rating:</label><br>
-    <input type="text" id="performanceRating" name="performanceRating" value="<%= user.performanceRating %>"><br><br>
+       
+         
 
-    <label for="workLocation">Work Location:</label><br>
-    <input type="text" id="workLocation" name="workLocation" value="<%= user.workLocation %>"><br><br>
 
-    <label for="employmentType">Employment Type:</label><br>
-    <input type="text" id="employmentType" name="employmentType" value="<%= user.employmentType %>"><br><br>
 
-    <label for="managerName">Manager Name:</label><br>
-    <input type="text" id="managerName" name="managerName" value="<%= user.managerName %>"><br><br>
 
-    <label for="emergencyContact">Emergency Contact:</label><br>
-    <input type="text" id="emergencyContact" name="emergencyContact"
-      value="<%= user.emergencyContact ? user.emergencyContact.name : '' %>"><br><br>
 
-    <label for="hireDate">Hire Date:</label><br>
-    <input type="date" id="hireDate" name="hireDate" value="<%= user.hireDate %>"><br><br>
 
-    <label for="employmentStatus">Employment Status:</label><br>
-    <input type="text" id="employmentStatus" name="employmentStatus" value="<%= user.employmentStatus %>"><br><br>
 
-    <label for="approvalStatus">Approval Status:</label><br>
-    <input type="text" id="approvalStatus" name="approvalStatus" value="<%= user.approvalStatus %>"><br><br>
+      </div>
 
-    <label for="lastPromotionDate">Last Promotion Date:</label><br>
-    <input type="date" id="lastPromotionDate" name="lastPromotionDate"
-      value="<%= user.lastPromotionDate ? user.lastPromotionDate : '' %>"><br><br>
+      <div>
+        <label for="contact">Contact Number:</label>
+        <input type="text" id="contact" name="contact">
+      </div>
 
-    <label for="probationPeriodEnd">Probation Period End:</label><br>
-    <input type="date" id="probationPeriodEnd" name="probationPeriodEnd"
-      value="<%= user.probationPeriodEnd ? user.probationPeriodEnd : '' %>"><br><br>
+      <div>
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
 
-    <label for="isMarried">Is Married:</label><br>
-    <select id="isMarried" name="isMarried">
-      <option value="true" <%=user.isMarried ? 'selected' : '' %>>Yes</option>
-      <option value="false" <%=!user.isMarried ? 'selected' : '' %>>No</option>
-    </select><br><br>
+      <div>
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob">
+      </div>
 
-    <label for="isActive">Is Active:</label><br>
-    <select id="isActive" name="isActive">
-      <option value="true" <%=user.isActive ? 'selected' : '' %>>Yes</option>
-      <option value="false" <%=!user.isActive ? 'selected' : '' %>>No</option>
-    </select><br><br>
+      <div>
+        <label for="salary">Salary:</label>
+        <input type="number" id="salary" name="salary" readonly>
+      </div>
 
-    <button type="submit">Update Profile</button>
-  </form>
+      <!-- Education Section -->
+      <p><strong>Education:</strong></p>
+      <table id="education-table">
+        <thead>
+          <tr>
+            <th>School Name</th>
+            <th>Passing Year</th>
+            <th>Degree</th>
+            <th>Marks</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="education-body">
+          <!-- Dynamically added education rows will go here -->
+        </tbody>
+      </table>
+      <button type="button" class="btn-add" onclick="addEducationRow()" style="background: linear-gradient(135deg, #004f6d, #2c3e50); color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: background 0.3s ease, transform 0.2s ease;">
+        Add More 
+      </button>
+            
+      <div>
+        <label for="workExperience">Work Experience:</label>
+        <textarea id="workExperience" name="workExperience"></textarea>
+      </div>
+
+      <div>
+        <label for="skills">Skills:</label>
+        <input type="text" id="skills" name="skills">
+      </div>
+
+      <div>
+        <label for="certifications">Certifications:</label>
+        <input type="text" id="certifications" name="certifications">
+      </div>
+
+      <div>
+        <label for="managerName">Manager Name:</label>
+        <input type="text" id="managerName" name="managerName" readonly>
+      </div>
+
+      <div>
+        <label for="performanceRating">Performance Rating:</label>
+        <input type="number" id="performanceRating" readonly name="performanceRating" min="1" max="5">
+      </div>
+
+      <div>
+        <label for="employmentType" readonly>Employment Type:</label>
+        <input type="text" id="employmentType" name="employmentType">
+      </div>
+
+      <div>
+        <label for="hireDate" readonly>Hire Date:</label>
+        <input type="date" id="hireDate" name="hireDate">
+      </div>
+
+      <div>
+        <label for="employmentStatus" readonly>Employment Status:</label>
+        <input type="text" id="employmentStatus" name="employmentStatus">
+      </div>
+
+      <div>
+        <label for="lastPromotionDate" readonly>Last Promotion Date:</label>
+        <input type="date" id="lastPromotionDate" name="lastPromotionDate" readonly>
+      </div>
+
+      <div>
+        <label for="isMarried">Is Married:</label>
+        <select id="isMarried" name="isMarried">
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="isActive" readonly>Is Active:</label>
+        <select id="isActive" name="isActive">
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="address">Address:</label>
+        <textarea id="address" name="address"></textarea>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit"  style="display: flex; position: relative; width:30%; justify-content: center; padding: 12px 8px; ">Update</button>
+    </form>
+  </div>
+
+  <%- include('partials/footer') %>
 
   <script>
-    // Get the userId and token from localStorage or URL (ensure it's available for submission)
-    const userId = localStorage.getItem('userId');
-    const token = localStorage.getItem('token');  // Assuming token is available in localStorage
+    document.addEventListener('DOMContentLoaded', function () {
+      const userId = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
 
-    const form = document.getElementById('update-profile-form');
+      if (!userId || !token) {
+        alert('You are not logged in. Please login first.');
+        window.location.href = '/login';
+        return;
+      }
 
-    form.addEventListener('submit', function (event) {
+      fetch(`/api/emp/employees/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data && data._id) {
+            populateEditProfile(data);
+            fetchImage(data._id);
+          } else {
+            alert('Failed to fetch profile data.');
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching profile details:', error);
+          alert('Error fetching profile data.');
+        });
+    });
+
+    function populateEditProfile(data) {
+      document.getElementById('empId').value = data.empId;
+      document.getElementById('name').value = data.name;
+      document.getElementById('email').value = data.email;
+      document.getElementById('role').value = data.role;
+      document.getElementById('department').value = data.department;
+      document.getElementById('contact').value = data.contactNumber;
+      document.getElementById('gender').value = data.gender;
+      document.getElementById('dob').value = new Date(data.dateOfBirth).toLocaleDateString('en-CA');
+      document.getElementById('salary').value = data.salary;
+      document.getElementById('workExperience').value = data.workExperience;
+      document.getElementById('skills').value = data.skills.join(', ');
+      document.getElementById('certifications').value = data.certifications.join(', ');
+      document.getElementById('managerName').value = data.managerName;
+      document.getElementById('performanceRating').value = data.performanceRating;
+      document.getElementById('employmentType').value = data.employmentType;
+      document.getElementById('hireDate').value = new Date(data.hireDate).toLocaleDateString('en-CA');
+      document.getElementById('employmentStatus').value = data.employmentStatus;
+      document.getElementById('lastPromotionDate').value = new Date(data.lastPromotionDate).toLocaleDateString('en-CA');
+      document.getElementById('isMarried').value = data.isMarried ? 'true' : 'false';
+      document.getElementById('isActive').value = data.isActive ? 'true' : 'false';
+      document.getElementById('address').value = data.address;
+
+      // Populating Education Table
+      const educationTableBody = document.getElementById('education-body');
+      educationTableBody.innerHTML = '';
+      data.education.forEach(ed => {
+        const row = document.createElement('tr');
+        row.innerHTML = ` 
+          <td><input type="text" name="schoolName[]" value="${ed.schoolName}"></td>
+          <td><input type="number" name="passingYear[]" value="${ed.passingYear}"></td>
+          <td><input type="text" name="degreeName[]" value="${ed.degreeName}"></td>
+          <td><input type="number" name="marks[]" value="${ed.marks}"></td>
+          <td><button type="button" class="btn-remove" onclick="removeEducationRow(this)">Remove</button></td>
+        `;
+        educationTableBody.appendChild(row);
+      });
+    }
+
+    function addEducationRow() {
+      const row = document.createElement('tr');
+      row.innerHTML = ` 
+        <td><input type="text" name="schoolName[]"></td>
+        <td><input type="number" name="passingYear[]"></td>
+        <td><input type="text" name="degreeName[]"></td>
+        <td><input type="number" name="marks[]"></td>
+        <td><button type="button" class="btn-remove" onclick="removeEducationRow(this)">Remove</button></td>
+      `;
+      document.getElementById('education-body').appendChild(row);
+    }
+
+    function removeEducationRow(button) {
+      const row = button.closest('tr');
+      row.remove();
+    }
+
+    // Update Profile Image
+    function updateProfileImage(event) {
+      const formData = new FormData();
+      const fileInput = document.getElementById('image-edit');
+      const file = fileInput.files[0];
+      formData.append('image', file);
+
+      const userId = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
+
+      if (file) {
+        fetch(`/api/emp/update-image/${userId}`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.image) {
+            fetchImage(userId); // Fetch and update the image on the profile
+          }
+        })
+        .catch(error => {
+          console.error('Error uploading image:', error);
+          alert('Error uploading image.');
+        });
+      }
+    }
+
+    // Fetch the current profile image
+    function fetchImage(userId) {
+      const token = localStorage.getItem('token');
+
+      fetch(`/api/emp/employee-image/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.image) {
+          document.getElementById('profile-image').src = `/${data.image}`;
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching image:', error);
+      });
+    }
+
+    // Form Submission for Profile Data
+    document.getElementById('update-profile-form').addEventListener('submit', function(event) {
       event.preventDefault();
-
-      const formData = new FormData(form);
-
-      // Prepare updated profile data to be sent in the request body
+      
       const updatedData = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        role: formData.get('role'),
-        department: formData.get('department'),
-        contactNumber: formData.get('contact'),
-        gender: formData.get('gender'),
-        dateOfBirth: formData.get('dob'),
-        salary: formData.get('salary'),
-        education: formData.get('education'),
-        workExperience: formData.get('workExperience'),
-        skills: formData.get('skills').split(',').map(skill => skill.trim()),
-        certifications: formData.get('certifications').split(',').map(cert => cert.trim()),
-        performanceRating: formData.get('performanceRating'),
-        workLocation: formData.get('workLocation'),
-        employmentType: formData.get('employmentType'),
-        managerName: formData.get('managerName'),
-        emergencyContact: formData.get('emergencyContact'),
-        hireDate: formData.get('hireDate'),
-        employmentStatus: formData.get('employmentStatus'),
-        approvalStatus: formData.get('approvalStatus'),
-        lastPromotionDate: formData.get('lastPromotionDate'),
-        probationPeriodEnd: formData.get('probationPeriodEnd'),
-        isMarried: formData.get('isMarried') === 'true',
-        isActive: formData.get('isActive') === 'true',
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        role: document.getElementById('role').value,
+        department: document.getElementById('department').value,
+        contactNumber: document.getElementById('contact').value,
+        gender: document.getElementById('gender').value,
+        dateOfBirth: document.getElementById('dob').value,
+        salary: document.getElementById('salary').value,
+        workExperience: document.getElementById('workExperience').value,
+        skills: document.getElementById('skills').value.split(','),
+        certifications: document.getElementById('certifications').value.split(','),
+        managerName: document.getElementById('managerName').value,
+        performanceRating: document.getElementById('performanceRating').value,
+        employmentType: document.getElementById('employmentType').value,
+        hireDate: document.getElementById('hireDate').value,
+        employmentStatus: document.getElementById('employmentStatus').value,
+        lastPromotionDate: document.getElementById('lastPromotionDate').value,
+        isMarried: document.getElementById('isMarried').value === 'true',
+        isActive: document.getElementById('isActive').value === 'true',
+        address: document.getElementById('address').value,
+        education: []
       };
 
-      // Send the PUT request to update the profile on the server
+      const educationElements = document.querySelectorAll('#education-body tr');
+      educationElements.forEach(educationRow => {
+        const schoolName = educationRow.querySelector('input[name="schoolName[]"]').value;
+        const passingYear = educationRow.querySelector('input[name="passingYear[]"]').value;
+        const degreeName = educationRow.querySelector('input[name="degreeName[]"]').value;
+        const marks = educationRow.querySelector('input[name="marks[]"]').value;
+
+        if (schoolName && passingYear && degreeName && marks) {
+          updatedData.education.push({ schoolName, passingYear, degreeName, marks });
+        }
+      });
+
+      const userId = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
+
+      // Submit the updated profile data
       fetch(`/api/emp/employees/${userId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify(updatedData)
       })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            alert('Profile updated successfully!');
-            window.location.href = '/my-profile'; // Redirect to the profile page
-          } else {
-            alert('Error updating profile!');
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          alert('There was an error updating your profile.');
-        });
+      .then(response => response.json())
+      .then(data => {
+        if (data && data._id) {
+          alert('Profile updated successfully.');
+          populateEditProfile(data); // Update the profile with the new data
+        } else {
+          alert('Failed to update profile.');
+        }
+      })
+      .catch(error => {
+        console.error('Error updating profile:', error);
+        alert('Error updating profile.');
+      });
     });
   </script>
+
 </body>
 
 </html>
+    
+ 

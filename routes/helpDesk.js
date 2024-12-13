@@ -12,6 +12,7 @@ router.post('/myticket', helpDeskController.createTicket);
 //get hr & manager name 
 router.get('/hr/employees', helpDeskController.getAllHREmployees);
 router.get('/manager/employees', helpDeskController.getAllManagerEmployees);
+router.get('/allemp/employees', helpDeskController.getAllEmpEmployees);
 
 
 
