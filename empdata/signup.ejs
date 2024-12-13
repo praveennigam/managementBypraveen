@@ -175,13 +175,16 @@ button:hover {
     </select>
 
     <!-- Location and Address -->
-    <input type="text" id="workLocation" placeholder="Work Location" required>
+    <input type="text" id="contactNumber" placeholder="contactNumber" required>
     <input type="text" id="address" placeholder="Address" required>
 
 
     <!-- Date of Birth -->
-    <input type="date" id="dateOfBirth" placeholder="Date of Birth" required>
-
+     <span style="display: flex; position: relative; width: 100%; flex-direction: row;">
+     <label for="" style="position: relative; display: flex; flex-direction: row; float: left; width: 30%; padding-left: 18px; padding-top: 3%;">DOB: 
+     </label> 
+     <input type="date" id="dateOfBirth" style="position: relative; width: 70%;" placeholder="Date of Birth" required>
+  </span>
     <!-- Submit Button -->
     <button type="submit" style="background: linear-gradient(135deg, #1e3d59, #004f6d);">Signup</button>
   </form>
@@ -198,9 +201,8 @@ button:hover {
         email: document.getElementById('email').value,
         password: document.getElementById('password').value,
         role: document.getElementById('role').value,
-        workLocation: document.getElementById('workLocation').value,
         address: document.getElementById('address').value,
-        
+        contactNumber: document.getElementById('contactNumber').value,
         dateOfBirth: document.getElementById('dateOfBirth').value,
       };
 

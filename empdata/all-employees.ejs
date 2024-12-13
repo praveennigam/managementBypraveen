@@ -281,7 +281,7 @@ form button[type="button"]:hover {
         <th>Emp ID</th>
         <th>Name</th>
         <th>Email</th>
-        <th>Role</th>
+        <th >Role</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -310,8 +310,24 @@ form button[type="button"]:hover {
         <option value="employee">Employee</option>
       </select><br>
 
+       
       <label>Department:</label><br>
-      <input type="text" id="editDepartment"><br>
+      <select type="text" id="editDepartment">
+        <option value="QA">QA</option>
+        <option value="SR Developer">SR Developer</option>
+        <option value="JR  Developer">JR  Developer</option>
+        <option value="intern">Intern</option>
+        <option value="Project Manager">Project Manager</option>
+        <option value="Jr Project Manager"> Jr Project Manager</option>
+        <option value="Qa Manager">Qa Manager</option>
+        <option value="DEVops Er">DEVops Er</option>
+        <option value="TESTER">TESTER</option>
+      </select><br>
+
+
+
+
+
 
       <label>Contact Number:</label><br>
       <input type="text" id="editContactNumber"><br>
@@ -451,47 +467,55 @@ async function fetchManagers() {
 
     // Fetch employees and display them in a table
     async function fetchEmployees() {
-        try {
-            const response = await fetch('/api/emp/employees', {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            const employees = await response.json();
-            const tableBody = document.querySelector('#employeesTable tbody');
-            tableBody.innerHTML = ''; // Clear the table body before adding new data
+    try {
+        const response = await fetch('/api/emp/employees', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+        const employees = await response.json();
+        const tableBody = document.querySelector('#employeesTable tbody');
+        tableBody.innerHTML = ''; // Clear the table body before adding new data
 
-            // Get the current user's role
-            const userRole = localStorage.getItem('role');
-            console.log("User Role: ", userRole);
+        // Sort employees by hireDate in descending order (latest first)
+        employees.sort((a, b) => new Date(b.hireDate) - new Date(a.hireDate));
 
-            employees.forEach(employee => {
-                const row = document.createElement('tr');
-                let editDeleteButtons = '';
+        // Get the current user's role
+        const userRole = localStorage.getItem('role');
+        console.log("User Role: ", userRole);
 
-                // Show "Edit" and "Delete" buttons for HR or Admin
-                if (userRole === 'admin' || userRole === 'hr') {
-                    editDeleteButtons = `
-                        <button onclick="editEmployee('${employee._id}')">Edit</button>
-                        <button onclick="deleteEmployee('${employee._id}')">Delete</button>
-                    `;
-                }
+        employees.forEach(employee => {
+            const row = document.createElement('tr');
+            let editDeleteButtons = '';
 
-                row.innerHTML = `
-                    <td>${employee.empId}</td> <!-- Use MongoDB _id here -->
-                    <td>${employee.name}</td>
-                    <td>${employee.email}</td>
-                    <td>${employee.role}</td>
-                    <td>${editDeleteButtons}</td>
+            // Show "Edit" and "Delete" buttons for HR or Admin
+            if (userRole === 'admin' || userRole === 'hr') {
+                editDeleteButtons = `
+                    <button onclick="editEmployee('${employee._id}')">Edit</button>
+                    <button onclick="deleteEmployee('${employee._id}')">Delete</button>
                 `;
-                tableBody.appendChild(row);
-            });
-        } catch (error) {
-            console.error('Error fetching employees:', error);
-            alert('Error fetching employees');
-        }
+            }
+
+            row.innerHTML = `
+                <td>${employee.empId}</td> <!-- Use MongoDB _id here -->
+                <td>${employee.name}</td>
+                <td>${employee.email}</td>
+                <td style="color: ${employee.role === 'admin' ? 'green' : 
+                                 employee.role === 'hr' ? 'orange' : 
+                                 employee.role === 'manager' ? 'blue' : 
+                                 'red'};">
+                    ${employee.role.toUpperCase()}
+                </td>
+                <td>${editDeleteButtons}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error fetching employees:', error);
+        alert('Error fetching employees');
     }
+}
 
     // Edit employee details
     async function editEmployee(id) {
