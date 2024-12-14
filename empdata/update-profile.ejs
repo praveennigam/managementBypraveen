@@ -325,8 +325,8 @@
       </div>
 
       <div>
-        <label for="dob">Date of Birth:</label>
-        <input type="date" id="dob" name="dob">
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="date" id="dateOfBirth" name="dateOfBirth">
       </div>
 
       <div>
@@ -466,9 +466,9 @@
       document.getElementById('email').value = data.email;
       document.getElementById('role').value = data.role;
       document.getElementById('department').value = data.department;
-      document.getElementById('contact').value = data.contactNumber;
+      document.getElementById('contact').value = data.contact;
       document.getElementById('gender').value = data.gender;
-      document.getElementById('dob').value = new Date(data.dateOfBirth).toLocaleDateString('en-CA');
+      document.getElementById('dateOfBirth').value = new Date(data.dateOfBirth).toLocaleDateString('en-CA');
       document.getElementById('salary').value = data.salary;
       document.getElementById('workExperience').value = data.workExperience;
       document.getElementById('skills').value = data.skills.join(', ');
@@ -577,9 +577,9 @@
         email: document.getElementById('email').value,
         role: document.getElementById('role').value,
         department: document.getElementById('department').value,
-        contactNumber: document.getElementById('contact').value,
+        contact: document.getElementById('contact').value,
         gender: document.getElementById('gender').value,
-        dateOfBirth: document.getElementById('dob').value,
+        dateOfBirth: document.getElementById('dateOfBirth').value,
         salary: document.getElementById('salary').value,
         workExperience: document.getElementById('workExperience').value,
         skills: document.getElementById('skills').value.split(','),

@@ -18,7 +18,7 @@ const employeeSchema = new mongoose.Schema({
   manager: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee', default: null },
   hireDate: { type: Date, default: Date.now },
   department: { type: String },
-  contactNumber: { type: String },
+  contact: { type: String },
   address: { type: String },
   isActive: { type: String },
   image: { type: String, default: null },
@@ -27,7 +27,7 @@ const employeeSchema = new mongoose.Schema({
   emergencyContact: {
     name: { type: String },
     relationship: { type: String },
-    phone: { type: String },
+    contact: { type: String },
   },
   employmentStatus: {
     type: String,
@@ -39,6 +39,7 @@ const employeeSchema = new mongoose.Schema({
     enum: ['pending', 'approved', 'rejected'],
     default: 'approved',
   },
+  dateOfBirth: { type: Date},
   dateOfJoining: { type: Date, default: Date.now },
   endDate: { type: Date },
   performanceRating: { type: Number, min: 1, max: 5 },
@@ -132,7 +133,7 @@ module.exports = Employee;
 //   manager: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee', default: null },
 //   hireDate: { type: Date, default: Date.now },
 //   department: { type: String },
-//   contactNumber: { type: String },
+//   contact: { type: String },
 //   address: { type: String },
 //   isActive: { type: Boolean, default: true },
 //   image: { type: String, default: null },
@@ -141,7 +142,7 @@ module.exports = Employee;
 //   emergencyContact: {
 //     name: { type: String },
 //     relationship: { type: String },
-//     phone: { type: String }
+//     contact: { type: String }
 //   },
 //   employmentStatus: {
 //     type: String,

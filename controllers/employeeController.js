@@ -77,7 +77,7 @@ const generateOfferLetter = async (offerDetails, filePath) => {
   pdfDocument.moveDown();
 
   // Contact and Emergency Information
-  pdfDocument.text(`Contact: ${offerDetails.contactNumber || 'N/A'}`);
+  pdfDocument.text(`Contact: ${offerDetails.contact || 'N/A'}`);
   pdfDocument.moveDown();
 
   // Closing Remarks
@@ -146,7 +146,7 @@ const sendSignupConfirmationEmail = async (email, name) => {
 
 const signup = async (req, res) => {
   try {
-    const { name, email, password, role, manager, department, contactNumber, address } = req.body;
+    const { name, email, password, role, manager, department,endDate,dateOfJoining,dateOfBirth,lastPromotionDate,workLocation,hireDate,isActive,gender,emergencyContact,salary,isMarried,workExperience,probationPeriodEnd,managerName, contact, address ,education, skills  } = req.body;
 
     // Check if the email already exists in the database
     const existingUser = await Employee.findOne({ email });
@@ -162,8 +162,13 @@ const signup = async (req, res) => {
       role: role || 'employee', // Default role to 'employee' if not provided
       manager,
       department,
-      contactNumber,
-      address
+      contact,
+      address,
+      education, 
+      skills,
+      endDate,dateOfJoining,dateOfBirth,lastPromotionDate,workLocation,hireDate,isActive,gender,emergencyContact,salary,isMarried,workExperience,probationPeriodEnd,managerName, 
+
+     
     });
 
     // Save the new employee to the database
@@ -180,7 +185,7 @@ const signup = async (req, res) => {
       salary: newEmployee.salary,
       dateOfJoining: newEmployee.dateOfJoining,
       empId: newEmployee.empId,
-      contactNumber: newEmployee.contactNumber,
+      contact: newEmployee.contact,
       address: newEmployee.address,
       gender: newEmployee.gender,
       employmentType: newEmployee.employmentType,
@@ -529,13 +534,13 @@ module.exports = {
 // const jwt = require('jsonwebtoken');
 
 // exports.signup = async (req, res) => {
-//   const { name, email, password, role, department, contactNumber, address } = req.body;
+//   const { name, email, password, role, department, contact, address } = req.body;
 //   try {
 //     const existingEmployee = await Employee.findOne({ email });
 //     if (existingEmployee) {
 //       return res.status(400).json({ message: 'Employee already exists' });
 //     }
-//     const newEmployee = new Employee({ name, email, password, role, department, contactNumber, address });
+//     const newEmployee = new Employee({ name, email, password, role, department, contact, address });
 //     await newEmployee.save();
 //     res.status(201).json({ message: 'Employee created successfully', employee: newEmployee });
 //   } catch (error) {
@@ -572,7 +577,7 @@ module.exports = {
 // };
 
 // exports.createEmployee = async (req, res) => {
-//   const { name, email, password, role, department, contactNumber, address } = req.body;
+//   const { name, email, password, role, department, contact, address } = req.body;
 //   try {
 //     const newEmployee = new Employee({
 //       name,
@@ -580,7 +585,7 @@ module.exports = {
 //       password,
 //       role,
 //       department,
-//       contactNumber,
+//       contact,
 //       address,
 //       image: req.file ? req.file.path : null
 //     });
@@ -629,7 +634,7 @@ module.exports = {
 
 // exports.updateEmployee = async (req, res) => {
 //   const { id } = req.params;
-//   const { name, email, password, role, department, contactNumber, address } = req.body;
+//   const { name, email, password, role, department, contact, address } = req.body;
 //   try {
 //     const employee = await Employee.findById(id);
 //     if (!employee) {
@@ -641,7 +646,7 @@ module.exports = {
 //       if (email) employee.email = email;
 //       if (password) employee.password = password;
 //       if (department) employee.department = department;
-//       if (contactNumber) employee.contactNumber = contactNumber;
+//       if (contact) employee.contact = contact;
 //       if (address) employee.address = address;
 //       if (req.file) employee.image = req.file.path;
 //     } else if (['admin', 'manager', 'hr'].includes(req.user.role)) {
@@ -649,7 +654,7 @@ module.exports = {
 //       if (email) employee.email = email;
 //       if (password) employee.password = password;
 //       if (department) employee.department = department;
-//       if (contactNumber) employee.contactNumber = contactNumber;
+//       if (contact) employee.contact = contact;
 //       if (address) employee.address = address;
 //       if (req.file) employee.image = req.file.path;
 //     } else {

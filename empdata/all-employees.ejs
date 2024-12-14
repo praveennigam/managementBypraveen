@@ -266,6 +266,73 @@ form button[type="button"]:hover {
 }
 
 
+table {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are joined */
+  margin-top: 20px;
+}
+
+table th, table td {
+  font-size: 12px;
+  padding: 8px;
+  text-align: left; /* Align text to the left */
+  border: 1px solid #ddd; /* Light border for the table */
+}
+
+table td input[type="text"],
+table td input[type="number"] {
+  font-size: 12px;
+  padding: 8px;
+  width: 100%; /* Make inputs span the full width of their cell */
+  border: 1px solid #ddd; /* Border for the input fields */
+  border-radius: 6px;
+  background-color: transparent; /* Transparent background */
+  color: #fff; /* White text */
+}
+
+/* Button Styling */
+table button[type="button"] {
+  font-size: 12px;
+  padding: 8px;
+  background-color: #3498db; /* Blue background */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+table button[type="button"]:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Add Education button */
+#addEducationBtn {
+  font-size: 14px;
+  padding: 10px;
+  background-color: #2ecc71; /* Green background */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+#addEducationBtn:hover {
+  background-color: #27ae60; /* Darker green on hover */
+}
+
+/* Remove Education button */
+.removeEducationBtn {
+  background-color: #e74c3c; /* Red background */
+}
+
+.removeEducationBtn:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+
 </style>
 </head>
 
@@ -323,7 +390,7 @@ form button[type="button"]:hover {
           </select><br>
   
           <label>Contact Number:</label><br>
-          <input type="text" id="editContactNumber"><br>
+          <input type="text" id="editcontact"><br>
   
           <label>Address:</label><br>
           <input type="text" id="editAddress"><br>
@@ -341,8 +408,8 @@ form button[type="button"]:hover {
           <label>Emergency Contact Name:</label><br>
           <input type="text" id="editEmergencyContactName"><br>
   
-          <label>Emergency Contact Phone:</label><br>
-          <input type="text" id="editEmergencyContactPhone"><br>
+          <label>Emergency Contact contact:</label><br>
+          <input type="text" id="editEmergencyContactcontact"><br>
   
           <label>Employment Status:</label><br>
           <select id="editEmploymentStatus">
@@ -373,15 +440,30 @@ form button[type="button"]:hover {
   
           <!-- Editable Education Section -->
           <div id="educationSection">
-            <div class="editEducation">
-              <input type="text" class="schoolName" placeholder="School Name">
-              <input type="number" class="passingYear" placeholder="Passing Year">
-              <input type="text" class="degreeName" placeholder="Degree Name">
-              <input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)">
-            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>School Name</th>
+                  <th>Passing Year</th>
+                  <th>Degree Name</th>
+                  <th>Marks</th>
+                  <th>Actions</th> <!-- Add an additional header for actions -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="editEducation">
+                  <td><input type="text" class="schoolName" placeholder="School Name"></td>
+                  <td><input type="number" class="passingYear" placeholder="Passing Year"></td>
+                  <td><input type="text" class="degreeName" placeholder="Degree Name"></td>
+                  <td><input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)"></td>
+                  <td><button type="button" class="removeEducationBtn">Remove</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="button" id="addEducationBtn">Add Education</button><br>
           </div>
-          <button type="button" id="addEducationBtn">Add Education</button><br>
-  
+          
+          
           <label>Work Experience:</label><br>
           <input type="text" id="editWorkExperience"><br>
   
@@ -453,20 +535,34 @@ form button[type="button"]:hover {
           }
       }
   
+      
+
+      
+
       // Add an education entry dynamically
       document.getElementById('addEducationBtn').addEventListener('click', function () {
-          const educationSection = document.getElementById('educationSection');
-          const newEducation = document.createElement('div');
-          newEducation.classList.add('editEducation');
-          newEducation.innerHTML = `
-              <input type="text" class="schoolName" placeholder="School Name">
-              <input type="number" class="passingYear" placeholder="Passing Year">
-              <input type="text" class="degreeName" placeholder="Degree Name">
-              <input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)">
-          `;
-          educationSection.appendChild(newEducation);
-      });
+  const educationTableBody = document.querySelector('#educationSection table tbody');
+  const newEducationRow = document.createElement('tr');
+  newEducationRow.classList.add('editEducation');
   
+  newEducationRow.innerHTML = `
+    <td><input type="text" class="schoolName" placeholder="School Name"></td>
+    <td><input type="number" class="passingYear" placeholder="Passing Year"></td>
+    <td><input type="text" class="degreeName" placeholder="Degree Name"></td>
+    <td><input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)"></td>
+    <td><button type="button" class="removeEducationBtn">Remove</button></td>
+  `;
+  
+  // Append the new row to the table body
+  educationTableBody.appendChild(newEducationRow);
+
+  // Add event listener for removing the entire row
+  newEducationRow.querySelector('.removeEducationBtn').addEventListener('click', function () {
+    educationTableBody.removeChild(newEducationRow); // Remove the entire row
+  });
+});
+
+
       // Fetch employees and display them in a table
       async function fetchEmployees() {
           try {
@@ -544,12 +640,12 @@ form button[type="button"]:hover {
               document.getElementById('editEmail').value = employee.email;
               document.getElementById('editRole').value = employee.role;
               document.getElementById('editDepartment').value = employee.department || '';
-              document.getElementById('editContactNumber').value = employee.contactNumber || '';
+              document.getElementById('editcontact').value = employee.contact || '';
               document.getElementById('editAddress').value = employee.address || '';
               document.getElementById('editGender').value = employee.gender || 'male';
               document.getElementById('editDateOfBirth').value = employee.dateOfBirth ? employee.dateOfBirth.split('T')[0] : '';
               document.getElementById('editEmergencyContactName').value = employee.emergencyContact?.name || '';
-              document.getElementById('editEmergencyContactPhone').value = employee.emergencyContact?.phone || '';
+              document.getElementById('editEmergencyContactcontact').value = employee.emergencyContact?.contact || '';
               document.getElementById('editEmploymentStatus').value = employee.employmentStatus || 'active';
               document.getElementById('editApprovalStatus').value = employee.approvalStatus || 'approved';
               document.getElementById('editHireDate').value = employee.hireDate ? employee.hireDate.split('T')[0] : '';
@@ -563,8 +659,6 @@ form button[type="button"]:hover {
               document.getElementById('editWorkLocation').value = employee.workLocation || '';
               document.getElementById('editEmploymentType').value = employee.employmentType || 'full-time';
               document.getElementById('editProbationPeriodEnd').value = employee.probationPeriodEnd ? employee.probationPeriodEnd.split('T')[0] : '';
-  
-              // Set the pre-selected manager
               document.getElementById('editManagerName').value = employee.managerId || '';  // Use managerId from employee
   
           } catch (error) {
@@ -580,12 +674,12 @@ form button[type="button"]:hover {
           const email = document.getElementById('editEmail').value;
           const role = document.getElementById('editRole').value;
           const department = document.getElementById('editDepartment').value;
-          const contactNumber = document.getElementById('editContactNumber').value;
+          const contact = document.getElementById('editcontact').value;
           const address = document.getElementById('editAddress').value;
           const gender = document.getElementById('editGender').value;
           const dateOfBirth = document.getElementById('editDateOfBirth').value;
           const emergencyContactName = document.getElementById('editEmergencyContactName').value;
-          const emergencyContactPhone = document.getElementById('editEmergencyContactPhone').value;
+          const emergencyContactcontact = document.getElementById('editEmergencyContactcontact').value;
           const employmentStatus = document.getElementById('editEmploymentStatus').value;
           const approvalStatus = document.getElementById('editApprovalStatus').value;
           const hireDate = document.getElementById('editHireDate').value;
@@ -620,11 +714,11 @@ form button[type="button"]:hover {
             email,
             role,
             department,
-            contactNumber,
+            contact,
             address,
             gender,
             dateOfBirth,
-            emergencyContact: { name: emergencyContactName, phone: emergencyContactPhone },
+            emergencyContact: { name: emergencyContactName, contact: emergencyContactcontact },
             employmentStatus,
             approvalStatus,
             hireDate,

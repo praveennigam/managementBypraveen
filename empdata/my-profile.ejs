@@ -182,8 +182,8 @@ strong {
         /* Title Styling */
       
     </style>
-</head>
-<body> 
+</head> 
+<body>
   <%- include('partials/navbar') %> 
   <div style="margin-top: 60px; position: relative; width: 100%; align-items: center; justify-content: center; display: flex; flex-direction: column;">
     <h1>My Profile</h1>
@@ -208,10 +208,9 @@ strong {
       <p><strong>Department:</strong> <span id="department" class="profile-field"></span></p>
       <p><strong>Contact:</strong> <span id="contact" class="profile-field"></span></p>
       <p><strong>Gender:</strong> <span id="gender" class="profile-field"></span></p>
-      <p><strong>Date of Birth:</strong> <span id="dob" class="profile-field"></span></p>
+      <p><strong>Date of Birth:</strong> <span id="dateOfBirth" class="profile-field"></span></p>
       <p><strong>Salary:</strong> <span id="salary" class="profile-field"></span></p>
 
- 
       <p><strong>Work Experience:</strong> <span id="workExperience" class="profile-field"></span></p>
       <p><strong>Skills:</strong> <span id="skills" class="profile-field"></span></p>
       <p><strong>Certifications:</strong> <span id="certifications" class="profile-field"></span></p>
@@ -227,8 +226,6 @@ strong {
 
       <!-- Address Field -->
       <p><strong>Address:</strong> <span id="address" class="profile-field"></span></p>
-        
-
 
       <p><strong>Education:</strong></p>
       <table id="education-table">
@@ -242,7 +239,6 @@ strong {
         </thead>
         <tbody id="education-body"></tbody>
       </table>
- 
     </div>
 
   <%- include('partials/footer') %> 
@@ -252,12 +248,15 @@ strong {
       const userId = localStorage.getItem('userId'); 
       const token = localStorage.getItem('token'); 
 
+      // Check if the user is logged in
       if (!userId || !token) {
         alert('You are not logged in. Please login first.');
         window.location.href = '/login';
         return;
       }
 
+      // Fetch profile data
+      console.log('Fetching profile data for userId:', userId);
       fetch(`/api/emp/employees/${userId}`, {
         method: 'GET',
         headers: {
@@ -267,9 +266,13 @@ strong {
       })
         .then(response => response.json())
         .then(data => {
+          console.log('Fetched profile data:', data); // Log profile data
           if (data && data._id) {
             populateProfile(data);
             fetchImage(data._id);
+            if (data.manager) {
+              fetchManagerName(data.manager); // Fetch manager's name
+            }
           } else {
             alert('Failed to fetch profile data.');
           }
@@ -280,25 +283,28 @@ strong {
         });
     });
 
+    // Function to toggle edit mode and redirect to the update profile page
     function toggleEditMode() {
-      // Transition to the update profile page
+      console.log('Redirecting to edit profile page...');
       window.location.href = '/update-profile';
     }
 
+    // Function to populate profile data on the page
     function populateProfile(data) {
+      console.log('Populating profile data:', data); // Log data being populated
+
       document.getElementById('empId').innerText = data.empId;
       document.getElementById('name').innerText = data.name;
       document.getElementById('email').innerText = data.email;
       document.getElementById('role').innerText = data.role;
       document.getElementById('department').innerText = data.department;
-      document.getElementById('contact').innerText = data.contactNumber;
+      document.getElementById('contact').innerText = data.contact;
       document.getElementById('gender').innerText = data.gender;
-      document.getElementById('dob').innerText = new Date(data.dateOfBirth).toLocaleDateString();
+      document.getElementById('dateOfBirth').innerText = new Date(data.dateOfBirth).toLocaleDateString();
       document.getElementById('salary').innerText = data.salary;
       document.getElementById('workExperience').innerText = data.workExperience;
       document.getElementById('skills').innerText = data.skills.join(', ');
       document.getElementById('certifications').innerText = data.certifications.join(', ');
-      document.getElementById('managerName').innerText = data.managerName;
 
       document.getElementById('performanceRating').innerText = data.performanceRating;
       document.getElementById('employmentType').innerText = data.employmentType;
@@ -309,7 +315,7 @@ strong {
       document.getElementById('isMarried').innerText = data.isMarried ? 'Yes' : 'No';
       document.getElementById('isActive').innerText = data.isActive ? 'Yes' : 'No';
 
-      // Populating Education Table
+      // Populate Education Table
       const educationTableBody = document.getElementById('education-body');
       educationTableBody.innerHTML = '';
       data.education.forEach(ed => {
@@ -325,40 +331,69 @@ strong {
 
       // Set Address Field
       document.getElementById('address').innerText = data.address;
+
+      console.log('Profile populated successfully.');
     }
 
+    // Function to fetch profile image
     function fetchImage(userId) {
       const token = localStorage.getItem('token');
+
+      console.log('Fetching image for userId:', userId); // Log userId for image fetch
+
       fetch(`/api/emp/employee-image/${userId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
         }
       })
-        .then(response => response.json())
-        .then(data => {
-          if (data && data.image) {
-            const imageUrl = `/${data.image}`;
-            const imgElement = document.getElementById('profile-image');
-            imgElement.src = imageUrl;
-            imgElement.style.display = 'inline'; // Display the image when it's fetched
-          } else {
-            console.log('No image found');
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching profile image:', error);
-          alert('Error loading profile image.');
-        });
+      .then(response => response.json())
+      .then(data => {
+        console.log('Fetched image data:', data); // Log image data
+        if (data && data.image) {
+          const profileImage = document.getElementById('profile-image');
+          profileImage.src = `/${data.image}`;
+          profileImage.style.display = 'block'; // Show the image
+          console.log('Image displayed.');
+        } else {
+          console.log('No image found for the user.');
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching image:', error);
+      });
     }
 
-    // Function to trigger print
+    // Fetch Manager Name from the manager ID
+    function fetchManagerName(managerId) {
+      const token = localStorage.getItem('token');
+      console.log('Fetching manager name for managerId:', managerId);
+
+      fetch(`/api/emp/employees/${managerId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.name) {
+          document.getElementById('managerName').innerText = data.name;
+        } else {
+          console.log('Manager name not found.');
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching manager name:', error);
+      });
+    }
+
+    // Function to trigger printing of profile page
     function printProfile() {
+      console.log('Printing profile...');
       window.print();
     }
   </script>
 </body>
-
-
 </html>
-

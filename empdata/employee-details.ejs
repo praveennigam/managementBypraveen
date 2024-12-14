@@ -17,7 +17,7 @@
     <p><strong>Contact:</strong> <span id="contact"></span></p>
     <p><strong>Address:</strong> <span id="address"></span></p>
     <p><strong>Gender:</strong> <span id="gender"></span></p>
-    <p><strong>Date of Birth:</strong> <span id="dob"></span></p>
+    <p><strong>Date of Birth:</strong> <span id="dateOfBirth"></span></p>
     <p><strong>Salary:</strong> <span id="salary"></span></p>
     <button onclick="window.history.back()">Back</button>
   </div>
@@ -38,10 +38,10 @@
           document.getElementById('email').innerText = data.email;
           document.getElementById('role').innerText = data.role;
           document.getElementById('department').innerText = data.department;
-          document.getElementById('contact').innerText = data.contactNumber;
+          document.getElementById('contact').innerText = data.contact;
           document.getElementById('address').innerText = data.address;
           document.getElementById('gender').innerText = data.gender;
-          document.getElementById('dob').innerText = data.dateOfBirth;
+          document.getElementById('dateOfBirth').innerText = data.dateOfBirth;
           document.getElementById('salary').innerText = data.salary;
         }
       })

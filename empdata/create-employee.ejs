@@ -183,10 +183,101 @@ form button[type="submit"]:hover {
         width: 48%; /* 50% layout for two fields in a row */
     }
 }
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are joined */
+  margin-top: 20px;
+}
+
+table th, table td {
+  font-size: 12px;
+  padding: 8px;
+  text-align: left; /* Align text to the left */
+  border: 1px solid #ddd; /* Light border for the table */
+}
+
+table td input[type="text"],
+table td input[type="number"] {
+  font-size: 12px;
+  padding: 8px;
+  width: 100%; /* Make inputs span the full width of their cell */
+  border: 1px solid #ddd; /* Border for the input fields */
+  border-radius: 6px;
+  background-color: transparent; /* Transparent background */
+  color: #fff; /* White text */
+}
+
+/* Button Styling */
+table button[type="button"] {
+  font-size: 12px;
+  padding: 8px;
+  background-color: #3498db; /* Blue background */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+table button[type="button"]:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Add Education button */
+#addEducationBtn {
+  font-size: 14px;
+  padding: 10px;
+  background-color: #2ecc71; /* Green background */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+#addEducationBtn:hover {
+  background-color: #27ae60; /* Darker green on hover */
+}
+
+/* Remove Education button */
+.removeEducationBtn {
+  background-color: #e74c3c; /* Red background */
+}
+
+.removeEducationBtn:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 480px) {
+  table th, table td {
+    font-size: 10px;
+    padding: 6px;
+  }
+
+  table td input[type="text"],
+  table td input[type="number"] {
+    font-size: 10px;
+    padding: 6px;
+  }
+
+  table button[type="button"] {
+    font-size: 10px;
+    padding: 6px;
+  }
+
+  #addEducationBtn {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
+
 
     </style>
 </head>
-<body>
+<<body>
   <%- include('partials/navbar') %>
 
   <div style="margin-top: 60px; position: relative; width: 100%; align-items: center; justify-content: center; display: flex; flex-direction: column;">
@@ -199,8 +290,8 @@ form button[type="submit"]:hover {
       <input type="password" id="password" placeholder="Password" required>
 
       <span style="display: flex; position: relative; width: 100%; flex-direction: row;">
-        <label for="dob" style="position: relative; display: flex; flex-direction: row; float: left; width: 30%; padding-left: 18px; padding-top: 4%; justify-content: center; align-items: center;">DOB: </label>
-        <input type="date" id="dob" style="position: relative; width: 70%;" placeholder="Date of Birth" required>
+        <label for="dateOfBirth" style="position: relative; display: flex; flex-direction: row; float: left; width: 30%; padding-left: 18px; padding-top: 4%; justify-content: center; align-items: center;">dateOfBirth: </label>
+        <input type="date" id="dateOfBirth" style="position: relative; width: 70%;" placeholder="Date of Birth" required>
       </span>
 
       <select id="gender" required>
@@ -250,7 +341,7 @@ form button[type="submit"]:hover {
       </select>
 
       <!-- Contact Information -->
-      <input type="tel" id="phone" placeholder="Phone Number">
+      <input type="tel" id="contact" placeholder="contact Number">
       <input type="text" id="address" placeholder="Address">
       <input type="text" id="city" placeholder="City">
       <input type="text" id="state" placeholder="State">
@@ -259,20 +350,35 @@ form button[type="submit"]:hover {
 
       <!-- Emergency Contact -->
       <input type="text" id="emergencyContactName" placeholder="Emergency Contact Name">
-      <input type="tel" id="emergencyContactPhone" placeholder="Emergency Contact Phone">
+      <input type="tel" id="emergencyContactcontact" placeholder="Emergency Contact contact">
 
       <!-- Education Section with Add Button -->
       <div id="educationSection">
         <!-- Initial education entry -->
-        <div class="educationEntry">
-          <input type="text" class="schoolName" placeholder="School Name">
-          <input type="number" class="passingYear" placeholder="Passing Year">
-          <input type="text" class="degreeName" placeholder="Degree Name">
-          <input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)">
+        <div id="educationSection">
+          <table id="educationTable">
+            <thead>
+              <tr>
+                <th>School Name</th>
+                <th>Passing Year</th>
+                <th>Degree Name</th>
+                <th>Marks</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="educationEntry">
+                <td><input type="text" class="schoolName" placeholder="School Name"></td>
+                <td><input type="number" class="passingYear" placeholder="Passing Year"></td>
+                <td><input type="text" class="degreeName" placeholder="Degree Name"></td>
+                <td><input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)"></td>
+                <td><button type="button" class="removeEducationBtn">Remove</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <button type="button" id="addEducationBtn">Add Education</button>
         </div>
-      </div>
-      <button type="button" id="addEducationBtn">Add Education</button>
-
+        
       <!-- Skills Section with Add Button -->
       <div id="skillsSection">
         <input type="text" class="skillsInput" placeholder="Enter Skill">
@@ -324,7 +430,7 @@ form button[type="submit"]:hover {
         return;
       }
 
-      // Collect form data into an object and replace missing fields with "N/A"
+      // Collect education data
       const educationEntries = Array.from(document.querySelectorAll('.educationEntry')).map(entry => ({
         schoolName: entry.querySelector('.schoolName').value || 'N/A',
         passingYear: entry.querySelector('.passingYear').value || 'N/A',
@@ -332,33 +438,36 @@ form button[type="submit"]:hover {
         marks: entry.querySelector('.marks').value || 'N/A',
       }));
 
-      const skills = Array.from(document.querySelectorAll('.skillsInput')).map(input => input.value).join(', ') || 'N/A';
+      // Collect skills data (skills array)
+      const skills = Array.from(document.querySelectorAll('.skillsInput')).map(input => input.value).filter(skill => skill.trim() !== '');
 
+      // Collect other form data (personal, employment, etc.)
       const data = {
         name: `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`,
         email: document.getElementById('email').value,
         password: document.getElementById('password').value,
-        dob: document.getElementById('dob').value,
+        dateOfBirth: document.getElementById('dateOfBirth').value,
         gender: document.getElementById('gender').value,
         role: document.getElementById('role').value,
         hireDate: document.getElementById('hireDate').value || 'N/A',
         department: document.getElementById('department').value || 'N/A',
         salary: document.getElementById('salary').value || 'N/A',
         isActive: document.getElementById('isActive').value || 'N/A',
-        managerId: document.getElementById('managerId').value || 'N/A',
+        manager: document.getElementById('managerId').value || 'N/A',
         employmentType: document.getElementById('employmentType').value || 'N/A',
-        phone: document.getElementById('phone').value || 'N/A',
+        contact: document.getElementById('contact').value || 'N/A',
         address: document.getElementById('address').value || 'N/A',
         city: document.getElementById('city').value || 'N/A',
         state: document.getElementById('state').value || 'N/A',
         zipCode: document.getElementById('zipCode').value || 'N/A',
         country: document.getElementById('country').value || 'N/A',
         emergencyContactName: document.getElementById('emergencyContactName').value || 'N/A',
-        emergencyContactPhone: document.getElementById('emergencyContactPhone').value || 'N/A',
-        education: educationEntries,
-        skills: skills,
+        emergencyContactcontact: document.getElementById('emergencyContactcontact').value || 'N/A',
+        education: educationEntries, // This is where the education array is included
+        skills: skills, // Collecting skills
       };
 
+      // Send the collected data to the API endpoint
       try {
         const response = await fetch('/api/emp/signup', {
           method: 'POST',
@@ -379,20 +488,32 @@ form button[type="submit"]:hover {
         alert('Error creating employee');
       }
     });
-
+    
     // Add Education Input
-    document.getElementById('addEducationBtn').addEventListener('click', () => {
-      const educationSection = document.getElementById('educationSection');
-      const newEntry = document.createElement('div');
-      newEntry.classList.add('educationEntry');
-      
-      newEntry.innerHTML = `
-        <input type="text" class="schoolName" placeholder="School Name">
-        <input type="number" class="passingYear" placeholder="Passing Year">
-        <input type="text" class="degreeName" placeholder="Degree Name">
-        <input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)">
+    document.getElementById('addEducationBtn').addEventListener('click', function() {
+      // Get the table body
+      const tableBody = document.querySelector('#educationTable tbody');
+
+      // Create a new row with input fields for education
+      const newRow = document.createElement('tr');
+      newRow.classList.add('educationEntry');
+
+      newRow.innerHTML = `
+        <td><input type="text" class="schoolName" placeholder="School Name"></td>
+        <td><input type="number" class="passingYear" placeholder="Passing Year"></td>
+        <td><input type="text" class="degreeName" placeholder="Degree Name"></td>
+        <td><input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)"></td>
+        <td><button type="button" class="removeEducationBtn">Remove</button></td>
       `;
-      educationSection.appendChild(newEntry);
+
+      // Append the new row to the table body
+      tableBody.appendChild(newRow);
+
+      // Add event listener to the "Remove" button in the newly added row
+      const removeButton = newRow.querySelector('.removeEducationBtn');
+      removeButton.addEventListener('click', function() {
+        newRow.remove(); // Remove the row when the button is clicked
+      });
     });
 
     // Add Skill Input
@@ -411,5 +532,4 @@ form button[type="submit"]:hover {
     });
   </script>
 </body>
-
 </html>
