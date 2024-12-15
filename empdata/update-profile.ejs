@@ -473,7 +473,7 @@
       document.getElementById('workExperience').value = data.workExperience;
       document.getElementById('skills').value = data.skills.join(', ');
       document.getElementById('certifications').value = data.certifications.join(', ');
-      document.getElementById('managerName').value = data.managerName;
+      document.getElementById('managerName').value = data.manager;
       document.getElementById('performanceRating').value = data.performanceRating;
       document.getElementById('employmentType').value = data.employmentType;
       document.getElementById('hireDate').value = new Date(data.hireDate).toLocaleDateString('en-CA');
@@ -584,7 +584,7 @@
         workExperience: document.getElementById('workExperience').value,
         skills: document.getElementById('skills').value.split(','),
         certifications: document.getElementById('certifications').value.split(','),
-        managerName: document.getElementById('managerName').value,
+        manager: document.getElementById('managerName').value,
         performanceRating: document.getElementById('performanceRating').value,
         employmentType: document.getElementById('employmentType').value,
         hireDate: document.getElementById('hireDate').value,

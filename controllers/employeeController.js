@@ -68,7 +68,7 @@ const generateOfferLetter = async (offerDetails, filePath) => {
   pdfDocument.moveDown();
 
   // Introduction
-  pdfDocument.fontSize(12).text(`We are pleased to offer you the position of ${offerDetails.role.toUpperCase()} at TheWebSeller Pvt. Ltd.`);
+  pdfDocument.fontSize(12).text(`We are pleased to offer you the position of ${offerDetails.department.toUpperCase()} at TheWebSeller Pvt. Ltd.`);
   pdfDocument.moveDown();
 
   // Employee Details
@@ -166,7 +166,7 @@ const signup = async (req, res) => {
       address,
       education, 
       skills,
-      endDate,dateOfJoining,dateOfBirth,lastPromotionDate,workLocation,hireDate,isActive,gender,emergencyContact,salary,isMarried,workExperience,probationPeriodEnd,managerName, 
+      endDate,dateOfJoining,dateOfBirth,lastPromotionDate,workLocation,isActive,gender,emergencyContact,salary,isMarried,workExperience,probationPeriodEnd,managerName,hireDate 
 
      
     });

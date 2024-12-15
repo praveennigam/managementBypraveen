@@ -284,14 +284,14 @@ table button[type="button"]:hover {
     <h2>Create Employee</h2>
     <form id="createEmployeeForm">
       <!-- Personal Information -->
-      <input type="text" id="firstName" placeholder="First Name" required>
-      <input type="text" id="lastName" placeholder="Last Name" required>
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="password" id="password" placeholder="Password" required>
+      <input type="text" id="firstName" placeholder="First Name" >
+      <input type="text" id="lastName" placeholder="Last Name" >
+      <input type="email" id="email" placeholder="Email" >
+      <input type="password" id="password" placeholder="Password" >
 
       <span style="display: flex; position: relative; width: 100%; flex-direction: row; justify-content: space-between;">
-        <label for="dateOfBirth" style="position: relative; display:  flex; font-size: 22px; flex-direction: row; float: left; width: 45%; padding-left: 18px; padding-top: 4%; justify-content: center; align-items: center;">Birth: </label>
-        <input type="date" id="dateOfBirth" style="position: relative; width: 45%;" placeholder="Date of Birth" required>
+        <label for="dateOfBirth" style="position: relative; display:  flex; font-size: 22px; flex-direction: row; float: left; width: 30%; padding-left: 18px;  padding-top: 4%;  align-items: center;">Birth: </label>
+        <input type="date" id="dateOfBirth" style="position: relative; width: 70%;" placeholder="Date of Birth" required>
       </span>
 
       <select id="gender" required>
@@ -309,11 +309,12 @@ table button[type="button"]:hover {
       </select>
 
 
-      <span style="display: flex; position: relative; width: 100%; flex-direction: row; justify-content: space-between;">  
-       <label for="dateOfBirth" style="position: relative; display:  flex; font-size: 22px; flex-direction: row; float: left; width: 45%; padding-left: 18px; padding-top: 4%; justify-content: center; align-items: center;">Hire Date: </label>
-       <input type="date" id="hireDate"  style="position: relative; width: 45%;" placeholder="Hire Date">
-      </span>
-      <select type="text" id="department">
+        <input type="date" id="hireDate" style="position: relative; width: 100%;" placeholder="Hire Date">
+      
+      
+      
+
+       <select type="text" id="department">
         <option value="QA">QA</option>
         <option value="SR Developer">SR Developer</option>
         <option value="JR Developer">JR Developer</option>
@@ -455,8 +456,7 @@ table button[type="button"]:hover {
         dateOfBirth: document.getElementById('dateOfBirth').value,
         gender: document.getElementById('gender').value,
         role: document.getElementById('role').value,
-        hireDate: document.getElementById('hireDate').value || 'N/A',
-        department: document.getElementById('department').value || 'N/A',
+        hireDate: document.getElementById('hireDate').value || new Date().toISOString().split('T')[0],        department: document.getElementById('department').value || 'N/A',
         salary: document.getElementById('salary').value || 'N/A',
         isActive: document.getElementById('isActive').value || 'N/A',
         manager: document.getElementById('managerId').value || 'N/A',

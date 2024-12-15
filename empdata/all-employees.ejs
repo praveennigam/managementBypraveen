@@ -542,7 +542,7 @@ table button[type="button"]:hover {
         // Fetch the list of managers from the API and populate the Manager Name dropdown
         async function fetchManagers() {
             try {
-                const response = await fetch('/api/helpdesk/manager/employees', {
+                const response = await fetch('/api/helpdesk/allemp/employees', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
