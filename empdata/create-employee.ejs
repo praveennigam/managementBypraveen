@@ -290,8 +290,8 @@ table button[type="button"]:hover {
       <input type="password" id="password" placeholder="Password" required>
 
       <span style="display: flex; position: relative; width: 100%; flex-direction: row;">
-        <label for="dateOfBirth" style="position: relative; display:  flex; font-size: 16px; flex-direction: row; float: left; width: 30%; padding-left: 18px; padding-top: 4%; justify-content: center; align-items: center;">DateOfBirth: </label>
-        <input type="date" id="dateOfBirth" style="position: relative; width: 70%;" placeholder="Date of Birth" required>
+        <label for="dateOfBirth" style="position: relative; display:  flex; font-size: 22px; flex-direction: row; float: left; width: 30%; padding-left: 18px; padding-top: 4%; justify-content: center; align-items: center;">Birth: </label>
+        <input type="date" id="dateOfBirth" style="position: relative; width: 50%;" placeholder="Date of Birth" required>
       </span>
 
       <select id="gender" required>
@@ -308,8 +308,11 @@ table button[type="button"]:hover {
         <option value="admin">Admin</option>
       </select>
 
-      <input type="date" id="hireDate" placeholder="Hire Date">
 
+      <span style="display: flex; position: relative; width: 100%; flex-direction: row;">  
+       <label for="dateOfBirth" style="position: relative; display:  flex; font-size: 22px; flex-direction: row; float: left; width: 30%; padding-left: 18px; padding-top: 4%; justify-content: center; align-items: center;">Hire Date: </label>
+       <input type="date" id="hireDate"  style="position: relative; width: 50%;" placeholder="Hire Date">
+      </span>
       <select type="text" id="department">
         <option value="QA">QA</option>
         <option value="SR Developer">SR Developer</option>
@@ -368,11 +371,11 @@ table button[type="button"]:hover {
             </thead>
             <tbody>
               <tr class="educationEntry">
-                <td><input type="text" class="schoolName" placeholder="School Name"></td>
-                <td><input type="number" class="passingYear" placeholder="Passing Year"></td>
-                <td><input type="text" class="degreeName" placeholder="Degree Name"></td>
-                <td><input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)"></td>
-                <td><button type="button" class="removeEducationBtn">Remove</button></td>
+                <td><input type="text" class="schoolName" placeholder="School Name" required></td>
+                <td><input type="number" class="passingYear" placeholder="Passing Year" required></td>
+                <td><input type="text" class="degreeName" placeholder="Degree Name" required></td>
+                <td><input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)" required></td>
+                <td><button type="button" class="removeEducationBtn" style="color: #2980b9;">Remove</button></td>
               </tr>
             </tbody>
           </table>
