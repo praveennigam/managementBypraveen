@@ -280,7 +280,7 @@ table button[type="button"]:hover {
 <<body>
   <%- include('partials/navbar') %>
 
-  <div style="margin-top: 60px; position: relative; width: 100%; align-items: center; justify-content: center; display: flex; flex-direction: column;">
+  <div style="margin-top: 60px; position: relative; width: 100%; align-items: center; justify-content: center; margin-bottom: 30px; display: flex; flex-direction: column;">
     <h2>Create Employee</h2>
     <form id="createEmployeeForm">
       <!-- Personal Information -->
@@ -290,7 +290,7 @@ table button[type="button"]:hover {
       <input type="password" id="password" placeholder="Password" required>
 
       <span style="display: flex; position: relative; width: 100%; flex-direction: row;">
-        <label for="dateOfBirth" style="position: relative; display: flex; flex-direction: row; float: left; width: 30%; padding-left: 18px; padding-top: 4%; justify-content: center; align-items: center;">dateOfBirth: </label>
+        <label for="dateOfBirth" style="position: relative; display:  flex; font-size: 16px; flex-direction: row; float: left; width: 30%; padding-left: 18px; padding-top: 4%; justify-content: center; align-items: center;">DateOfBirth: </label>
         <input type="date" id="dateOfBirth" style="position: relative; width: 70%;" placeholder="Date of Birth" required>
       </span>
 
@@ -376,7 +376,7 @@ table button[type="button"]:hover {
               </tr>
             </tbody>
           </table>
-          <button type="button" id="addEducationBtn">Add Education</button>
+          <button type="button" id="addEducationBtn" style="background-color: transparent; color: #faa79e; cursor: pointer;">Add Education</button>
         </div>
         
       <!-- Skills Section with Add Button -->
@@ -385,10 +385,13 @@ table button[type="button"]:hover {
       </div>
       <button type="button" id="addSkillBtn">Add Skill</button>
 
-      <button type="submit">Create</button>
+      <span style="display: flex; justify-content: space-around;">      
+        <button type="submit" style="width: 45%; background-color: #27ae5f76;">Create</button>
+        <button type="button" id="closeBtn" style="width: 45%; background-color: #5450d769;">Close</button>
+
+      </span>
 
       <!-- Close Button -->
-      <button type="button" id="closeBtn">Close</button>
     </form>
   </div>
 

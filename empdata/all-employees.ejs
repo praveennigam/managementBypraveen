@@ -154,7 +154,19 @@ form button:hover {
 }
 
 form button[type="button"] {
-    background-color: #e74c3c;
+    padding: 6px 12px;
+    background-color: transparent; /* Transparent background */
+    color: blue; /* Make text transparent */
+    border: 2px solid #6a11cb; /* Border with matching purple color */
+    border-radius: 4px;
+    cursor: pointer;
+    width: 46%;
+    font-size: 12px;
+    margin: 5px;
+    background-image: linear-gradient(45deg, #6a11cb, #2575fc); 
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    transition: all 0.3s ease; 
 }
 
 form button[type="button"]:hover {
@@ -201,6 +213,7 @@ form button[type="button"]:hover {
         width: 100%;
         font-size: 14px;
         padding: 12px 18px;
+        
     }
 
     /* Table Adjustments */
@@ -262,6 +275,7 @@ form button[type="button"]:hover {
     form button {
         font-size: 16px;
         padding: 12px 20px;
+        
     }
 }
 
@@ -287,36 +301,48 @@ table td input[type="number"] {
   border: 1px solid #ddd; /* Border for the input fields */
   border-radius: 6px;
   background-color: transparent; /* Transparent background */
-  color: #fff; /* White text */
+  color: rebeccapurple; /* White text */
 }
 
 /* Button Styling */
 table button[type="button"] {
   font-size: 12px;
   padding: 8px;
-  background-color: #3498db; /* Blue background */
-  color: white;
-  border: none;
-  cursor: pointer;
+  background-image: linear-gradient(45deg, #6a11cb, #2575fc); 
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    transition: all 0.3s ease; 
+cursor: pointer;
   border-radius: 6px;
+  border: none;
   transition: background-color 0.3s ease;
 }
 
 table button[type="button"]:hover {
-  background-color: #2980b9; /* Darker blue on hover */
+    background-image: linear-gradient(45deg, #db3949, #2575fc); 
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    transition: all 0.3s ease; 
 }
 
 /* Add Education button */
 #addEducationBtn {
-  font-size: 14px;
-  padding: 10px;
-  background-color: #2ecc71; /* Green background */
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 6px;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
+    padding: 6px 10px;
+    
+    background-color: transparent; /* Transparent background */
+    color: transparent; /* Make text transparent */
+    border: 2px solid #6a11cb; /* Border with matching purple color */
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 10px;
+    background-image: linear-gradient(45deg, #6a11cb, #2575fc); 
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    transition: all 0.3s ease; 
 }
 
 #addEducationBtn:hover {
@@ -501,188 +527,205 @@ table button[type="button"]:hover {
     </div>
     <%- include('partials/footer') %>
   
+
     <script>
-      const token = localStorage.getItem('token');
-      if (!token) {
-          window.location.href = '/login'; // Redirect to login if no token exists
-      }
-  
-      // Fetch the list of managers from the API and populate the Manager Name dropdown
-      async function fetchManagers() {
-          try {
-              const response = await fetch('/api/helpdesk/manager/employees', {
-                  method: 'GET',
-                  headers: {
-                      'Authorization': `Bearer ${token}`,
-                  },
-              });
-              const managers = await response.json();
-  
-              const managerSelect = document.getElementById('editManagerName');
-              managerSelect.innerHTML = '';  // Clear any existing options
-  
-              // Add an option for each manager
-              managers.forEach(manager => {
-                  const option = document.createElement('option');
-                  option.value = manager._id;  // Use the manager's _id for value
-                  option.textContent = manager.name;  // Display the manager's name
-                  managerSelect.appendChild(option);
-              });
-  
-          } catch (error) {
-              console.error('Error fetching managers:', error);
-              alert('Error fetching managers');
-          }
-      }
-  
-      
-
-      
-
-      // Add an education entry dynamically
-      document.getElementById('addEducationBtn').addEventListener('click', function () {
-  const educationTableBody = document.querySelector('#educationSection table tbody');
-  const newEducationRow = document.createElement('tr');
-  newEducationRow.classList.add('editEducation');
-  
-  newEducationRow.innerHTML = `
-    <td><input type="text" class="schoolName" placeholder="School Name"></td>
-    <td><input type="number" class="passingYear" placeholder="Passing Year"></td>
-    <td><input type="text" class="degreeName" placeholder="Degree Name"></td>
-    <td><input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)"></td>
-    <td><button type="button" class="removeEducationBtn">Remove</button></td>
-  `;
-  
-  // Append the new row to the table body
-  educationTableBody.appendChild(newEducationRow);
-
-  // Add event listener for removing the entire row
-  newEducationRow.querySelector('.removeEducationBtn').addEventListener('click', function () {
-    educationTableBody.removeChild(newEducationRow); // Remove the entire row
-  });
-});
-
-
-      // Fetch employees and display them in a table
-      async function fetchEmployees() {
-          try {
-              const response = await fetch('/api/emp/employees', {
-                  method: 'GET',
-                  headers: {
-                      'Authorization': `Bearer ${token}`,
-                  },
-              });
-              const employees = await response.json();
-              const tableBody = document.querySelector('#employeesTable tbody');
-              tableBody.innerHTML = ''; // Clear the table body before adding new data
-  
-              // Sort employees by hireDate in descending order (latest first)
-              employees.sort((a, b) => new Date(b.hireDate) - new Date(a.hireDate));
-  
-              // Get the current user's role
-              const userRole = localStorage.getItem('role');
-              console.log("User Role: ", userRole);
-  
-              employees.forEach(employee => {
-                  const row = document.createElement('tr');
-                  let editDeleteButtons = '';
-  
-                  // Show "Edit" and "Delete" buttons for HR or Admin
-                  if (userRole === 'admin' || userRole === 'hr') {
-                      editDeleteButtons = `
-                          <button onclick="editEmployee('${employee._id}')">Edit</button>
-                          <button onclick="deleteEmployee('${employee._id}')">Delete</button>
-                      `;
-                  }
-  
-                  row.innerHTML = `
-                      <td>${employee.empId}</td> <!-- Use MongoDB _id here -->
-                      <td>${employee.name}</td>
-                      <td>${employee.email}</td>
-                      <td style="color: ${employee.role === 'admin' ? 'green' : 
-                                       employee.role === 'hr' ? 'orange' : 
-                                       employee.role === 'manager' ? 'blue' : 
-                                       'red'};">
-                          ${employee.role.toUpperCase()}
-                      </td>
-                      <td>${editDeleteButtons}</td>
-                  `;
-                  tableBody.appendChild(row);
-              });
-          } catch (error) {
-              console.error('Error fetching employees:', error);
-              alert('Error fetching employees');
-          }
-      }
-  
-      // Edit employee details
-      async function editEmployee(id) {
-          try {
-              const response = await fetch(`/api/emp/employees/${id}`, {
-                  method: 'GET',
-                  headers: {
-                      'Authorization': `Bearer ${token}`,
-                  },
-              });
-  
-              if (!response.ok) {
-                  alert('Error fetching employee details');
-                  return;
-              }
-  
-              const employee = await response.json();
-  
-              // Pre-fill the form with employee data
-              document.getElementById('editEmployeeForm').style.display = 'block';
-              document.getElementById('editEmpId').value = employee.empId;  // Display empId
-              document.getElementById('editEmpId').value = employee._id;  // Use _id for PUT method
-              document.getElementById('editName').value = employee.name;
-              document.getElementById('editEmail').value = employee.email;
-              document.getElementById('editRole').value = employee.role;
-              document.getElementById('editDepartment').value = employee.department || '';
-              document.getElementById('editcontact').value = employee.contact || '';
-              document.getElementById('editAddress').value = employee.address || '';
-              document.getElementById('editGender').value = employee.gender || 'male';
-              document.getElementById('editDateOfBirth').value = employee.dateOfBirth ? employee.dateOfBirth.split('T')[0] : '';
-              document.getElementById('editEmergencyContactName').value = employee.emergencyContact?.name || '';
-              document.getElementById('editEmergencyContactcontact').value = employee.emergencyContact?.contact || '';
-              document.getElementById('editEmploymentStatus').value = employee.employmentStatus || 'active';
-              document.getElementById('editApprovalStatus').value = employee.approvalStatus || 'approved';
-              document.getElementById('editHireDate').value = employee.hireDate ? employee.hireDate.split('T')[0] : '';
-              document.getElementById('editPerformanceRating').value = employee.performanceRating || '';
-              document.getElementById('editSalary').value = employee.salary || '';
-              document.getElementById('editIsMarried').checked = employee.isMarried || false;
-              document.getElementById('editWorkExperience').value = employee.workExperience || '';
-              document.getElementById('editSkills').value = employee.skills?.join(', ') || '';
-              document.getElementById('editCertifications').value = employee.certifications?.join(', ') || '';
-              document.getElementById('editLastPromotionDate').value = employee.lastPromotionDate ? employee.lastPromotionDate.split('T')[0] : '';
-              document.getElementById('editWorkLocation').value = employee.workLocation || '';
-              document.getElementById('editEmploymentType').value = employee.employmentType || 'full-time';
-              document.getElementById('editProbationPeriodEnd').value = employee.probationPeriodEnd ? employee.probationPeriodEnd.split('T')[0] : '';
-              document.getElementById('editManagerName').value = employee.managerId || '';  // Use managerId from employee
-  
-          } catch (error) {
-              console.error('Error fetching employee details:', error);
-              alert('Error fetching employee details');
-          }
-      }
-  
-      // Save edited employee details
-      async function saveEmployee() {
-          const id = document.getElementById('editEmpId').value;  // MongoDB _id is used here
-          const name = document.getElementById('editName').value;
-          const email = document.getElementById('editEmail').value;
-          const role = document.getElementById('editRole').value;
-          const department = document.getElementById('editDepartment').value;
-          const contact = document.getElementById('editcontact').value;
-          const address = document.getElementById('editAddress').value;
-          const gender = document.getElementById('editGender').value;
-          const dateOfBirth = document.getElementById('editDateOfBirth').value;
-          const emergencyContactName = document.getElementById('editEmergencyContactName').value;
-          const emergencyContactcontact = document.getElementById('editEmergencyContactcontact').value;
-          const employmentStatus = document.getElementById('editEmploymentStatus').value;
-          const approvalStatus = document.getElementById('editApprovalStatus').value;
-          const hireDate = document.getElementById('editHireDate').value;
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = '/login'; // Redirect to login if no token exists
+        }
+    
+        // Fetch the list of managers from the API and populate the Manager Name dropdown
+        async function fetchManagers() {
+            try {
+                const response = await fetch('/api/helpdesk/manager/employees', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+                const managers = await response.json();
+    
+                const managerSelect = document.getElementById('editManagerName');
+                managerSelect.innerHTML = '';  // Clear any existing options
+    
+                // Add an option for each manager
+                managers.forEach(manager => {
+                    const option = document.createElement('option');
+                    option.value = manager._id;  // Use the manager's _id for value
+                    option.textContent = manager.name;  // Display the manager's name
+                    managerSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching managers:', error);
+                alert('Error fetching managers');
+            }
+        }
+    
+        // Add an education entry dynamically
+        document.getElementById('addEducationBtn').addEventListener('click', function () {
+            const educationTableBody = document.querySelector('#educationSection table tbody');
+            const newEducationRow = document.createElement('tr');
+            newEducationRow.classList.add('editEducation');
+    
+            newEducationRow.innerHTML = `
+                <td><input type="text" class="schoolName" placeholder="School Name"></td>
+                <td><input type="number" class="passingYear" placeholder="Passing Year"></td>
+                <td><input type="text" class="degreeName" placeholder="Degree Name"></td>
+                <td><input type="text" class="marks" placeholder="Marks (e.g., CGPA, Percentage)"></td>
+                <td><button type="button" class="removeEducationBtn">Remove</button></td>
+            `;
+    
+            // Append the new row to the table body
+            educationTableBody.appendChild(newEducationRow);
+    
+            // Add event listener for removing the entire row
+            newEducationRow.querySelector('.removeEducationBtn').addEventListener('click', function () {
+                educationTableBody.removeChild(newEducationRow); // Remove the entire row
+            });
+        });
+    
+        // Fetch employees and display them in a table
+        async function fetchEmployees() {
+            try {
+                const response = await fetch('/api/emp/employees', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+                const employees = await response.json();
+                const tableBody = document.querySelector('#employeesTable tbody');
+                tableBody.innerHTML = ''; // Clear the table body before adding new data
+    
+                // Sort employees by hireDate in descending order (latest first)
+                employees.sort((a, b) => new Date(b.hireDate) - new Date(a.hireDate));
+    
+                // Get the current user's role
+                const userRole = localStorage.getItem('role');
+                console.log("User Role: ", userRole);
+    
+                employees.forEach(employee => {
+                    const row = document.createElement('tr');
+                    let editDeleteButtons = '';
+    
+                    // Show "Edit" and "Delete" buttons for HR or Admin
+                    if (userRole === 'admin' || userRole === 'hr') {
+                        editDeleteButtons = `
+                            <button onclick="editEmployee('${employee._id}')">Edit</button>
+                            <button onclick="deleteEmployee('${employee._id}')">Delete</button>
+                        `;
+                    }
+    
+                    row.innerHTML = `
+                        <td>${employee.empId}</td>
+                        <td>${employee.name}</td>
+                        <td>${employee.email}</td>
+                        <td style="color: ${employee.role === 'admin' ? 'green' : 
+                                        employee.role === 'hr' ? 'orange' : 
+                                        employee.role === 'manager' ? 'blue' : 
+                                        'red'};">
+                            ${employee.role.toUpperCase()}
+                        </td>
+                        <td>${editDeleteButtons}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching employees:', error);
+                alert('Error fetching employees');
+            }
+        }
+    
+        // Edit employee details
+        async function editEmployee(id) {
+            try {
+                const response = await fetch(`/api/emp/employees/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+    
+                if (!response.ok) {
+                    alert('Error fetching employee details');
+                    return;
+                }
+    
+                const employee = await response.json();
+    
+                // Pre-fill the form with employee data
+                document.getElementById('editEmployeeForm').style.display = 'block';
+                document.getElementById('editEmpId').value = employee.empId;  // Display empId
+                document.getElementById('editEmpId').value = employee._id;  // Use _id for PUT method
+                document.getElementById('editName').value = employee.name;
+                document.getElementById('editEmail').value = employee.email;
+                document.getElementById('editRole').value = employee.role;
+                document.getElementById('editDepartment').value = employee.department || '';
+                document.getElementById('editcontact').value = employee.contact || '';
+                document.getElementById('editAddress').value = employee.address || '';
+                document.getElementById('editGender').value = employee.gender || 'male';
+                document.getElementById('editDateOfBirth').value = employee.dateOfBirth ? employee.dateOfBirth.split('T')[0] : '';
+                document.getElementById('editEmergencyContactName').value = employee.emergencyContact?.name || '';
+                document.getElementById('editEmergencyContactcontact').value = employee.emergencyContact?.contact || '';
+                document.getElementById('editEmploymentStatus').value = employee.employmentStatus || 'active';
+                document.getElementById('editApprovalStatus').value = employee.approvalStatus || 'approved';
+                document.getElementById('editHireDate').value = employee.hireDate ? employee.hireDate.split('T')[0] : '';
+                document.getElementById('editPerformanceRating').value = employee.performanceRating || '';
+                document.getElementById('editSalary').value = employee.salary || '';
+                document.getElementById('editIsMarried').checked = employee.isMarried || false;
+                document.getElementById('editWorkExperience').value = employee.workExperience || '';
+                document.getElementById('editSkills').value = employee.skills?.join(', ') || '';
+                document.getElementById('editCertifications').value = employee.certifications?.join(', ') || '';
+                document.getElementById('editLastPromotionDate').value = employee.lastPromotionDate ? employee.lastPromotionDate.split('T')[0] : '';
+                document.getElementById('editWorkLocation').value = employee.workLocation || '';
+                document.getElementById('editEmploymentType').value = employee.employmentType || 'full-time';
+                document.getElementById('editProbationPeriodEnd').value = employee.probationPeriodEnd ? employee.probationPeriodEnd.split('T')[0] : '';
+                document.getElementById('editManagerName').value = employee.managerId || '';  // Use managerId from employee
+    
+                // Handle education data
+                const educationTableBody = document.querySelector('#educationSection table tbody');
+                educationTableBody.innerHTML = ''; // Clear existing education rows
+    
+                employee.education.forEach(edu => {
+                    const newRow = document.createElement('tr');
+                    newRow.classList.add('editEducation');
+                    newRow.innerHTML = `
+                        <td><input type="text" class="schoolName" value="${edu.schoolName}" placeholder="School Name"></td>
+                        <td><input type="number" class="passingYear" value="${edu.passingYear}" placeholder="Passing Year"></td>
+                        <td><input type="text" class="degreeName" value="${edu.degreeName}" placeholder="Degree Name"></td>
+                        <td><input type="text" class="marks" value="${edu.marks}" placeholder="Marks (e.g., CGPA, Percentage)"></td>
+                        <td><button type="button" class="removeEducationBtn">Remove</button></td>
+                    `;
+                    educationTableBody.appendChild(newRow);
+    
+                    // Add event listener for removing the entire row
+                    newRow.querySelector('.removeEducationBtn').addEventListener('click', function () {
+                        educationTableBody.removeChild(newRow); // Remove the entire row
+                    });
+                });
+    
+            } catch (error) {
+                console.error('Error fetching employee details:', error);
+                alert('Error fetching employee details');
+            }
+        }
+    
+            // Save edited employee details
+    async function saveEmployee() {
+        const id = document.getElementById('editEmpId').value;  // MongoDB _id is used here
+        const name = document.getElementById('editName').value;
+        const email = document.getElementById('editEmail').value;
+        const role = document.getElementById('editRole').value;
+        const department = document.getElementById('editDepartment').value;
+        const contact = document.getElementById('editcontact').value;
+        const address = document.getElementById('editAddress').value;
+        const gender = document.getElementById('editGender').value;
+        const dateOfBirth = document.getElementById('editDateOfBirth').value;
+        const emergencyContactName = document.getElementById('editEmergencyContactName').value;
+        const emergencyContactcontact = document.getElementById('editEmergencyContactcontact').value;
+        const employmentStatus = document.getElementById('editEmploymentStatus').value;
+        const approvalStatus = document.getElementById('editApprovalStatus').value;
+        const hireDate = document.getElementById('editHireDate').value;
         const performanceRating = document.getElementById('editPerformanceRating').value;
         const salary = document.getElementById('editSalary').value;
         const isMarried = document.getElementById('editIsMarried').checked;
@@ -693,7 +736,7 @@ table button[type="button"]:hover {
         const workLocation = document.getElementById('editWorkLocation').value;
         const employmentType = document.getElementById('editEmploymentType').value;
         const probationPeriodEnd = document.getElementById('editProbationPeriodEnd').value;
-        const managerId = document.getElementById('editManagerName').value;
+        const manager = document.getElementById('editManagerName').value;
 
         // Gather Education data
         const educationData = [];
@@ -732,7 +775,7 @@ table button[type="button"]:hover {
             workLocation,
             employmentType,
             probationPeriodEnd,
-            managerId,
+            manager,
             education: educationData
         };
 
@@ -791,7 +834,8 @@ table button[type="button"]:hover {
     // Initial fetch
     fetchEmployees();
     fetchManagers(); // Fetch managers for the select dropdown
-  </script>
+</script>
+
 </body>
 
 </html>
